@@ -1,32 +1,28 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="dark">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الريف للشحنات - REEFTEK PRO | مؤسسة الريف التقني لقطع غيار الشاحنات</title>
+  <title>الريف للشحنات | REEFTEK PRO v3.6</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&family=Libre+Barcode+128&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Google Fonts: Cairo, Tajawal, JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-
-  <!-- QR Code Generator Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
-
-  <!-- Supabase JS (Optional Cloud Sync Support) -->
+  <!-- Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Cairo', 'Tajawal', 'sans-serif'],
+            sans: ['Cairo', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace'],
+            barcode: ['"Libre Barcode 128"', 'cursive']
           },
           colors: {
             brand: {
@@ -35,12 +31,7 @@
               400: '#fbbf24',
               500: '#f59e0b',
               600: '#d97706',
-              700: '#b45309',
-            },
-            industrial: {
-              800: '#1e293b',
-              900: '#0f172a',
-              950: '#090d16',
+              900: '#78350f'
             }
           }
         }
@@ -49,100 +40,58 @@
   </script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Cairo', 'Tajawal', sans-serif;
+      font-family: 'Cairo', sans-serif;
+      background-color: #0b0f19;
+      color: #f1f5f9;
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.4);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #475569;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #f59e0b;
-    }
-
-    /* Industrial Label Styling (Screen Preview & Print Master) */
-    .waybill-sheet {
-      background: #ffffff !important;
-      color: #000000 !important;
-      font-family: 'Cairo', 'Tajawal', sans-serif;
-      border: 4px solid #000000;
-      position: relative;
+    /* شكل ورقة الطباعة الصناعية في المعاينة والطباعة */
+    .label-sheet {
+      background: #ffffff;
+      color: #000000;
+      border: 3px solid #000000;
+      border-radius: 6px;
       overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-    }
-
-    .waybill-grid-cell {
-      border-color: #000000 !important;
-    }
-
-    /* High contrast black badge that forces background printing */
-    .print-black-box {
-      background-color: #000000 !important;
-      color: #ffffff !important;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
 
-    .print-gray-box {
-      background-color: #f1f5f9 !important;
-      color: #000000 !important;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
+    .industrial-grid {
+      border-collapse: collapse;
+      width: 100%;
     }
 
-    .print-stripe-bg {
-      background: repeating-linear-gradient(
-        -45deg,
-        #000000,
-        #000000 10px,
-        #ffffff 10px,
-        #ffffff 20px
-      ) !important;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
+    .barcode-text {
+      font-family: 'Libre Barcode 128', cursive;
+      font-size: 54px;
+      line-height: 1;
+      letter-spacing: 0;
+      white-space: nowrap;
     }
 
-    /* Print Media Query - Zero Distractions, Pure Crisp Label Output */
+    /* إعدادات الطباعة الاحترافية */
     @media print {
       @page {
         size: A4 portrait;
-        margin: 6mm;
+        margin: 8mm;
       }
 
-      html, body {
+      body {
         background: #ffffff !important;
         color: #000000 !important;
         margin: 0 !important;
         padding: 0 !important;
-        width: 100% !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
       }
 
-      /* Hide all UI elements during printing */
       .no-print {
         display: none !important;
       }
 
-      /* Show dedicated print container */
       #printMount {
         display: block !important;
         width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
       }
 
       .print-page-break {
@@ -150,93 +99,66 @@
         break-after: page;
       }
 
-      .waybill-sheet {
+      .label-sheet {
         box-shadow: none !important;
+        border: 3px solid #000000 !important;
         width: 100% !important;
-        max-width: 100% !important;
         margin: 0 auto !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
     }
   </style>
 </head>
-<body class="bg-slate-100 dark:bg-industrial-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+<body class="min-h-screen flex flex-col selection:bg-amber-500 selection:text-slate-950">
 
-  <!-- =====================================================================
-       DEDICATED PRINT MOUNT (Generates 1 or Multiple Carton Pages on Print)
-       ===================================================================== -->
+  <!-- حاوية صفحات الطباعة الفعلية (تظهر وقت الطباعة فقط) -->
   <div id="printMount" class="hidden"></div>
 
-  <!-- =====================================================================
-       TOP INDUSTRIAL HEADER & NAVIGATION BAR
-       ===================================================================== -->
-  <header class="no-print sticky top-0 z-40 bg-white/95 dark:bg-industrial-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-3">
+  <!-- الترويسة العلوية -->
+  <header class="no-print sticky top-0 z-30 bg-slate-900/95 backdrop-blur border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 py-3">
       <div class="flex flex-wrap items-center justify-between gap-4">
         
-        <!-- Brand Identity -->
-        <div class="flex items-center gap-3.5">
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-slate-950 shadow-lg shadow-amber-500/20 border border-amber-400/40 shrink-0">
-            <!-- Heavy Truck Icon -->
-            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M10 17h4V5H2v12h3"/>
-              <path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/>
-              <path d="M14 17h1"/>
-              <circle cx="7.5" cy="17.5" r="2.5"/>
-              <circle cx="17.5" cy="17.5" r="2.5"/>
-            </svg>
+        <!-- الشعار والاسم -->
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-amber-500/20">
+            RT
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h1 class="text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white">
-                الريف للشحنات
-              </h1>
-              <span class="px-2 py-0.5 text-[11px] font-mono font-extrabold uppercase tracking-wider bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 rounded-md">
-                REEFTEK PRO v3.5
+              <h1 class="text-lg md:text-xl font-black tracking-tight text-white">الريف للشحنات</h1>
+              <span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                REEFTEK PRO v3.6
               </span>
             </div>
-            <p class="text-xs font-medium text-slate-500 dark:text-slate-400">
-              مؤسسة الريف التقني لقطع غيار الشاحنات — نظام البوليصات وتتبع الطرود
-            </p>
+            <p class="text-xs text-slate-400">مؤسسة الريف التقني لقطع غيار الشاحنات — نظام البوليصات وتتبع الطرود السحابي</p>
           </div>
         </div>
 
-        <!-- Navigation Tabs -->
-        <nav class="flex items-center bg-slate-100 dark:bg-slate-800/90 p-1 rounded-xl border border-slate-200 dark:border-slate-700/70 order-3 lg:order-2 w-full lg:w-auto justify-center">
-          <button onclick="switchTab('create')" id="tabBtn-create" class="tab-btn flex-1 lg:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all bg-amber-500 text-slate-950 shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-            <span>إصدار ملصق جديد</span>
+        <!-- التبويبات -->
+        <nav class="flex items-center bg-slate-950/80 p-1 rounded-xl border border-slate-800">
+          <button onclick="switchTab('create')" id="tabBtn-create" class="px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-bold transition bg-amber-500 text-slate-950">
+            إصدار بوليصة وملصق
           </button>
-
-          <button onclick="switchTab('manage')" id="tabBtn-manage" class="tab-btn flex-1 lg:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-            <span>إدارة وتتبع الشحنات</span>
-            <span id="navShipmentsCount" class="px-1.5 py-0.2 text-[11px] font-mono rounded-full bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200">0</span>
+          <button onclick="switchTab('shipments')" id="tabBtn-shipments" class="px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-bold transition text-slate-300 hover:text-white">
+            سجل وإدارة الشحنات <span id="navShipmentsCount" class="mr-1 px-1.5 py-0.2 rounded-full text-[11px] bg-slate-800 text-amber-400">0</span>
           </button>
-
-          <button onclick="switchTab('directory')" id="tabBtn-directory" class="tab-btn flex-1 lg:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-            <span>دليل المحلات والمخرجين</span>
+          <button onclick="switchTab('directory')" id="tabBtn-directory" class="px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-bold transition text-slate-300 hover:text-white">
+            دليل المحلات والمخرجين
           </button>
         </nav>
 
-        <!-- Quick Actions & Status Indicators -->
-        <div class="flex items-center gap-2 order-2 lg:order-3">
-          <!-- Quick Track Modal Trigger -->
-          <button onclick="openTrackModal()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-amber-500/15 hover:text-amber-500 border border-slate-200 dark:border-slate-700 text-xs font-bold transition-all" title="تتبع أو فحص شحنة بالرقم">
-            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
-            <span class="hidden sm:inline">فحص باركود / تتبع</span>
+        <!-- أزرار الفحص وحالة السحابة -->
+        <div class="flex items-center gap-2">
+          <button onclick="openScannerModal()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 text-xs font-bold transition">
+            <span>🔍</span>
+            <span>فحص وتتبع شحنة</span>
           </button>
 
-          <!-- Storage / Cloud Sync Badge -->
-          <button onclick="openCloudModal()" id="syncStatusBtn" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold transition-all" title="إعدادات الحفظ السحابي Supabase والنسخ الاحتياطي">
-            <span id="syncDot" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span id="syncText" class="hidden md:inline text-slate-700 dark:text-slate-300">حفظ محلي نشط</span>
-          </button>
-
-          <!-- Theme Toggle -->
-          <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-amber-500 transition-all" title="تبديل المظهر الليلي / النهاري">
-            <svg id="themeIconSun" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-            <svg id="themeIconMoon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <button onclick="openSupabaseModal()" id="cloudStatusBtn" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-slate-300 hover:border-amber-500/50 transition">
+            <span id="cloudDot" class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+            <span id="cloudStatusText">جاري الاتصال بالسحابة...</span>
           </button>
         </div>
 
@@ -244,309 +166,199 @@
     </div>
   </header>
 
-  <!-- =====================================================================
-       MAIN APPLICATION WORKSPACE
-       ===================================================================== -->
-  <main class="no-print flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 py-6">
+  <!-- المحتوى الرئيسي -->
+  <main class="no-print flex-1 max-w-7xl w-full mx-auto px-4 py-6">
 
-    <!-- ===================================================================
-         TAB 1: CREATE LABEL & LIVE REDESIGNED INDUSTRIAL PREVIEW
-         =================================================================== -->
+    <!-- القسم 1: إصدار البوليصة والمعاينة الحية -->
     <section id="tab-create" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-      <!-- RIGHT COLUMN: SMART SHIPMENT FORM (5 Cols on Desktop) -->
-      <div class="lg:col-span-5 bg-white dark:bg-industrial-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+      <!-- العمود الأيمن: نموذج البيانات -->
+      <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
         
-        <!-- Form Header & Completion Bar -->
-        <div class="p-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/50">
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <div class="flex items-center gap-2.5">
-              <span class="w-8 h-8 rounded-lg bg-amber-500/15 text-amber-500 flex items-center justify-center font-black text-sm">1</span>
-              <div>
-                <h2 class="text-base font-black text-slate-900 dark:text-white">بيانات الكرتون والبوليصة</h2>
-                <p class="text-[11px] text-slate-500 dark:text-slate-400">اضغط <kbd class="px-1.5 py-0.5 text-[10px] font-mono bg-slate-200 dark:bg-slate-800 rounded">Enter</kbd> للتنقل، و <kbd class="px-1.5 py-0.5 text-[10px] font-mono bg-slate-200 dark:bg-slate-800 rounded">Ctrl+Enter</kbd> للحفظ والطباعة</p>
-              </div>
-            </div>
-
-            <!-- Shipment Number Badge -->
-            <div class="flex items-center gap-1 bg-slate-200/80 dark:bg-slate-800 px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700">
-              <span class="text-[11px] text-slate-500 dark:text-slate-400">رقم الشحنة:</span>
-              <span id="formShipmentIdDisplay" class="font-mono font-extrabold text-xs text-amber-600 dark:text-amber-400">RT-84920</span>
-              <button type="button" onclick="generateNewShipmentId()" class="text-slate-400 hover:text-amber-500 transition-colors mr-1" title="توليد رقم شحنة جديد">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-              </button>
+        <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+          <div class="flex items-center gap-2.5">
+            <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 font-black flex items-center justify-center text-sm">1</span>
+            <div>
+              <h2 class="font-extrabold text-base text-white">بيانات الكرتون والبوليصة</h2>
+              <p class="text-[11px] text-slate-400">اضغط <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-amber-400 font-mono">Enter</kbd> للتنقل، و <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-amber-400 font-mono">Ctrl+Enter</kbd> للحفظ والطباعة</p>
             </div>
           </div>
 
-          <!-- Progress Bar -->
-          <div class="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
-            <div id="formProgressBar" class="bg-gradient-to-l from-amber-500 to-emerald-500 h-full transition-all duration-300" style="width: 100%"></div>
-          </div>
-          <div class="flex justify-between items-center mt-1.5 text-[11px] font-bold">
-            <span id="formProgressText" class="text-emerald-600 dark:text-emerald-400">البيانات الأساسية مكتملة وجاهزة للطباعة ✓</span>
-            <button type="button" onclick="resetForm()" class="text-slate-500 hover:text-rose-500 flex items-center gap-1 transition-colors">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-              <span>تفريغ الحقول</span>
-            </button>
+          <div class="text-left">
+            <span class="text-[11px] text-slate-400 block">رقم الشحنة</span>
+            <div class="flex items-center gap-1">
+              <span id="currentShipmentId" class="font-mono font-black text-amber-400 text-sm">RT-84920</span>
+              <button type="button" onclick="generateNewShipmentId(true)" title="توليد رقم جديد" class="text-xs text-slate-400 hover:text-white px-1">🔄</button>
+            </div>
           </div>
         </div>
 
-        <!-- Form Body -->
-        <form id="shipmentForm" onsubmit="event.preventDefault(); handleSaveAndPrint();" class="p-5 space-y-4">
+        <!-- شريط اكتمال الحقول -->
+        <div class="mb-4">
+          <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+            <div id="formProgressBar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 100%"></div>
+          </div>
+          <div class="flex justify-between items-center mt-1.5 text-[11px]">
+            <span id="formProgressText" class="text-emerald-400 font-bold">البيانات الأساسية مكتملة وجاهزة للطباعة ✓</span>
+            <button type="button" onclick="resetForm()" class="text-slate-400 hover:text-rose-400">تفريغ الحقول</button>
+          </div>
+        </div>
 
-          <!-- Quick Fill from Saved Shops -->
-          <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/25">
-            <div class="flex items-center justify-between mb-1.5">
-              <label class="text-xs font-extrabold text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                <span>تعبئة سريعة لعميل / محل محفوظ:</span>
-              </label>
-              <button type="button" onclick="saveCurrentShopToDirectory()" class="text-[11px] font-bold text-amber-600 dark:text-amber-300 hover:underline">
-                + حفظ المحل الحالي بالدليل
-              </button>
-            </div>
-            <select id="quickShopSelect" onchange="applyQuickShop(this.value)" class="w-full rounded-lg bg-white dark:bg-slate-900 border border-amber-500/30 px-3 py-2 text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
-              <option value="">-- اختر محلاً لتعبئة (المدينة + الزبون + الجوال + المخرج) تلقائياً --</option>
-            </select>
+        <!-- اختيار سريع من دليل المحلات -->
+        <div class="mb-4 p-3 rounded-xl bg-slate-950/70 border border-slate-800/80">
+          <label class="block text-xs font-bold text-amber-400 mb-1.5">⚡ تعبئة سريعة من المحلات المحفوظة:</label>
+          <select id="quickShopSelect" onchange="applyQuickShop(this.value)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-500 focus:outline-none">
+            <option value="">— اختر محلاً لتعبئة بياناته تلقائياً —</option>
+          </select>
+        </div>
+
+        <!-- الحقول الأساسية -->
+        <form id="shipmentForm" onsubmit="event.preventDefault(); handleSaveAndPrint();" class="space-y-3.5">
+          
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">اسم المحل / الجهة المستلمة <span class="text-amber-500">*</span></label>
+            <input type="text" id="shopName" required value="مؤسسة الصقر لقطع غيار الشاحنات" oninput="updatePreview()"
+              placeholder="مثال: مؤسسة الصقر لقطع غيار الشاحنات"
+              class="form-nav w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-bold text-white focus:border-amber-500 focus:outline-none" />
           </div>
 
-          <!-- Shop Name & Destination City -->
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-3.5">
-            <div class="sm:col-span-7">
-              <label for="shopName" class="block text-xs font-extrabold text-slate-700 dark:text-slate-300 mb-1">
-                اسم المحل / الجهة المستلمة <span class="text-rose-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="shopName"
-                list="shopsDatalist"
-                required
-                placeholder="مثال: مؤسسة الصقر لقطع غيار الشاحنات"
-                oninput="handleShopInput(this.value); updateLivePreview();"
-                class="form-nav-input w-full rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 px-3.5 py-2.5 text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all"
-              />
-              <datalist id="shopsDatalist"></datalist>
-            </div>
-
-            <div class="sm:col-span-5">
-              <label for="city" class="block text-xs font-extrabold text-slate-700 dark:text-slate-300 mb-1">
-                المدينة / الوجهة <span class="text-rose-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="city"
-                list="citiesDatalist"
-                required
-                placeholder="الرياض، الدمام، جدة..."
-                oninput="updateLivePreview()"
-                class="form-nav-input w-full rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 px-3.5 py-2.5 text-sm font-black text-amber-600 dark:text-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all"
-              />
-              <datalist id="citiesDatalist">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">المدينة / الوجهة <span class="text-amber-500">*</span></label>
+              <input type="text" id="city" list="citiesList" required value="الرياض" oninput="updatePreview()"
+                placeholder="مثال: الرياض، الدمام، تبوك..."
+                class="form-nav w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-bold text-amber-400 focus:border-amber-500 focus:outline-none" />
+              <datalist id="citiesList">
                 <option value="الرياض"></option>
-                <option value="جدة"></option>
                 <option value="الدمام"></option>
+                <option value="جدة"></option>
+                <option value="مكة المكرمة"></option>
+                <option value="المدينة المنورة"></option>
                 <option value="القصيم - بريدة"></option>
+                <option value="تبوك"></option>
                 <option value="خميس مشيط"></option>
                 <option value="أبها"></option>
-                <option value="تبوك"></option>
-                <option value="حائل"></option>
-                <option value="المدينة المنورة"></option>
-                <option value="مكة المكرمة"></option>
-                <option value="حفر الباطن"></option>
                 <option value="جازان"></option>
+                <option value="حفر الباطن"></option>
+                <option value="حائل"></option>
                 <option value="نجران"></option>
-                <option value="سكاكا - الجوف"></option>
                 <option value="ينبع"></option>
-                <option value="الطائف"></option>
-                <option value="الأحساء"></option>
-                <option value="عرعر"></option>
-                <option value="بيشة"></option>
-                <option value="القريات"></option>
               </datalist>
             </div>
-          </div>
-
-          <!-- Customer Name & Freight Forwarder (المخرج) -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            <div>
-              <label for="customerName" class="block text-xs font-extrabold text-slate-700 dark:text-slate-300 mb-1">
-                اسم الزبون / المسؤول <span class="text-rose-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="customerName"
-                required
-                placeholder="مثال: أبو فهد العتيبي"
-                oninput="updateLivePreview()"
-                class="form-nav-input w-full rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 px-3.5 py-2.5 text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all"
-              />
-            </div>
 
             <div>
-              <label for="carrierName" class="block text-xs font-extrabold text-slate-700 dark:text-slate-300 mb-1">
-                اسم المخرج (شركة الشحن) <span class="text-rose-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="carrierName"
-                list="carriersDatalist"
-                required
-                placeholder="مثال: نقليات الصاعدي / الزاجل"
-                oninput="updateLivePreview()"
-                class="form-nav-input w-full rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 px-3.5 py-2.5 text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all"
-              />
+              <label class="block text-xs font-bold text-slate-300 mb-1">اسم المخرج / شركة الشحن <span class="text-amber-500">*</span></label>
+              <input type="text" id="carrier" list="carriersDatalist" required value="مخرج الصاعدي للنقل" oninput="updatePreview()"
+                placeholder="مثال: الصاعدي، الزاجل، المقيطيب..."
+                class="form-nav w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-bold text-white focus:border-amber-500 focus:outline-none" />
               <datalist id="carriersDatalist"></datalist>
             </div>
           </div>
 
-          <!-- Phone Number & Carton Stepper -->
-          <div class="grid grid-cols-1 sm:grid-cols-12 gap-3.5">
-            <div class="sm:col-span-7">
-              <div class="flex items-center justify-between mb-1">
-                <label for="customerPhone" class="text-xs font-extrabold text-slate-700 dark:text-slate-300">
-                  رقم الجوال <span class="text-rose-500">*</span>
-                </label>
-                <span id="phoneValidationBadge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-500">رقم صحيح ✓</span>
-              </div>
-              <input
-                type="tel"
-                id="customerPhone"
-                dir="ltr"
-                required
-                placeholder="05XXXXXXXX"
-                oninput="handlePhoneInput(this)"
-                class="form-nav-input w-full rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 px-3.5 py-2.5 text-sm font-mono font-bold text-left text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all"
-              />
-            </div>
-
-            <div class="sm:col-span-5">
-              <label for="cartonCount" class="block text-xs font-extrabold text-slate-700 dark:text-slate-300 mb-1">
-                عدد الكراتين / الطرود <span class="text-rose-500">*</span>
-              </label>
-              <div class="flex items-center rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 overflow-hidden">
-                <button type="button" onclick="adjustCartons(-1)" class="px-3.5 py-2.5 bg-slate-200/70 dark:bg-slate-700/70 hover:bg-amber-500 hover:text-slate-950 font-black text-base transition-colors">-</button>
-                <input
-                  type="number"
-                  id="cartonCount"
-                  min="1"
-                  max="999"
-                  value="3"
-                  oninput="handleCartonCountChange()"
-                  class="form-nav-input w-full bg-transparent text-center font-mono font-black text-base text-slate-900 dark:text-white focus:outline-none"
-                />
-                <button type="button" onclick="adjustCartons(1)" class="px-3.5 py-2.5 bg-slate-200/70 dark:bg-slate-700/70 hover:bg-amber-500 hover:text-slate-950 font-black text-base transition-colors">+</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Handling & Warning Badges (رموز تنبيهية على الملصق) -->
-          <div>
-            <label class="block text-xs font-extrabold text-slate-700 dark:text-slate-300 mb-1.5">
-              رموز العناية والتنبيه على الكرتون (تظهر بوضوح للعمّال والمخرج):
-            </label>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              <button type="button" onclick="toggleWarning('fragile')" id="warnBtn-fragile" class="warn-toggle-btn flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl border text-xs font-extrabold transition-all bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400">
-                <span>🍷</span>
-                <span>قابل للكسر</span>
-              </button>
-              <button type="button" onclick="toggleWarning('heavy')" id="warnBtn-heavy" class="warn-toggle-btn flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl border text-xs font-extrabold transition-all bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400">
-                <span>🏋️</span>
-                <span>ثقيل الوزن</span>
-              </button>
-              <button type="button" onclick="toggleWarning('upward')" id="warnBtn-upward" class="warn-toggle-btn flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl border text-xs font-extrabold transition-all bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400">
-                <span>⬆️</span>
-                <span>اتجاه للأعلى</span>
-              </button>
-              <button type="button" onclick="toggleWarning('urgent')" id="warnBtn-urgent" class="warn-toggle-btn flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl border text-xs font-extrabold transition-all bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400">
-                <span>⚡</span>
-                <span>عاجل جداً</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Waybill Extra Details (Invoice, Payment, Parts Description) -->
-          <div class="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-3">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <div>
-                <label for="invoiceNo" class="block text-xs font-extrabold text-slate-700 dark:text-slate-300 mb-1">
-                  رقم الفاتورة (اختياري)
-                </label>
-                <input
-                  type="text"
-                  id="invoiceNo"
-                  dir="ltr"
-                  placeholder="INV-2026-884"
-                  oninput="updateLivePreview()"
-                  class="form-nav-input w-full rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 px-3.5 py-2 text-xs font-mono font-bold text-left text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
-                />
-              </div>
-
-              <div>
-                <label for="paymentStatus" class="block text-xs font-extrabold text-slate-700 dark:text-slate-300 mb-1">
-                  حالة الدفع / الحساب
-                </label>
-                <select
-                  id="paymentStatus"
-                  onchange="updateLivePreview()"
-                  class="form-nav-input w-full rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs font-extrabold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
-                >
-                  <option value="مدفوع">تم الدفع (خالص)</option>
-                  <option value="عند الاستلام">الدفع عند الاستلام (COD)</option>
-                  <option value="آجل">حساب آجل (عميل معتمد)</option>
-                  <option value="غير مدفوع">غير مدفوع</option>
-                </select>
-              </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">اسم الزبون / المستلم</label>
+              <input type="text" id="customerName" value="أبو فهد العتيبي" oninput="updatePreview()"
+                placeholder="اسم الشخص المستلم"
+                class="form-nav w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:border-amber-500 focus:outline-none" />
             </div>
 
             <div>
-              <label for="notes" class="block text-xs font-extrabold text-slate-700 dark:text-slate-300 mb-1">
-                بيان القطع / ملاحظات للمخرج (اختياري)
-              </label>
-              <input
-                type="text"
-                id="notes"
-                placeholder="مثال: قطع غيار أكتروس (رديتر + طرمبة ماء + حساسات) - يرجى عدمرصّ الكراتين"
-                oninput="updateLivePreview()"
-                class="form-nav-input w-full rounded-xl bg-slate-50 dark:bg-slate-800/90 border border-slate-300 dark:border-slate-700 px-3.5 py-2 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
+              <label class="block text-xs font-bold text-slate-300 mb-1">رقم الجوال <span class="text-amber-500">*</span></label>
+              <input type="tel" id="phone" required value="0501234567" oninput="normalizePhoneInput(this); updatePreview()"
+                placeholder="05XXXXXXXX" dir="ltr"
+                class="form-nav w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-mono font-bold text-left text-white focus:border-amber-500 focus:outline-none" />
             </div>
           </div>
 
-          <!-- Multi-Carton Print Mode Option -->
-          <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 flex items-center justify-between gap-2">
-            <label for="printAllCartonsToggle" class="text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer select-none">
-              طباعة ملصق مستقل لكل كرتون بالتسلسل <span class="text-amber-500 font-mono" id="multiCartonLabelHint">(1/3 ، 2/3 ، 3/3)</span>
-            </label>
-            <input type="checkbox" id="printAllCartonsToggle" checked class="w-4 h-4 accent-amber-500 rounded cursor-pointer" />
+          <!-- عدد الكراتين وحالة الدفع -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+              <label class="block text-xs font-bold text-slate-300 mb-1.5">عدد الكراتين / الطرود</label>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="adjustBoxes(-1)" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700 font-black text-lg">-</button>
+                <input type="number" id="boxes" min="1" max="99" value="3" oninput="resetPreviewBoxIndex(); updatePreview()"
+                  class="form-nav w-full text-center bg-slate-900 border border-slate-700 rounded-lg py-1.5 font-mono font-black text-base text-amber-400" />
+                <button type="button" onclick="adjustBoxes(1)" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700 font-black text-lg">+</button>
+              </div>
+              <label class="flex items-center gap-2 mt-2 text-[11px] text-slate-400 cursor-pointer">
+                <input type="checkbox" id="printAllBoxes" checked class="accent-amber-500 rounded" />
+                <span>طباعة ملصق مستقل لكل كرتون بالتسلسل</span>
+              </label>
+            </div>
+
+            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+              <label class="block text-xs font-bold text-slate-300 mb-1.5">حالة الدفع / البوليصة</label>
+              <select id="paymentStatus" onchange="toggleCodField(); updatePreview()"
+                class="form-nav w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-2 text-xs font-bold text-white focus:border-amber-500 focus:outline-none">
+                <option value="مدفوع">✅ مدفوع بالكامل</option>
+                <option value="عند الاستلام">💵 الدفع عند الاستلام (COD)</option>
+                <option value="آجل">📒 حساب آجل (معتمد)</option>
+                <option value="غير مدفوع">⚠️ غير مدفوع</option>
+              </select>
+
+              <div id="codAmountWrapper" class="hidden mt-2">
+                <input type="number" id="codAmount" placeholder="مبلغ التحصيل بالريال (ر.س)" oninput="updatePreview()"
+                  class="w-full bg-slate-900 border border-amber-500/60 rounded-lg px-2.5 py-1.5 text-xs font-mono text-amber-300 focus:outline-none" />
+              </div>
+            </div>
           </div>
 
-          <!-- Action Buttons Grid -->
-          <div class="pt-2 space-y-2.5">
-            <button
-              type="submit"
-              class="w-full py-3.5 px-5 rounded-xl bg-gradient-to-l from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2 transition-all transform active:scale-[0.99]"
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-              <span>حفظ الشحنة وطباعة الملصق الآن (Ctrl + Enter)</span>
+          <!-- تفاصيل الفاتورة والتنبيهات -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-400 mb-1">رقم الفاتورة / طلب المبيعات (اختياري)</label>
+              <input type="text" id="invoiceNo" value="INV-2026-994" oninput="updatePreview()"
+                placeholder="مثال: INV-1042"
+                class="form-nav w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-mono text-white focus:border-amber-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-400 mb-1">وصف القطع / ملاحظات للمخرج</label>
+              <input type="text" id="notes" value="فلاتر + طقم اصلاح + اصطبات" oninput="updatePreview()"
+                placeholder="مثال: قطع غيار فلبو / مرسيدس..."
+                class="form-nav w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:border-amber-500 focus:outline-none" />
+            </div>
+          </div>
+
+          <!-- رموز تنبيهية على الكرتون -->
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1.5">رموز تنبيهية مطبوعة على الملصق:</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+              <label class="flex items-center gap-1.5 p-2 rounded-lg bg-slate-950 border border-slate-800 cursor-pointer hover:border-amber-500/50">
+                <input type="checkbox" value="قابل للكسر" checked onchange="updatePreview()" class="warn-check accent-amber-500" />
+                <span>🍷 قابل للكسر</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2 rounded-lg bg-slate-950 border border-slate-800 cursor-pointer hover:border-amber-500/50">
+                <input type="checkbox" value="ثقيل الوزن" onchange="updatePreview()" class="warn-check accent-amber-500" />
+                <span>⚖️ ثقيل الوزن</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2 rounded-lg bg-slate-950 border border-slate-800 cursor-pointer hover:border-amber-500/50">
+                <input type="checkbox" value="اتجاه للأعلى" checked onchange="updatePreview()" class="warn-check accent-amber-500" />
+                <span>⬆️ اتجاه للأعلى</span>
+              </label>
+              <label class="flex items-center gap-1.5 p-2 rounded-lg bg-slate-950 border border-slate-800 cursor-pointer hover:border-amber-500/50">
+                <input type="checkbox" value="عاجل جداً" onchange="updatePreview()" class="warn-check accent-amber-500" />
+                <span>⚡ شحن عاجل</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- أزرار الإجراءات والحفظ والطباعة -->
+          <div class="pt-3 space-y-2.5">
+            <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-base shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 transition">
+              <span>🖨️</span>
+              <span>حفظ في السحابة وطباعة الملصق الآن (Ctrl+Enter)</span>
             </button>
 
             <div class="grid grid-cols-2 gap-2.5">
-              <button
-                type="button"
-                onclick="sendWhatsAppFromForm()"
-                class="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-600/20 transition-all"
-              >
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
-                <span>إشعار الزبون واتساب</span>
+              <button type="button" onclick="handleSaveOnly()" class="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 flex items-center justify-center gap-1.5 transition">
+                <span>☁️</span>
+                <span>حفظ في السجل السحابي فقط</span>
               </button>
 
-              <button
-                type="button"
-                onclick="saveShipmentOnly()"
-                class="py-2.5 px-3 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 transition-all"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
-                <span>حفظ في السجل فقط</span>
+              <button type="button" onclick="sendWhatsAppCurrent()" class="py-2.5 px-3 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 font-bold text-xs border border-emerald-500/30 flex items-center justify-center gap-1.5 transition">
+                <span>💬</span>
+                <span>إشعار الزبون واتساب</span>
               </button>
             </div>
           </div>
@@ -554,123 +366,103 @@
         </form>
       </div>
 
-      <!-- LEFT COLUMN: COMPLETELY REDESIGNED INDUSTRIAL LABEL PREVIEW (7 Cols on Desktop) -->
+      <!-- العمود الأيسر: المعاينة الحية لورقة الطباعة -->
       <div class="lg:col-span-7 space-y-4">
         
-        <!-- Preview Toolbar & Layout Switcher -->
-        <div class="bg-white dark:bg-industrial-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg flex flex-wrap items-center justify-between gap-3">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
-            <h3 class="text-sm font-black text-slate-900 dark:text-white">معاينة حية لورقة الطباعة الجديدة</h3>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            <h3 class="font-bold text-sm text-white">معاينة حية لورقة الطباعة (الباركود يعمل على أي جوال فوراً)</h3>
           </div>
 
-          <!-- Print Layout Mode Selector -->
-          <div class="flex flex-wrap items-center gap-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
-            <button type="button" onclick="setLabelTemplate('industrial')" id="tplBtn-industrial" class="tpl-btn px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all bg-amber-500 text-slate-950 shadow-sm">
-              ملصق صناعي احترافي (الافتراضي)
+          <!-- اختيار قالب الطباعة -->
+          <div class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+            <button type="button" onclick="setPrintTemplate('single')" id="tplBtn-single" class="px-2.5 py-1 rounded-lg font-bold bg-amber-500 text-slate-950">
+              ملصق صناعي كبير
             </button>
-            <button type="button" onclick="setLabelTemplate('dual')" id="tplBtn-dual" class="tpl-btn px-3 py-1.5 rounded-lg text-xs font-extrabold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">
-              ملصق مزدوج (نسختين بصفحة A4)
+            <button type="button" onclick="setPrintTemplate('dual')" id="tplBtn-dual" class="px-2.5 py-1 rounded-lg font-bold text-slate-300 hover:text-white">
+              ملصق مزدوج (2 في A4)
             </button>
-            <button type="button" onclick="setLabelTemplate('waybill')" id="tplBtn-waybill" class="tpl-btn px-3 py-1.5 rounded-lg text-xs font-extrabold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">
-              بوليصة شحن رسمية كاملة
+            <button type="button" onclick="setPrintTemplate('waybill')" id="tplBtn-waybill" class="px-2.5 py-1 rounded-lg font-bold text-slate-300 hover:text-white">
+              بوليصة رسمية
             </button>
           </div>
 
-          <!-- Carton Preview Stepper (See Carton 1 of X, 2 of X) -->
-          <div class="flex items-center gap-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
-            <span class="text-slate-500 dark:text-slate-400">معاينة الكرتون:</span>
-            <button type="button" onclick="stepPreviewCarton(-1)" class="w-6 h-6 rounded bg-slate-200 dark:bg-slate-700 hover:bg-amber-500 hover:text-slate-950 font-black">‹</button>
-            <span id="previewCartonIndicator" class="font-mono font-black px-1.5 text-amber-500">1 / 3</span>
-            <button type="button" onclick="stepPreviewCarton(1)" class="w-6 h-6 rounded bg-slate-200 dark:bg-slate-700 hover:bg-amber-500 hover:text-slate-950 font-black">›</button>
+          <!-- التنقل بين الكراتين في المعاينة -->
+          <div class="flex items-center gap-2 text-xs bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
+            <span class="text-slate-400">معاينة الكرتون:</span>
+            <button type="button" onclick="stepPreviewBox(-1)" class="px-1.5 py-0.5 bg-slate-800 rounded hover:bg-slate-700 font-bold">◀</button>
+            <span id="previewBoxCounter" class="font-mono font-bold text-amber-400">1 / 3</span>
+            <button type="button" onclick="stepPreviewBox(1)" class="px-1.5 py-0.5 bg-slate-800 rounded hover:bg-slate-700 font-bold">▶</button>
           </div>
         </div>
 
-        <!-- LIVE INDUSTRIAL WAYBILL CANVAS CONTAINER -->
-        <div class="bg-slate-200/70 dark:bg-slate-900/90 p-3 sm:p-6 rounded-2xl border border-slate-300 dark:border-slate-800 flex flex-col items-center justify-center">
-          <div id="livePreviewContainer" class="w-full max-w-[760px] transition-all duration-200">
-            <!-- Dynamically rendered by renderLabelHTML() -->
-          </div>
+        <!-- منطقة عرض الورقة البيضاء -->
+        <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-4 md:p-6 overflow-x-auto">
+          <div id="livePreviewContainer" class="max-w-[680px] mx-auto"></div>
         </div>
 
       </div>
 
     </section>
 
-    <!-- ===================================================================
-         TAB 2: SHIPMENTS MANAGEMENT & ANALYTICS DASHBOARD
-         =================================================================== -->
-    <section id="tab-manage" class="hidden space-y-6">
+    <!-- القسم 2: سجل وإدارة الشحنات -->
+    <section id="tab-shipments" class="hidden space-y-6">
       
-      <!-- 4 KPI Cards -->
+      <!-- بطاقات الإحصائيات -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white dark:bg-industrial-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
           <div>
-            <p class="text-xs font-bold text-slate-500 dark:text-slate-400">إجمالي الشحنات</p>
-            <h4 id="kpiTotal" class="text-2xl sm:text-3xl font-black font-mono text-slate-900 dark:text-white mt-1">0</h4>
-            <p id="kpiTotalCartons" class="text-[11px] font-bold text-amber-500 mt-1">0 كرتون مسجل</p>
+            <p class="text-xs text-slate-400">إجمالي الشحنات</p>
+            <h4 id="statTotalShipments" class="text-2xl font-black text-white mt-1">0</h4>
+            <p id="statTotalBoxes" class="text-[11px] text-amber-400 mt-0.5">0 كرتون مسجل</p>
           </div>
-          <div class="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-500 flex items-center justify-center">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-          </div>
+          <div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-xl">📦</div>
         </div>
 
-        <div class="bg-white dark:bg-industrial-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
           <div>
-            <p class="text-xs font-bold text-slate-500 dark:text-slate-400">قيد التجهيز بالمستودع</p>
-            <h4 id="kpiPrep" class="text-2xl sm:text-3xl font-black font-mono text-amber-500 mt-1">0</h4>
-            <p class="text-[11px] text-slate-400 mt-1">بانتظار التسليم للمخرج</p>
+            <p class="text-xs text-slate-400">قيد التجهيز بالمستودع</p>
+            <h4 id="statPreparing" class="text-2xl font-black text-sky-400 mt-1">0</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">بانتظار التسليم للمخرج</p>
           </div>
-          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          </div>
+          <div class="w-11 h-11 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-xl">🛠️</div>
         </div>
 
-        <div class="bg-white dark:bg-industrial-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
           <div>
-            <p class="text-xs font-bold text-slate-500 dark:text-slate-400">سُلمت للمخرج / بالطريق</p>
-            <h4 id="kpiTransit" class="text-2xl sm:text-3xl font-black font-mono text-sky-500 mt-1">0</h4>
-            <p class="text-[11px] text-slate-400 mt-1">مع شركات الشحن</p>
+            <p class="text-xs text-slate-400">سُلمت للمخرج / بالطريق</p>
+            <h4 id="statWithCarrier" class="text-2xl font-black text-amber-400 mt-1">0</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">مع شركات الشحن</p>
           </div>
-          <div class="w-12 h-12 rounded-2xl bg-sky-500/15 text-sky-500 flex items-center justify-center">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
-          </div>
+          <div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-xl">🚛</div>
         </div>
 
-        <div class="bg-white dark:bg-industrial-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
           <div>
-            <p class="text-xs font-bold text-slate-500 dark:text-slate-400">تم التسليم للعميل</p>
-            <h4 id="kpiDelivered" class="text-2xl sm:text-3xl font-black font-mono text-emerald-500 mt-1">0</h4>
-            <p class="text-[11px] text-slate-400 mt-1">مكتملة بنجاح</p>
+            <p class="text-xs text-slate-400">تم التسليم للعميل</p>
+            <h4 id="statDelivered" class="text-2xl font-black text-emerald-400 mt-1">0</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">مكتملة بنجاح</p>
           </div>
-          <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-500 flex items-center justify-center">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          </div>
+          <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-xl">✅</div>
         </div>
       </div>
 
-      <!-- Search, Filters & Export Bar -->
-      <div class="bg-white dark:bg-industrial-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-3">
-        <div class="flex flex-wrap items-center gap-3 flex-1 min-w-[260px]">
-          <div class="relative flex-1 min-w-[220px]">
-            <input
-              type="text"
-              id="searchShipmentsInput"
-              oninput="renderShipmentsTable()"
-              placeholder="ابحث برقم الشحنة، اسم المحل، الزبون، الجوال، المدينة، المخرج..."
-              class="w-full rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 pr-10 pl-4 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
-            />
-            <svg class="w-4 h-4 text-slate-400 absolute right-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          </div>
+      <!-- أدوات البحث والفلترة -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-3 flex-1">
+          <input type="text" id="searchShipmentsInput" oninput="renderShipmentsTable()"
+            placeholder="ابحث برقم الشحنة، اسم المحل، المدينة، الجوال، أو المخرج..."
+            class="flex-1 min-w-[240px] bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white focus:border-amber-500 focus:outline-none" />
 
-          <select id="filterStatusSelect" onchange="renderShipmentsTable()" class="rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3 py-2.5 text-xs font-bold text-slate-800 dark:text-slate-200">
+          <select id="filterStatus" onchange="renderShipmentsTable()" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
             <option value="ALL">كل الحالات</option>
             <option value="قيد التجهيز">قيد التجهيز</option>
             <option value="سُلمت للمخرج">سُلمت للمخرج</option>
             <option value="تم التسليم">تم التسليم</option>
           </select>
 
-          <select id="filterPaymentSelect" onchange="renderShipmentsTable()" class="rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3 py-2.5 text-xs font-bold text-slate-800 dark:text-slate-200">
+          <select id="filterPayment" onchange="renderShipmentsTable()" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
             <option value="ALL">كل حالات الدفع</option>
             <option value="مدفوع">مدفوع</option>
             <option value="عند الاستلام">عند الاستلام (COD)</option>
@@ -680,1651 +472,1175 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <button onclick="exportShipmentsCSV()" class="px-3.5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            <span>تصدير Excel (CSV)</span>
+          <button onclick="syncFromCloud(true)" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-amber-400 border border-slate-700">
+            🔄 تحديث من السحابة
+          </button>
+          <button onclick="exportShipmentsCSV()" class="px-3 py-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-xs font-bold text-emerald-400 border border-emerald-500/30">
+            📥 تصدير Excel (CSV)
           </button>
         </div>
       </div>
 
-      <!-- Shipments Table -->
-      <div class="bg-white dark:bg-industrial-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg overflow-hidden">
+      <!-- جدول الشحنات -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
         <div class="overflow-x-auto">
-          <table class="w-full text-right border-collapse">
-            <thead>
-              <tr class="bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 text-xs font-extrabold border-b border-slate-200 dark:border-slate-700">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-slate-950 text-slate-400 border-b border-slate-800">
+              <tr>
                 <th class="py-3.5 px-4">رقم الشحنة</th>
                 <th class="py-3.5 px-4">اسم المحل والزبون</th>
                 <th class="py-3.5 px-4">المدينة والمخرج</th>
-                <th class="py-3.5 px-4 text-center">الكراتين</th>
+                <th class="py-3.5 px-4">الكراتين</th>
                 <th class="py-3.5 px-4">الدفع / الفاتورة</th>
                 <th class="py-3.5 px-4">حالة الشحنة</th>
                 <th class="py-3.5 px-4">التاريخ</th>
                 <th class="py-3.5 px-4 text-center">إجراءات سريعة</th>
               </tr>
             </thead>
-            <tbody id="shipmentsTableBody" class="divide-y divide-slate-200 dark:divide-slate-800 text-xs sm:text-sm">
-              <!-- Populated by JS -->
-            </tbody>
+            <tbody id="shipmentsTableBody" class="divide-y divide-slate-800/70"></tbody>
           </table>
         </div>
       </div>
     </section>
 
-    <!-- ===================================================================
-         TAB 3: SAVED SHOPS & FREIGHT FORWARDERS DIRECTORY
-         =================================================================== -->
+    <!-- القسم 3: دليل المحلات والمخرجين -->
     <section id="tab-directory" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
       
-      <!-- Saved Shops List (7 Cols) -->
-      <div class="lg:col-span-7 bg-white dark:bg-industrial-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg p-5 space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+      <!-- دليل المحلات الدائمة -->
+      <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
           <div>
-            <h3 class="text-base font-black text-slate-900 dark:text-white">دليل المحلات والعملاء الدائمين</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">اضغط "تعبئة بالملصق" لإصدار شحنة للمحل بضغطة زر واحدة</p>
+            <h3 class="font-extrabold text-base text-white">دليل المحلات والعملاء الدائمين</h3>
+            <p class="text-xs text-slate-400">اضغط "تعبئة بالملصق" لإصدار شحنة للمحل بضغطة زر واحدة</p>
           </div>
-          <span id="savedShopsCountBadge" class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-500 font-mono text-xs font-black">0 محل</span>
+          <span id="shopsCountBadge" class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-400">0 محل</span>
         </div>
 
-        <!-- Add New Shop Form -->
-        <form onsubmit="event.preventDefault(); addShopFromDirectory();" class="grid grid-cols-1 sm:grid-cols-5 gap-2.5 bg-slate-50 dark:bg-slate-800/60 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
-          <input type="text" id="dirShopName" required placeholder="اسم المحل *" class="rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs font-bold" />
-          <input type="text" id="dirCity" required placeholder="المدينة *" class="rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs font-bold" />
-          <input type="text" id="dirCustomer" required placeholder="اسم الزبون *" class="rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs font-bold" />
-          <input type="tel" id="dirPhone" dir="ltr" required placeholder="05XXXXXXXX" class="rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs font-mono font-bold text-left" />
-          <div class="flex gap-1.5">
-            <input type="text" id="dirCarrier" required placeholder="المخرج المعتاد *" class="w-full rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 px-2.5 py-2 text-xs font-bold" />
-            <button type="submit" class="px-3 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shrink-0">+ إضافة</button>
-          </div>
+        <form onsubmit="event.preventDefault(); addShopToDirectory();" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+          <input type="text" id="dirShopName" required placeholder="اسم المحل *" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white" />
+          <input type="text" id="dirCity" required placeholder="المدينة *" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white" />
+          <input type="text" id="dirCustomer" placeholder="اسم المستلم" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white" />
+          <input type="tel" id="dirPhone" required placeholder="رقم الجوال 05XXXXXXXX *" dir="ltr" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-left text-white" />
+          <input type="text" id="dirCarrier" placeholder="المخرج المعتاد (مثال: الصاعدي)" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white" />
+          <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-lg px-3 py-2 text-xs transition">
+            + حفظ المحل في الدليل
+          </button>
         </form>
 
-        <div id="directoryShopsList" class="space-y-2.5 max-h-[460px] overflow-y-auto pr-1">
-          <!-- Populated by JS -->
-        </div>
+        <div id="directoryShopsList" class="space-y-2 max-h-96 overflow-y-auto"></div>
       </div>
 
-      <!-- Freight Forwarders (المخرجين) List (5 Cols) -->
-      <div class="lg:col-span-5 bg-white dark:bg-industrial-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg p-5 space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-          <div>
-            <h3 class="text-base font-black text-slate-900 dark:text-white">قائمة المخرجين وشركات الشحن</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">تظهر تلقائياً في الاقتراحات السريعة أثناء كتابة البوليصة</p>
-          </div>
+      <!-- قائمة المخرجين -->
+      <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div class="border-b border-slate-800 pb-3">
+          <h3 class="font-extrabold text-base text-white">قائمة المخرجين وشركات الشحن</h3>
+          <p class="text-xs text-slate-400">تظهر تلقائياً في الاقتراحات السريعة أثناء كتابة البوليصة</p>
         </div>
 
-        <form onsubmit="event.preventDefault(); addCarrierToDirectory();" class="flex gap-2">
-          <input type="text" id="newCarrierInput" required placeholder="أضف اسم مخرج / شركة نقليات جديدة..." class="flex-1 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3.5 py-2 text-xs font-bold" />
-          <button type="submit" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs">+ إضافة مخرج</button>
+        <form onsubmit="event.preventDefault(); addCarrierToList();" class="flex gap-2">
+          <input type="text" id="newCarrierName" required placeholder="اسم المخرج أو شركة النقل..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white" />
+          <button type="submit" class="px-4 py-2 rounded-xl bg-amber-500 text-slate-950 font-black text-xs">+ إضافة</button>
         </form>
 
-        <div id="directoryCarriersList" class="flex flex-wrap gap-2 pt-2">
-          <!-- Populated by JS -->
-        </div>
+        <div id="carriersListContainer" class="flex flex-wrap gap-2 pt-2"></div>
       </div>
 
     </section>
 
   </main>
 
-  <!-- =====================================================================
-       MODAL 1: SHIPMENT TRACKING / QR SCANNER QUICK STATUS UPDATE
-       ===================================================================== -->
-  <div id="trackModal" class="no-print fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-industrial-900 w-full max-w-lg rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-      <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-800/60">
+  <!-- نافذة فحص وتتبع الشحنة (تفتح تلقائياً عند مسح الباركود بالجوال) -->
+  <div id="scannerModal" class="no-print fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-5 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
         <div class="flex items-center gap-2">
-          <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
-          <h3 class="text-sm font-black text-slate-900 dark:text-white">فحص وتتبع الشحنة السريع (محاكاة مسح الباركود)</h3>
+          <span class="text-amber-400 text-lg">📦</span>
+          <h3 class="font-extrabold text-sm md:text-base text-white">فحص وتتبع الشحنة السريع</h3>
         </div>
-        <button onclick="closeTrackModal()" class="text-slate-400 hover:text-rose-500 font-bold text-lg px-2">✕</button>
+        <button onclick="closeScannerModal()" class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-white">✕</button>
       </div>
 
-      <div class="p-5 space-y-4">
+      <div class="space-y-3">
         <div class="flex gap-2">
-          <input
-            type="text"
-            id="trackLookupInput"
-            dir="ltr"
-            placeholder="أدخل رقم الشحنة مثل RT-84920"
-            onkeydown="if(event.key==='Enter') lookupShipmentById()"
-            class="flex-1 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-4 py-2.5 text-sm font-mono font-bold text-center"
-          />
-          <button onclick="lookupShipmentById()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs">بحث</button>
+          <input type="text" id="scannerInput" placeholder="أدخل رقم الشحنة (مثال: RT-84920)" dir="ltr"
+            onkeydown="if(event.key==='Enter') lookupShipment(this.value)"
+            class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-mono font-bold text-center text-white focus:border-amber-500 focus:outline-none" />
+          <button onclick="lookupShipment(document.getElementById('scannerInput').value)" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm">
+            بحث
+          </button>
         </div>
 
-        <div id="trackResultContainer" class="space-y-3">
-          <!-- Populated dynamically -->
-        </div>
+        <div id="scannerResultBox" class="pt-2"></div>
       </div>
     </div>
   </div>
 
-  <!-- =====================================================================
-       MODAL 2: CLOUD SYNC (SUPABASE) & BACKUP SETTINGS
-       ===================================================================== -->
-  <div id="cloudModal" class="no-print fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-industrial-900 w-full max-w-md rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-      <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-        <h3 class="text-sm font-black text-slate-900 dark:text-white">إعدادات الربط السحابي (Supabase) والنسخ الاحتياطي</h3>
-        <button onclick="closeCloudModal()" class="text-slate-400 hover:text-rose-500 font-bold text-lg px-2">✕</button>
+  <!-- نافذة إعدادات الربط السحابي Supabase -->
+  <div id="supabaseModal" class="no-print fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-xl w-full p-5 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="font-extrabold text-base text-white">☁️ إعدادات الربط السحابي (Supabase)</h3>
+        <button onclick="closeSupabaseModal()" class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-white">✕</button>
       </div>
-      <div class="p-5 space-y-4 text-xs">
-        <p class="text-slate-500 dark:text-slate-400 leading-relaxed">
-          النظام يحفظ جميع الشحنات والمحلات تلقائياً على جهازك. يمكنك أيضاً إدخال بيانات <strong>Supabase</strong> لمزامنة الشحنات بين عدة أجهزة في المستودع والإدارة.
-        </p>
+
+      <div class="space-y-3 text-xs">
+        <div id="sbConnectionBanner" class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-bold">
+          تم ربط مشروعك (sefvjkaosxicjqrxbcax.supabase.co) بنجاح داخل الكود الأساسي.
+        </div>
+
         <div>
-          <label class="block font-bold mb-1">Supabase Project URL</label>
-          <input type="url" id="supaUrlInput" dir="ltr" placeholder="https://xxxx.supabase.co" class="w-full rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3 py-2 font-mono" />
+          <label class="block text-slate-300 font-bold mb-1">Project URL</label>
+          <input type="text" id="sbUrlInput" dir="ltr" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 font-mono text-white" />
         </div>
+
         <div>
-          <label class="block font-bold mb-1">Supabase Anon Public Key</label>
-          <input type="password" id="supaKeyInput" dir="ltr" placeholder="eyJhbGciOiJIUzI1NiIsInR..." class="w-full rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3 py-2 font-mono" />
+          <label class="block text-slate-300 font-bold mb-1">Publishable / Anon Key</label>
+          <input type="text" id="sbKeyInput" dir="ltr" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 font-mono text-white" />
         </div>
-        <div class="flex gap-2 pt-2">
-          <button onclick="saveCloudConfig()" class="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black">حفظ وتفعيل المزامنة</button>
-          <button onclick="disconnectCloudConfig()" class="px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">وضع محلي فقط</button>
+
+        <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-amber-400">كود تهيئة جدول الشحنات في Supabase (SQL Editor):</span>
+            <button type="button" onclick="copySqlCode()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white font-bold">📋 نسخ الكود</button>
+          </div>
+          <pre id="sqlSetupCode" dir="ltr" class="text-[11px] font-mono text-slate-300 overflow-x-auto p-2 bg-slate-900 rounded border border-slate-800">create table if not exists public.shipments (
+  id text primary key,
+  shop_name text not null,
+  city text not null,
+  customer_name text,
+  phone text not null,
+  carrier text not null,
+  boxes integer default 1,
+  payment_status text default 'مدفوع',
+  cod_amount text default '',
+  invoice_no text default '',
+  notes text default '',
+  warnings jsonb default '[]'::jsonb,
+  status text default 'قيد التجهيز',
+  created_at timestamptz default now()
+);
+alter table public.shipments enable row level security;
+drop policy if exists "Public shipments access" on public.shipments;
+create policy "Public shipments access" on public.shipments for all to anon, authenticated using (true) with check (true);</pre>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button onclick="saveSupabaseSettings()" class="px-4 py-2 rounded-xl bg-amber-500 text-slate-950 font-black">حفظ وإعادة الاتصال</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- =====================================================================
-       TOAST NOTIFICATION BANNER
-       ===================================================================== -->
-  <div id="toastBanner" class="no-print fixed bottom-5 left-5 z-50 hidden transform transition-all duration-300">
-    <div class="bg-slate-900 dark:bg-white text-white dark:text-slate-950 px-4 py-3 rounded-xl shadow-2xl border border-amber-500/40 flex items-center gap-2.5 text-xs font-extrabold">
-      <span id="toastIcon" class="text-amber-500 text-base">✓</span>
-      <span id="toastMessage">تمت العملية بنجاح</span>
-    </div>
+  <!-- إشعار منبثق Toast -->
+  <div id="toastBox" class="no-print fixed bottom-5 left-5 z-50 hidden bg-slate-900 border border-amber-500/50 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs font-bold">
+    <span class="text-amber-400 text-base">✓</span>
+    <span id="toastText">تمت العملية بنجاح</span>
   </div>
 
-  <!-- =====================================================================
-       FOOTER WITH REQUIRED CREDIT
-       ===================================================================== -->
-  <footer class="no-print mt-auto border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-industrial-900 py-4 px-6">
-    <div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
-      <div class="flex items-center gap-2 font-bold">
-        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-        <span>الريف للشحنات - REEFTEK PRO | مؤسسة الريف التقني لقطع غيار الشاحنات</span>
-      </div>
-      <div class="font-extrabold text-slate-700 dark:text-slate-300">
-        تصميم وتطوير: <span class="text-amber-600 dark:text-amber-400">سعيد عبدالله</span>
-      </div>
+  <!-- التذييل -->
+  <footer class="no-print border-t border-slate-900 bg-slate-950/80 py-4 mt-8">
+    <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+      <div>الريف للشحنات - REEFTEK PRO | مؤسسة الريف التقني لقطع غيار الشاحنات</div>
+      <div>تصميم وتطوير: <strong class="text-amber-400">سعيد عبدالله</strong></div>
     </div>
   </footer>
 
-  <!-- =====================================================================
-       APPLICATION JAVASCRIPT ENGINE
-       ===================================================================== -->
+  <!-- السكربت الرئيسي الشامل -->
   <script>
-    // --- STATE & STORAGE KEYS ---
-    const STORAGE_KEYS = {
-      SHIPMENTS: 'reeftek_pro_shipments_v3',
-      SHOPS: 'reeftek_pro_shops_v3',
-      CARRIERS: 'reeftek_pro_carriers_v3',
-      SUPA_URL: 'reeftek_supa_url',
-      SUPA_KEY: 'reeftek_supa_key',
-      THEME: 'reeftek_theme'
-    };
+    // ============================================================================
+    // 1. بيانات الربط السحابي (Supabase) المدمجة مسبقاً لمشروع سعيد عبدالله
+    // ============================================================================
+    const DEFAULT_SUPABASE_URL = "https://sefvjkaosxicjqrxbcax.supabase.co";
+    const DEFAULT_SUPABASE_KEY = "sb_publishable_p-vchq14hqGkUknZI_-42g_7-EY2T1g";
 
-    let currentShipmentId = 'RT-84920';
-    let currentTemplate = 'industrial'; // 'industrial' | 'dual' | 'waybill'
-    let previewCartonIndex = 1;
-    let activeWarnings = {
-      fragile: true,
-      heavy: true,
-      upward: false,
-      urgent: false
-    };
+    let supabaseUrl = localStorage.getItem('reeftek_sb_url') || DEFAULT_SUPABASE_URL;
+    let supabaseKey = localStorage.getItem('reeftek_sb_key') || DEFAULT_SUPABASE_KEY;
+    localStorage.setItem('reeftek_sb_url', supabaseUrl);
+    localStorage.setItem('reeftek_sb_key', supabaseKey);
 
     let supabaseClient = null;
-
-    // --- DEFAULT REALISTIC SAMPLES FOR TRUCK SPARE PARTS ---
-    const DEFAULT_CARRIERS = [
-      'نقليات الصاعدي',
-      'الزاجل للشحن',
-      'نقليات المقيطيب',
-      'نقليات السيف',
-      'التيار السريع للنقل',
-      'نقليات الصخيرات',
-      'نقليات البسامي',
-      'شركة سمسا (SMSA)',
-      'أرامكس (Aramex)',
-      'نقليات الشملاني'
-    ];
-
-    const DEFAULT_SHOPS = [
-      {
-        shopName: 'مؤسسة الصقر لقطع غيار الشاحنات',
-        city: 'الرياض',
-        customerName: 'أبو فهد العتيبي',
-        phone: '0504829104',
-        carrier: 'نقليات الصاعدي'
-      },
-      {
-        shopName: 'شركة الدمام للديزل والأكتروس',
-        city: 'الدمام',
-        customerName: 'م. خالد الدوسري',
-        phone: '0553198271',
-        carrier: 'الزاجل للشحن'
-      },
-      {
-        shopName: 'مركز الجنوب لقطع غيار فولفو ومان',
-        city: 'خميس مشيط',
-        customerName: 'سعيد القحطاني',
-        phone: '0549182736',
-        carrier: 'نقليات المقيطيب'
-      },
-      {
-        shopName: 'معرض القصيم للشاحنات الثقيلة',
-        city: 'القصيم - بريدة',
-        customerName: 'صالح الحربي',
-        phone: '0562201948',
-        carrier: 'نقليات السيف'
-      }
-    ];
-
-    const DEFAULT_SHIPMENTS = [
-      {
-        id: 'RT-84918',
-        shopName: 'مؤسسة الصقر لقطع غيار الشاحنات',
-        city: 'الرياض',
-        customerName: 'أبو فهد العتيبي',
-        carrierName: 'نقليات الصاعدي',
-        phone: '0504829104',
-        cartons: 3,
-        invoiceNo: 'INV-2026-410',
-        paymentStatus: 'مدفوع',
-        notes: 'رديتر أكتروس MP4 أصلي + طرمبة ماء + حساسات شكمان',
-        warnings: { fragile: true, heavy: true, upward: false, urgent: false },
-        status: 'سُلمت للمخرج',
-        createdAt: '2026-10-27 09:30'
-      },
-      {
-        id: 'RT-84915',
-        shopName: 'شركة الدمام للديزل والأكتروس',
-        city: 'الدمام',
-        customerName: 'م. خالد الدوسري',
-        carrierName: 'الزاجل للشحن',
-        phone: '0553198271',
-        cartons: 2,
-        invoiceNo: 'INV-2026-408',
-        paymentStatus: 'آجل',
-        notes: 'طقم كلتش كامل فولفو FH + فحمات فرامل أمامية',
-        warnings: { fragile: false, heavy: true, upward: false, urgent: true },
-        status: 'قيد التجهيز',
-        createdAt: '2026-10-27 11:15'
-      },
-      {
-        id: 'RT-84909',
-        shopName: 'مركز الجنوب لقطع غيار فولفو ومان',
-        city: 'خميس مشيط',
-        customerName: 'سعيد القحطاني',
-        carrierName: 'نقليات المقيطيب',
-        phone: '0549182736',
-        cartons: 4,
-        invoiceNo: 'INV-2026-399',
-        paymentStatus: 'عند الاستلام',
-        notes: 'شمعات أمامية أكتروس يمين ويسار + مرايات جانبية',
-        warnings: { fragile: true, heavy: false, upward: true, urgent: false },
-        status: 'تم التسليم',
-        createdAt: '2026-10-26 16:40'
-      }
-    ];
-
-    let shipments = [];
-    let savedShops = [];
-    let savedCarriers = [];
-
-    // --- INITIALIZATION ---
-    window.addEventListener('DOMContentLoaded', () => {
-      initTheme();
-      loadAllData();
-      initCloudSync();
-      populateDirectoryUI();
-
-      // Load initial realistic data into the form so the user immediately sees the new industrial label
-      fillFormWithSample({
-        id: 'RT-84920',
-        shopName: 'مؤسسة الصقر لقطع غيار الشاحنات',
-        city: 'الرياض',
-        customerName: 'أبو فهد العتيبي',
-        carrierName: 'نقليات الصاعدي',
-        phone: '0504829104',
-        cartons: 3,
-        invoiceNo: 'INV-2026-412',
-        paymentStatus: 'مدفوع',
-        notes: 'قطع غيار أكتروس (رديتر + طرمبة ماء + طقم حساسات)',
-        warnings: { fragile: true, heavy: true, upward: false, urgent: false }
-      });
-
-      setupKeyboardShortcuts();
-      checkUrlForTrackingHash();
-    });
-
-    // --- THEME MANAGEMENT ---
-    function initTheme() {
-      const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || 'dark';
-      if (savedTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    }
-
-    function toggleTheme() {
-      const html = document.documentElement;
-      html.classList.toggle('dark');
-      const isDark = html.classList.contains('dark');
-      localStorage.setItem(STORAGE_KEYS.THEME, isDark ? 'dark' : 'light');
-    }
-
-    // --- DATA PERSISTENCE ---
-    function loadAllData() {
+    function initSupabaseClient() {
       try {
-        const rawShipments = localStorage.getItem(STORAGE_KEYS.SHIPMENTS);
-        shipments = rawShipments ? JSON.parse(rawShipments) : [...DEFAULT_SHIPMENTS];
-
-        const rawShops = localStorage.getItem(STORAGE_KEYS.SHOPS);
-        savedShops = rawShops ? JSON.parse(rawShops) : [...DEFAULT_SHOPS];
-
-        const rawCarriers = localStorage.getItem(STORAGE_KEYS.CARRIERS);
-        savedCarriers = rawCarriers ? JSON.parse(rawCarriers) : [...DEFAULT_CARRIERS];
-
-        saveAllData();
-      } catch (e) {
-        shipments = [...DEFAULT_SHIPMENTS];
-        savedShops = [...DEFAULT_SHOPS];
-        savedCarriers = [...DEFAULT_CARRIERS];
-      }
-    }
-
-    function saveAllData() {
-      localStorage.setItem(STORAGE_KEYS.SHIPMENTS, JSON.stringify(shipments));
-      localStorage.setItem(STORAGE_KEYS.SHOPS, JSON.stringify(savedShops));
-      localStorage.setItem(STORAGE_KEYS.CARRIERS, JSON.stringify(savedCarriers));
-      updateStatsAndBadges();
-    }
-
-    // --- TAB NAVIGATION ---
-    function switchTab(tabName) {
-      ['create', 'manage', 'directory'].forEach(t => {
-        const sec = document.getElementById(`tab-${t}`);
-        const btn = document.getElementById(`tabBtn-${t}`);
-        if (t === tabName) {
-          sec.classList.remove('hidden');
-          btn.className = 'tab-btn flex-1 lg:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all bg-amber-500 text-slate-950 shadow-sm';
-        } else {
-          sec.classList.add('hidden');
-          btn.className = 'tab-btn flex-1 lg:flex-initial flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all';
+        if (window.supabase && supabaseUrl && supabaseKey) {
+          supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
         }
-      });
-
-      if (tabName === 'manage') {
-        renderShipmentsTable();
-      } else if (tabName === 'directory') {
-        populateDirectoryUI();
+      } catch (err) {
+        console.warn("Supabase init warning:", err);
       }
     }
+    initSupabaseClient();
 
-    // --- ARABIC DIGIT CONVERSION & SAUDI PHONE VALIDATION ---
-    function convertArabicDigits(str) {
-      if (!str) return '';
-      return str
-        .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
-        .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
-    }
+    // ============================================================================
+    // 2. حالة النظام والبيانات الافتراضية
+    // ============================================================================
+    let printTemplate = 'single'; // 'single' | 'dual' | 'waybill'
+    let previewBoxIndex = 1;
 
-    function handlePhoneInput(inputEl) {
-      let cleaned = convertArabicDigits(inputEl.value).replace(/[^\d+]/g, '');
-      if (cleaned.startsWith('9665') && cleaned.length === 12) {
-        cleaned = '0' + cleaned.slice(3);
-      } else if (cleaned.startsWith('+9665') && cleaned.length === 13) {
-        cleaned = '0' + cleaned.slice(4);
-      }
-      inputEl.value = cleaned;
+    const defaultShops = [
+      { shopName: 'مؤسسة الصقر لقطع غيار الشاحنات', city: 'الرياض', customerName: 'أبو فهد العتيبي', phone: '0501234567', carrier: 'مخرج الصاعدي للنقل' },
+      { shopName: 'شركة القافلة الثقيلة لقطع الغيار', city: 'الدمام', customerName: 'سلمان الدوسري', phone: '0559876543', carrier: 'شركة الزاجل السريع' },
+      { shopName: 'مركز الشمال لصيانة الشاحنات', city: 'تبوك', customerName: 'محمد العنزي', phone: '0543219876', carrier: 'مخرج المقيطيب' },
+      { shopName: 'مؤسسة طريق الجنوب للشاحنات', city: 'خميس مشيط', customerName: 'سعيد القحطاني', phone: '0561122334', carrier: 'مخرج بن شيهون للنقل' }
+    ];
 
-      const badge = document.getElementById('phoneValidationBadge');
-      const isValidSaudi = /^05\d{8}$/.test(cleaned);
-      if (isValidSaudi) {
-        badge.textContent = 'رقم جوال صحيح ✓';
-        badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-500';
-      } else if (cleaned.length === 0) {
-        badge.textContent = 'مطلوب';
-        badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-500/15 text-slate-400';
+    const defaultCarriers = [
+      'مخرج الصاعدي للنقل',
+      'شركة الزاجل السريع',
+      'مخرج المقيطيب',
+      'مخرج بن شيهون للنقل',
+      'شركة الصخيرات للنقل',
+      'مخرج السيف للشحن',
+      'مندوب خاص / استلام من المستودع'
+    ];
+
+    let shopsDirectory = JSON.parse(localStorage.getItem('reeftek_shops_v36') || 'null') || defaultShops;
+    let carriersList = JSON.parse(localStorage.getItem('reeftek_carriers_v36') || 'null') || defaultCarriers;
+    let shipments = JSON.parse(localStorage.getItem('reeftek_shipments_v35') || '[]');
+
+    // ============================================================================
+    // 3. المزامنة مع Supabase (قراءة + كتابة + تحديث الحالة)
+    // ============================================================================
+    function setCloudIndicator(state, message) {
+      const dot = document.getElementById('cloudDot');
+      const txt = document.getElementById('cloudStatusText');
+      if (!dot || !txt) return;
+      txt.textContent = message;
+      dot.className = 'w-2.5 h-2.5 rounded-full ';
+      if (state === 'online') {
+        dot.className += 'bg-emerald-400';
+      } else if (state === 'warn') {
+        dot.className += 'bg-amber-400';
       } else {
-        badge.textContent = 'يفضل 10 أرقام تبدأ بـ 05';
-        badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-500';
-      }
-
-      updateLivePreview();
-    }
-
-    function formatPhoneForDisplay(phone) {
-      const clean = convertArabicDigits(phone || '').replace(/\D/g, '');
-      if (clean.length === 10 && clean.startsWith('05')) {
-        return `${clean.slice(0, 3)} ${clean.slice(3, 6)} ${clean.slice(6)}`;
-      }
-      return phone || '—';
-    }
-
-    // --- SMART AUTO-FILL & DIRECTORY ---
-    function populateDirectoryUI() {
-      // 1. Quick Select Dropdown & Datalist
-      const quickSelect = document.getElementById('quickShopSelect');
-      const shopsDatalist = document.getElementById('shopsDatalist');
-      const carriersDatalist = document.getElementById('carriersDatalist');
-
-      quickSelect.innerHTML = `<option value="">-- اختر محلاً محفوظاً لتعبئة جميع حقوله تلقائياً (${savedShops.length} محل) --</option>`;
-      shopsDatalist.innerHTML = '';
-
-      savedShops.forEach((shop, idx) => {
-        const opt = document.createElement('option');
-        opt.value = idx;
-        opt.textContent = `${shop.shopName} — (${shop.city}) — ${shop.carrier}`;
-        quickSelect.appendChild(opt);
-
-        const dlOpt = document.createElement('option');
-        dlOpt.value = shop.shopName;
-        shopsDatalist.appendChild(dlOpt);
-      });
-
-      carriersDatalist.innerHTML = '';
-      savedCarriers.forEach(c => {
-        const opt = document.createElement('option');
-        opt.value = c;
-        carriersDatalist.appendChild(opt);
-      });
-
-      // 2. Directory Tab Lists
-      document.getElementById('savedShopsCountBadge').textContent = `${savedShops.length} محل`;
-      const shopsContainer = document.getElementById('directoryShopsList');
-      shopsContainer.innerHTML = savedShops.map((s, idx) => `
-        <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="font-black text-sm text-slate-900 dark:text-white">${escapeHTML(s.shopName)}</span>
-              <span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 text-xs font-extrabold">${escapeHTML(s.city)}</span>
-            </div>
-            <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 flex flex-wrap items-center gap-3">
-              <span>👤 ${escapeHTML(s.customerName)}</span>
-              <span class="font-mono" dir="ltr">📞 ${escapeHTML(s.phone)}</span>
-              <span>🚚 المخرج: <strong class="text-slate-700 dark:text-slate-200">${escapeHTML(s.carrier)}</strong></span>
-            </div>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <button onclick="applyQuickShop(${idx}); switchTab('create');" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs">
-              تعبئة بالملصق
-            </button>
-            <button onclick="deleteShopFromDirectory(${idx})" class="p-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white text-xs transition-colors" title="حذف">
-              ✕
-            </button>
-          </div>
-        </div>
-      `).join('');
-
-      const carriersContainer = document.getElementById('directoryCarriersList');
-      carriersContainer.innerHTML = savedCarriers.map((c, idx) => `
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold">
-          <span>🚚 ${escapeHTML(c)}</span>
-          <button onclick="deleteCarrierFromDirectory(${idx})" class="text-slate-400 hover:text-rose-500 font-black">✕</button>
-        </div>
-      `).join('');
-    }
-
-    function applyQuickShop(indexStr) {
-      if (indexStr === '') return;
-      const shop = savedShops[Number(indexStr)];
-      if (!shop) return;
-
-      document.getElementById('shopName').value = shop.shopName;
-      document.getElementById('city').value = shop.city;
-      document.getElementById('customerName').value = shop.customerName;
-      document.getElementById('customerPhone').value = shop.phone;
-      document.getElementById('carrierName').value = shop.carrier;
-
-      handlePhoneInput(document.getElementById('customerPhone'));
-      updateLivePreview();
-      showToast(`تمت تعبئة بيانات "${shop.shopName}" تلقائياً`);
-    }
-
-    function handleShopInput(val) {
-      const matched = savedShops.find(s => s.shopName.trim() === val.trim());
-      if (matched) {
-        document.getElementById('city').value = matched.city;
-        document.getElementById('customerName').value = matched.customerName;
-        document.getElementById('customerPhone').value = matched.phone;
-        document.getElementById('carrierName').value = matched.carrier;
-        handlePhoneInput(document.getElementById('customerPhone'));
+        dot.className += 'bg-rose-500';
       }
     }
 
-    function saveCurrentShopToDirectory() {
-      const data = getFormData();
-      if (!data.shopName || !data.city) {
-        showToast('يرجى إدخال اسم المحل والمدينة أولاً لحفظهما في الدليل', '⚠️');
+    function mapRowFromDb(row) {
+      return {
+        id: row.id,
+        shopName: row.shop_name || row.shopName || '',
+        city: row.city || '',
+        customerName: row.customer_name || row.customerName || '',
+        phone: row.phone || '',
+        carrier: row.carrier || '',
+        boxes: Number(row.boxes) || 1,
+        paymentStatus: row.payment_status || row.paymentStatus || 'مدفوع',
+        codAmount: row.cod_amount || row.codAmount || '',
+        invoiceNo: row.invoice_no || row.invoiceNo || '',
+        notes: row.notes || '',
+        warnings: Array.isArray(row.warnings) ? row.warnings : [],
+        status: row.status || 'قيد التجهيز',
+        createdAt: row.created_at || row.createdAt || new Date().toISOString()
+      };
+    }
+
+    async function syncFromCloud(showNotification = false) {
+      if (!supabaseClient) {
+        setCloudIndicator('warn', 'وضع محلي');
         return;
       }
-      const existingIdx = savedShops.findIndex(s => s.shopName === data.shopName);
-      const entry = {
-        shopName: data.shopName,
-        city: data.city,
-        customerName: data.customerName || 'العميل',
-        phone: data.phone || '',
-        carrier: data.carrierName || 'نقليات الصاعدي'
-      };
+      try {
+        const { data, error } = await supabaseClient
+          .from('shipments')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(300);
 
-      if (existingIdx >= 0) {
-        savedShops[existingIdx] = entry;
-      } else {
-        savedShops.unshift(entry);
+        if (error) {
+          // في حال لم يتم إنشاء الجدول بعد في SQL Editor
+          if (error.code === '42P01' || (error.message && error.message.includes('shipments'))) {
+            setCloudIndicator('warn', 'بانتظار تفعيل جدول SQL');
+            const banner = document.getElementById('sbConnectionBanner');
+            if (banner) {
+              banner.className = 'p-3 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-300 font-bold';
+              banner.textContent = '⚠️ الاتصال ناجح، ولكن يرجى نسخ كود SQL بالأسفل وتشغيله مرة واحدة في Supabase SQL Editor لإنشاء جدول shipments.';
+            }
+          } else {
+            setCloudIndicator('warn', 'متصل محلياً + QR ذكي');
+          }
+          return;
+        }
+
+        if (Array.isArray(data)) {
+          const cloudItems = data.map(mapRowFromDb);
+          // دمج الشحنات السحابية مع أي شحنات محلية غير مرفوعة
+          const cloudIds = new Set(cloudItems.map(i => i.id.toUpperCase()));
+          const localOnly = shipments.filter(loc => !cloudIds.has(loc.id.toUpperCase()));
+          shipments = [...cloudItems, ...localOnly];
+          localStorage.setItem('reeftek_shipments_v35', JSON.stringify(shipments));
+          renderShipmentsTable();
+          setCloudIndicator('online', 'متصل بالسحابة (Supabase)');
+          if (showNotification) showToast('تمت مزامنة الشحنات مع السحابة بنجاح');
+
+          // رفع أي شحنات محلية لم تكن في السحابة
+          for (const item of localOnly) {
+            pushShipmentToCloud(item);
+          }
+        }
+      } catch (e) {
+        console.warn('Cloud sync warning:', e);
+        setCloudIndicator('warn', 'محلي + باركود ذكي');
       }
-      saveAllData();
-      populateDirectoryUI();
-      showToast(`تم حفظ "${data.shopName}" في دليل المحلات للوصول السريع`);
     }
 
-    function addShopFromDirectory() {
-      const shopName = document.getElementById('dirShopName').value.trim();
-      const city = document.getElementById('dirCity').value.trim();
-      const customerName = document.getElementById('dirCustomer').value.trim();
-      const phone = convertArabicDigits(document.getElementById('dirPhone').value.trim());
-      const carrier = document.getElementById('dirCarrier').value.trim();
+    async function pushShipmentToCloud(shipmentObj) {
+      if (!supabaseClient) return;
+      try {
+        const payload = {
+          id: shipmentObj.id,
+          shop_name: shipmentObj.shopName,
+          city: shipmentObj.city,
+          customer_name: shipmentObj.customerName,
+          phone: shipmentObj.phone,
+          carrier: shipmentObj.carrier,
+          boxes: Number(shipmentObj.boxes) || 1,
+          payment_status: shipmentObj.paymentStatus,
+          cod_amount: String(shipmentObj.codAmount || ''),
+          invoice_no: shipmentObj.invoiceNo || '',
+          notes: shipmentObj.notes || '',
+          warnings: shipmentObj.warnings || [],
+          status: shipmentObj.status || 'قيد التجهيز',
+          created_at: shipmentObj.createdAt || new Date().toISOString()
+        };
+        const { error } = await supabaseClient.from('shipments').upsert(payload, { onConflict: 'id' });
+        if (!error) {
+          setCloudIndicator('online', 'متصل بالسحابة (Supabase)');
+        }
+      } catch (err) {
+        console.warn('Cloud push error:', err);
+      }
+    }
 
-      if (!shopName || !city) return;
-      savedShops.unshift({ shopName, city, customerName, phone, carrier });
-      saveAllData();
-      populateDirectoryUI();
+    // ============================================================================
+    // 4. الباركود الذكي (Smart QR) ليعمل على الجوال فوراً بدون أي أخطاء
+    // ============================================================================
+    function buildSmartTrackingUrl(data) {
+      const baseUrl = window.location.origin + window.location.pathname;
+      const params = new URLSearchParams({
+        track: data.id,
+        s: data.shopName || '',
+        c: data.city || '',
+        u: data.customerName || '',
+        p: data.phone || '',
+        m: data.carrier || '',
+        b: String(data.boxes || 1),
+        pay: data.paymentStatus || 'مدفوع',
+        inv: data.invoiceNo || ''
+      });
+      return `${baseUrl}?${params.toString()}`;
+    }
 
+    // ============================================================================
+    // 5. قراءة بيانات النموذج وتحديث المعاينة الحية
+    // ============================================================================
+    function getFormData() {
+      const warnings = Array.from(document.querySelectorAll('.warn-check:checked')).map(cb => cb.value);
+      return {
+        id: document.getElementById('currentShipmentId').textContent.trim(),
+        shopName: document.getElementById('shopName').value.trim(),
+        city: document.getElementById('city').value.trim(),
+        customerName: document.getElementById('customerName').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        carrier: document.getElementById('carrier').value.trim(),
+        boxes: Math.max(1, parseInt(document.getElementById('boxes').value) || 1),
+        paymentStatus: document.getElementById('paymentStatus').value,
+        codAmount: document.getElementById('codAmount').value.trim(),
+        invoiceNo: document.getElementById('invoiceNo').value.trim(),
+        notes: document.getElementById('notes').value.trim(),
+        warnings: warnings,
+        status: 'قيد التجهيز',
+        createdAt: new Date().toISOString()
+      };
+    }
+
+    function renderIndustrialLabelHTML(data, boxNum, totalBoxes, isCompact = false) {
+      const smartUrl = buildSmartTrackingUrl(data);
+      const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=2&data=${encodeURIComponent(smartUrl)}`;
+      const dateFormatted = new Date(data.createdAt || Date.now()).toLocaleDateString('ar-SA', {
+        year: 'numeric', month: '2-digit', day: '2-digit'
+      });
+
+      const paymentBadgeText = data.paymentStatus === 'عند الاستلام' && data.codAmount
+        ? `الدفع عند الاستلام: ${data.codAmount} ر.س`
+        : data.paymentStatus;
+
+      const warningsHtml = (data.warnings && data.warnings.length > 0)
+        ? data.warnings.map(w => {
+            const icon = w.includes('كسر') ? '🍷' : w.includes('ثقيل') ? '⚖️' : w.includes('أعلى') ? '⬆️' : '⚡';
+            return `<span style="border:2px solid #000; padding:2px 8px; font-weight:900; font-size:${isCompact ? '11px' : '13px'}; display:inline-flex; align-items:center; gap:4px; background:#fff; color:#000;">${icon} ${w}</span>`;
+          }).join(' ')
+        : `<span style="font-size:12px; font-weight:700;">قطع غيار شاحنات قياسية</span>`;
+
+      return `
+        <div class="label-sheet" style="padding:${isCompact ? '10px' : '16px'}; font-family:'Cairo', sans-serif; direction:rtl;">
+          
+          <!-- الترويسة السوداء الحادة -->
+          <div style="background:#000000; color:#ffffff; padding:${isCompact ? '8px 12px' : '12px 16px'}; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #000;">
+            <div>
+              <div style="font-size:${isCompact ? '18px' : '24px'}; font-weight:900; letter-spacing:-0.5px;">مؤسسة الريف التقني للتجارة</div>
+              <div style="font-size:${isCompact ? '11px' : '13px'}; font-weight:700; color:#fbbf24;">REEFTEK TRUCK SPARE PARTS · قسم الشحن والطرود</div>
+            </div>
+            <div style="text-align:left; font-family:'JetBrains Mono', monospace;">
+              <div style="background:#ffffff; color:#000000; padding:3px 10px; font-weight:900; font-size:${isCompact ? '15px' : '19px'}; border-radius:4px;">${data.id}</div>
+              <div style="font-size:11px; margin-top:3px; color:#e2e8f0;">التاريخ: ${dateFormatted}</div>
+            </div>
+          </div>
+
+          <!-- شريط الوجهة (المدينة) والمخرج ورقم الكرتون -->
+          <div style="display:grid; grid-template-columns: 1.2fr 1.3fr 0.8fr; border-bottom:3px solid #000000;">
+            <div style="padding:${isCompact ? '8px' : '12px'}; border-left:3px solid #000000; background:#f8fafc;">
+              <div style="font-size:11px; font-weight:800; color:#334155;">المدينة / الوجهة النهائية:</div>
+              <div style="font-size:${isCompact ? '24px' : '34px'}; font-weight:900; line-height:1.1; color:#000000; margin-top:2px;">${data.city || '—'}</div>
+            </div>
+
+            <div style="padding:${isCompact ? '8px' : '12px'}; border-left:3px solid #000000;">
+              <div style="font-size:11px; font-weight:800; color:#334155;">يُشحن عبر المخرج (شركة النقل):</div>
+              <div style="font-size:${isCompact ? '18px' : '24px'}; font-weight:900; line-height:1.2; color:#000000; margin-top:4px;">${data.carrier || '—'}</div>
+            </div>
+
+            <div style="padding:${isCompact ? '8px' : '12px'}; background:#000000; color:#ffffff; text-align:center; display:flex; flex-direction:column; justify-content:center;">
+              <div style="font-size:11px; font-weight:800; color:#fbbf24;">رقم الكرتون</div>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:${isCompact ? '24px' : '34px'}; font-weight:900; line-height:1.1;" dir="ltr">${boxNum} / ${totalBoxes}</div>
+            </div>
+          </div>
+
+          <!-- اسم المحل المستلم (الخط الأكبر والأوضح) -->
+          <div style="padding:${isCompact ? '10px 12px' : '16px'}; border-bottom:3px solid #000000;">
+            <div style="font-size:12px; font-weight:800; color:#334155;">المحل / الجهة المستلمة:</div>
+            <div style="font-size:${isCompact ? '22px' : '30px'}; font-weight:900; color:#000000; margin-top:2px; line-height:1.25;">
+              ${data.shopName || '—'}
+            </div>
+          </div>
+
+          <!-- بيانات المستلم ورقم الجوال وحالة الدفع -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; border-bottom:3px solid #000000;">
+            <div style="padding:${isCompact ? '8px 10px' : '12px'}; border-left:3px solid #000000;">
+              <div style="font-size:11px; font-weight:800; color:#334155;">اسم الزبون المستلم:</div>
+              <div style="font-size:${isCompact ? '15px' : '19px'}; font-weight:900; margin-top:2px;">${data.customerName || '—'}</div>
+            </div>
+
+            <div style="padding:${isCompact ? '8px 10px' : '12px'}; border-left:3px solid #000000;">
+              <div style="font-size:11px; font-weight:800; color:#334155;">رقم جوال المستلم:</div>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:${isCompact ? '16px' : '21px'}; font-weight:900; margin-top:2px;" dir="ltr">${data.phone || '—'}</div>
+            </div>
+
+            <div style="padding:${isCompact ? '8px 10px' : '12px'}; background:#f1f5f9;">
+              <div style="font-size:11px; font-weight:800; color:#334155;">حالة الدفع / الفاتورة:</div>
+              <div style="font-size:${isCompact ? '14px' : '17px'}; font-weight:900; margin-top:2px;">${paymentBadgeText}</div>
+              ${data.invoiceNo ? `<div style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700;">فاتورة: ${data.invoiceNo}</div>` : ''}
+            </div>
+          </div>
+
+          <!-- التنبيهات والوصف -->
+          <div style="padding:${isCompact ? '8px 12px' : '10px 14px'}; border-bottom:3px solid #000000; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; background:#fafafa;">
+            <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+              ${warningsHtml}
+            </div>
+            ${data.notes ? `<div style="font-size:12px; font-weight:800; color:#000;">محتوى الطرد: ${data.notes}</div>` : ''}
+          </div>
+
+          <!-- الباركود الخطي + كود QR الذكي -->
+          <div style="padding:${isCompact ? '8px 12px' : '12px 16px'}; display:flex; justify-content:space-between; align-items:center; gap:12px;">
+            <div style="text-align:center; flex:1;">
+              <div class="barcode-text">*${data.id}*</div>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:800; letter-spacing:2px; margin-top:2px;">${data.id} · BOX ${boxNum}/${totalBoxes}</div>
+              <div style="font-size:11px; font-weight:700; color:#334155; margin-top:4px;">الريف التقني لقطع غيار الشاحنات - جدة | REEFTEK</div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:10px; border-right:2px dashed #000; padding-right:12px;">
+              <img src="${qrSrc}" alt="QR" class="qr-code-img" style="width:${isCompact ? '76px' : '96px'}; height:${isCompact ? '76px' : '96px'}; border:2px solid #000; padding:2px; background:#fff;" />
+              <div style="max-width:95px; font-size:11px; font-weight:800; line-height:1.35;">
+                امسح الكود بالجوال لتتبع الشحنة وتأكيد الاستلام فوراً
+              </div>
+            </div>
+          </div>
+
+        </div>
+      `;
+    }
+
+    function renderWaybillHTML(data) {
+      const baseLabel = renderIndustrialLabelHTML(data, 1, data.boxes, false);
+      return `
+        <div class="space-y-4" style="font-family:'Cairo', sans-serif; direction:rtl; color:#000;">
+          ${baseLabel}
+          <div style="border:3px solid #000; background:#fff; padding:14px; border-radius:6px;">
+            <div style="font-weight:900; font-size:15px; border-bottom:2px solid #000; padding-bottom:6px; margin-bottom:10px;">
+              محضر تسليم واستلام رسمي (نسخة الأرشيف والمخرج) — إجمالي الطرود: (${data.boxes}) كرتون
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; font-size:12px; font-weight:800;">
+              <div style="border:2px solid #000; padding:10px; min-height:85px;">
+                <div>توقيع مسؤول مستودع الريف التقني:</div>
+                <div style="margin-top:32px; border-top:1px dashed #000; padding-top:4px;">الاسم والتوقيع: ........................</div>
+              </div>
+              <div style="border:2px solid #000; padding:10px; min-height:85px;">
+                <div>توقيع مندوب المخرج (${data.carrier || ''}):</div>
+                <div style="margin-top:32px; border-top:1px dashed #000; padding-top:4px;">الاسم والتوقيع: ........................</div>
+              </div>
+              <div style="border:2px solid #000; padding:10px; min-height:85px;">
+                <div>إقرار استلام العميل (${data.shopName || ''}):</div>
+                <div style="margin-top:32px; border-top:1px dashed #000; padding-top:4px;">الاسم والتوقيع: ........................</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function updatePreview() {
+      const data = getFormData();
+      if (previewBoxIndex > data.boxes) previewBoxIndex = data.boxes;
+      if (previewBoxIndex < 1) previewBoxIndex = 1;
+
+      document.getElementById('previewBoxCounter').textContent = `${previewBoxIndex} / ${data.boxes}`;
+
+      // تحديث شريط الاكتمال
+      const requiredFields = [data.shopName, data.city, data.phone, data.carrier];
+      const filledCount = requiredFields.filter(Boolean).length;
+      const pct = Math.round((filledCount / 4) * 100);
+      const bar = document.getElementById('formProgressBar');
+      const txt = document.getElementById('formProgressText');
+      bar.style.width = `${pct}%`;
+      if (filledCount === 4) {
+        bar.className = 'h-full bg-emerald-500 transition-all duration-300';
+        txt.className = 'text-emerald-400 font-bold';
+        txt.textContent = 'البيانات الأساسية مكتملة وجاهزة للطباعة ✓';
+      } else {
+        bar.className = 'h-full bg-amber-500 transition-all duration-300';
+        txt.className = 'text-amber-400 font-bold';
+        txt.textContent = `مكتمل ${filledCount} من 4 حقول أساسية`;
+      }
+
+      const container = document.getElementById('livePreviewContainer');
+      if (printTemplate === 'single') {
+        container.innerHTML = renderIndustrialLabelHTML(data, previewBoxIndex, data.boxes, false);
+      } else if (printTemplate === 'dual') {
+        container.innerHTML = `
+          <div class="space-y-3">
+            ${renderIndustrialLabelHTML(data, previewBoxIndex, data.boxes, true)}
+            <div class="text-center text-xs font-bold text-slate-400 py-1 border-y border-dashed border-slate-600">✂️ خط قص الورقة (نسخة للكرتون + نسخة للمخرج أو المستودع) ✂️</div>
+            ${renderIndustrialLabelHTML(data, previewBoxIndex, data.boxes, true)}
+          </div>
+        `;
+      } else {
+        container.innerHTML = renderWaybillHTML(data);
+      }
+    }
+
+    // ============================================================================
+    // 6. الحفظ والطباعة وإدارة السجل
+    // ============================================================================
+    function saveCurrentShipmentRecord() {
+      const data = getFormData();
+      const existingIdx = shipments.findIndex(s => s.id.toUpperCase() === data.id.toUpperCase());
+      if (existingIdx >= 0) {
+        shipments[existingIdx] = { ...shipments[existingIdx], ...data };
+      } else {
+        shipments.unshift(data);
+      }
+      localStorage.setItem('reeftek_shipments_v35', JSON.stringify(shipments));
+      pushShipmentToCloud(data);
+      renderShipmentsTable();
+      return data;
+    }
+
+    function handleSaveOnly() {
+      const saved = saveCurrentShipmentRecord();
+      showToast(`تم حفظ الشحنة (${saved.id}) في السجل والسحابة ✓`);
+      generateNewShipmentId(false);
+      updatePreview();
+    }
+
+    function handleSaveAndPrint() {
+      const data = saveCurrentShipmentRecord();
+      printShipmentData(data);
+    }
+
+    function printShipmentData(data) {
+      const printAll = document.getElementById('printAllBoxes').checked;
+      const mount = document.getElementById('printMount');
+      let pagesHtml = '';
+
+      if (printTemplate === 'waybill') {
+        pagesHtml = `<div class="print-page-break">${renderWaybillHTML(data)}</div>`;
+      } else if (printTemplate === 'dual') {
+        const total = printAll ? data.boxes : 1;
+        for (let i = 1; i <= total; i++) {
+          const isLast = i === total;
+          pagesHtml += `
+            <div class="${isLast ? '' : 'print-page-break'}" style="display:flex; flex-direction:column; justify-content:space-between; gap:14px;">
+              ${renderIndustrialLabelHTML(data, i, data.boxes, true)}
+              <div style="border-top:2px dashed #000; text-align:center; font-size:11px; font-weight:800; padding:2px 0;">✂️ خط قص ✂️</div>
+              ${renderIndustrialLabelHTML(data, i, data.boxes, true)}
+            </div>
+          `;
+        }
+      } else {
+        const total = printAll ? data.boxes : 1;
+        for (let i = 1; i <= total; i++) {
+          const isLast = i === total;
+          pagesHtml += `<div class="${isLast ? '' : 'print-page-break'}">${renderIndustrialLabelHTML(data, i, data.boxes, false)}</div>`;
+        }
+      }
+
+      mount.innerHTML = pagesHtml;
+      showToast(`جاري تحضير الطباعة للشحنة ${data.id}...`);
+
+      setTimeout(() => {
+        window.print();
+      }, 250);
+    }
+
+    // ============================================================================
+    // 7. فحص وتتبع الشحنات (Scanner & URL Auto-Track)
+    // ============================================================================
+    function openScannerModal(prefillId = '') {
+      document.getElementById('scannerModal').classList.remove('hidden');
+      if (prefillId) {
+        document.getElementById('scannerInput').value = prefillId;
+        lookupShipment(prefillId);
+      }
+    }
+
+    function closeScannerModal() {
+      document.getElementById('scannerModal').classList.add('hidden');
+    }
+
+    async function lookupShipment(rawId) {
+      const id = (rawId || '').trim().toUpperCase();
+      const box = document.getElementById('scannerResultBox');
+      if (!id) return;
+
+      let found = shipments.find(s => s.id.toUpperCase() === id);
+
+      // إذا لم تكن موجودة في الذاكرة المحلية، نبحث عنها مباشرة في Supabase
+      if (!found && supabaseClient) {
+        box.innerHTML = `<div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center text-xs text-amber-400">⏳ جاري جلب بيانات الشحنة (${id}) من السحابة...</div>`;
+        try {
+          const { data } = await supabaseClient
+            .from('shipments')
+            .select('*')
+            .ilike('id', id)
+            .maybeSingle();
+          if (data) {
+            found = mapRowFromDb(data);
+            shipments.unshift(found);
+            localStorage.setItem('reeftek_shipments_v35', JSON.stringify(shipments));
+            renderShipmentsTable();
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+
+      // إذا كانت الشحنة هي نفس الشحنة المعروضة حالياً في النموذج ولم تُحفظ بعد، نحفظها تلقائياً ونعرضها!
+      const currentForm = getFormData();
+      if (!found && currentForm.id.toUpperCase() === id) {
+        found = saveCurrentShipmentRecord();
+      }
+
+      if (!found) {
+        box.innerHTML = `
+          <div class="p-4 rounded-xl bg-rose-950/40 border border-rose-500/40 text-rose-300 text-xs font-bold text-center">
+            لم يتم العثور على شحنة برقم (${id}) في السجل الحالي. تأكد من ضغط زر "حفظ" أو امسح كود الـ QR المطبوع على الملصق مباشرة.
+          </div>
+        `;
+        return;
+      }
+
+      const statusColors = {
+        'قيد التجهيز': 'bg-sky-500/20 text-sky-300 border-sky-500/40',
+        'سُلمت للمخرج': 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+        'تم التسليم': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+      };
+
+      box.innerHTML = `
+        <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 text-xs">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+            <div>
+              <span class="font-mono font-black text-base text-amber-400">${found.id}</span>
+              <span class="block text-[11px] text-slate-400">${found.shopName}</span>
+            </div>
+            <span class="px-3 py-1 rounded-full font-bold border ${statusColors[found.status] || statusColors['قيد التجهيز']}">
+              ${found.status}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5 text-slate-300">
+            <div class="bg-slate-900 p-2.5 rounded-xl">
+              <span class="text-slate-500 block text-[10px]">المدينة / الوجهة:</span>
+              <strong class="text-amber-400 text-sm">${found.city}</strong>
+            </div>
+            <div class="bg-slate-900 p-2.5 rounded-xl">
+              <span class="text-slate-500 block text-[10px]">المخرج / شركة النقل:</span>
+              <strong class="text-white text-sm">${found.carrier}</strong>
+            </div>
+            <div class="bg-slate-900 p-2.5 rounded-xl">
+              <span class="text-slate-500 block text-[10px]">المستلم والجوال:</span>
+              <strong class="text-white">${found.customerName || '—'} (${found.phone})</strong>
+            </div>
+            <div class="bg-slate-900 p-2.5 rounded-xl">
+              <span class="text-slate-500 block text-[10px]">عدد الطرود والدفع:</span>
+              <strong class="text-white">${found.boxes} كرتون · ${found.paymentStatus}</strong>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-slate-800">
+            <span class="block text-[11px] font-bold text-slate-400 mb-2">تحديث فوري لحالة الشحنة (يتزامن مع السحابة):</span>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="updateShipmentStatus('${found.id}', 'قيد التجهيز', true)"
+                class="py-2 px-2 rounded-xl font-bold border ${found.status === 'قيد التجهيز' ? 'bg-sky-500 text-slate-950 border-sky-400' : 'bg-slate-900 text-slate-300 border-slate-700'}">
+                🛠️ قيد التجهيز
+              </button>
+              <button onclick="updateShipmentStatus('${found.id}', 'سُلمت للمخرج', true)"
+                class="py-2 px-2 rounded-xl font-bold border ${found.status === 'سُلمت للمخرج' ? 'bg-amber-500 text-slate-950 border-amber-400' : 'bg-slate-900 text-slate-300 border-slate-700'}">
+                🚛 سُلمت للمخرج
+              </button>
+              <button onclick="updateShipmentStatus('${found.id}', 'تم التسليم', true)"
+                class="py-2 px-2 rounded-xl font-bold border ${found.status === 'تم التسليم' ? 'bg-emerald-500 text-slate-950 border-emerald-400' : 'bg-slate-900 text-slate-300 border-slate-700'}">
+                ✅ تم التسليم
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    async function updateShipmentStatus(id, newStatus, refreshModal = false) {
+      const item = shipments.find(s => s.id.toUpperCase() === id.toUpperCase());
+      if (!item) return;
+      item.status = newStatus;
+      localStorage.setItem('reeftek_shipments_v35', JSON.stringify(shipments));
+      renderShipmentsTable();
+      showToast(`تم تحديث حالة ${id} إلى: ${newStatus}`);
+
+      if (refreshModal) lookupShipment(id);
+
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('shipments').update({ status: newStatus }).eq('id', item.id);
+        } catch (e) {
+          console.warn(e);
+        }
+      }
+    }
+
+    // ============================================================================
+    // 8. جدول الشحنات والدليل والواتساب
+    // ============================================================================
+    function renderShipmentsTable() {
+      const tbody = document.getElementById('shipmentsTableBody');
+      const q = (document.getElementById('searchShipmentsInput')?.value || '').trim().toLowerCase();
+      const statusFilter = document.getElementById('filterStatus')?.value || 'ALL';
+      const payFilter = document.getElementById('filterPayment')?.value || 'ALL';
+
+      // تحديث الإحصائيات
+      document.getElementById('navShipmentsCount').textContent = shipments.length;
+      document.getElementById('statTotalShipments').textContent = shipments.length;
+      const totalBoxes = shipments.reduce((acc, s) => acc + (Number(s.boxes) || 1), 0);
+      document.getElementById('statTotalBoxes').textContent = `${totalBoxes} كرتون مسجل`;
+      document.getElementById('statPreparing').textContent = shipments.filter(s => s.status === 'قيد التجهيز').length;
+      document.getElementById('statWithCarrier').textContent = shipments.filter(s => s.status === 'سُلمت للمخرج').length;
+      document.getElementById('statDelivered').textContent = shipments.filter(s => s.status === 'تم التسليم').length;
+
+      const filtered = shipments.filter(s => {
+        const matchQ = !q || [s.id, s.shopName, s.city, s.customerName, s.phone, s.carrier, s.invoiceNo]
+          .some(v => (v || '').toLowerCase().includes(q));
+        const matchSt = statusFilter === 'ALL' || s.status === statusFilter;
+        const matchPay = payFilter === 'ALL' || s.paymentStatus === payFilter;
+        return matchQ && matchSt && matchPay;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="py-10 text-center text-slate-500">لا توجد شحنات مطابقة للبحث الحالي</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(s => {
+        const dateStr = new Date(s.createdAt || Date.now()).toLocaleDateString('ar-SA');
+        return `
+          <tr class="hover:bg-slate-800/40 transition">
+            <td class="py-3 px-4 font-mono font-black text-amber-400">${s.id}</td>
+            <td class="py-3 px-4">
+              <div class="font-bold text-white">${s.shopName}</div>
+              <div class="text-[11px] text-slate-400">${s.customerName || '—'} · <span class="font-mono" dir="ltr">${s.phone}</span></div>
+            </td>
+            <td class="py-3 px-4">
+              <span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-bold">${s.city}</span>
+              <div class="text-[11px] text-slate-300 mt-1">${s.carrier}</div>
+            </td>
+            <td class="py-3 px-4 font-mono font-bold text-white">${s.boxes} كرتون</td>
+            <td class="py-3 px-4">
+              <span class="font-bold text-slate-200">${s.paymentStatus}</span>
+              ${s.invoiceNo ? `<div class="text-[10px] font-mono text-slate-400">${s.invoiceNo}</div>` : ''}
+            </td>
+            <td class="py-3 px-4">
+              <select onchange="updateShipmentStatus('${s.id}', this.value, false)"
+                class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-xs font-bold text-white">
+                <option value="قيد التجهيز" ${s.status === 'قيد التجهيز' ? 'selected' : ''}>🛠️ قيد التجهيز</option>
+                <option value="سُلمت للمخرج" ${s.status === 'سُلمت للمخرج' ? 'selected' : ''}>🚛 سُلمت للمخرج</option>
+                <option value="تم التسليم" ${s.status === 'تم التسليم' ? 'selected' : ''}>✅ تم التسليم</option>
+              </select>
+            </td>
+            <td class="py-3 px-4 text-slate-400 text-[11px]">${dateStr}</td>
+            <td class="py-3 px-4">
+              <div class="flex items-center justify-center gap-1.5">
+                <button onclick="reprintById('${s.id}')" title="إعادة طباعة" class="px-2 py-1 rounded bg-slate-800 hover:bg-amber-500 hover:text-slate-950 font-bold">🖨️</button>
+                <button onclick="sendWhatsAppByObject('${s.id}')" title="إشعار واتساب" class="px-2 py-1 rounded bg-emerald-600/20 text-emerald-400 hover:bg-emerald-500 hover:text-slate-950 font-bold">💬</button>
+                <button onclick="deleteShipment('${s.id}')" title="حذف" class="px-2 py-1 rounded bg-rose-600/20 text-rose-400 hover:bg-rose-500 hover:text-white font-bold">🗑️</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function reprintById(id) {
+      const item = shipments.find(s => s.id === id);
+      if (!item) return;
+      loadShipmentIntoForm(item);
+      switchTab('create');
+      setTimeout(() => printShipmentData(item), 200);
+    }
+
+    function loadShipmentIntoForm(item) {
+      document.getElementById('currentShipmentId').textContent = item.id;
+      document.getElementById('shopName').value = item.shopName || '';
+      document.getElementById('city').value = item.city || '';
+      document.getElementById('customerName').value = item.customerName || '';
+      document.getElementById('phone').value = item.phone || '';
+      document.getElementById('carrier').value = item.carrier || '';
+      document.getElementById('boxes').value = item.boxes || 1;
+      document.getElementById('paymentStatus').value = item.paymentStatus || 'مدفوع';
+      document.getElementById('codAmount').value = item.codAmount || '';
+      document.getElementById('invoiceNo').value = item.invoiceNo || '';
+      document.getElementById('notes').value = item.notes || '';
+      toggleCodField();
+      updatePreview();
+    }
+
+    async function deleteShipment(id) {
+      shipments = shipments.filter(s => s.id !== id);
+      localStorage.setItem('reeftek_shipments_v35', JSON.stringify(shipments));
+      renderShipmentsTable();
+      if (supabaseClient) {
+        try { await supabaseClient.from('shipments').delete().eq('id', id); } catch (e) {}
+      }
+      showToast(`تم حذف الشحنة ${id}`);
+    }
+
+    function formatSaudiWhatsAppNumber(phone) {
+      let clean = (phone || '').replace(/\D/g, '');
+      if (clean.startsWith('05')) clean = '966' + clean.slice(1);
+      else if (clean.startsWith('5') && clean.length === 9) clean = '966' + clean;
+      return clean;
+    }
+
+    function sendWhatsAppMessage(data) {
+      const waPhone = formatSaudiWhatsAppNumber(data.phone);
+      const trackLink = buildSmartTrackingUrl(data);
+      const msg = [
+        `*مؤسسة الريف التقني لقطع غيار الشاحنات (REEFTEK)*`,
+        `مرحباً بك *${data.shopName}* (${data.customerName || 'عميلنا العزيز'})،`,
+        `تم تجهيز شحنتكم رقم: *${data.id}*`,
+        `• الوجهة: *${data.city}*`,
+        `• شركة الشحن (المخرج): *${data.carrier}*`,
+        `• عدد الطرود: *${data.boxes} كرتون*`,
+        `• حالة الدفع: *${data.paymentStatus}*`,
+        ``,
+        `يمكنكم فتح بطاقة الشحنة وتتبع حالتها مباشرة عبر الرابط:`,
+        trackLink
+      ].join('\n');
+
+      window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function sendWhatsAppCurrent() {
+      const data = saveCurrentShipmentRecord();
+      sendWhatsAppMessage(data);
+    }
+
+    function sendWhatsAppByObject(id) {
+      const item = shipments.find(s => s.id === id);
+      if (item) sendWhatsAppMessage(item);
+    }
+
+    // ============================================================================
+    // 9. إدارة دليل المحلات والمخرجين والأدوات المساعدة
+    // ============================================================================
+    function renderDirectory() {
+      const select = document.getElementById('quickShopSelect');
+      select.innerHTML = `<option value="">— اختر محلاً لتعبئة بياناته تلقائياً (${shopsDirectory.length} محل محفوظ) —</option>` +
+        shopsDirectory.map((sh, idx) => `<option value="${idx}">${sh.shopName} — ${sh.city} (${sh.carrier})</option>`).join('');
+
+      document.getElementById('shopsCountBadge').textContent = `${shopsDirectory.length} محل`;
+
+      const listEl = document.getElementById('directoryShopsList');
+      listEl.innerHTML = shopsDirectory.map((sh, idx) => `
+        <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs">
+          <div>
+            <div class="font-bold text-white">${sh.shopName} <span class="text-amber-400">(${sh.city})</span></div>
+            <div class="text-slate-400 text-[11px]">${sh.customerName || '—'} · <span class="font-mono">${sh.phone}</span> · المخرج: ${sh.carrier}</div>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="applyQuickShop(${idx}); switchTab('create');" class="px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-black">تعبئة بالملصق</button>
+            <button onclick="removeShop(${idx})" class="px-2 py-1.5 rounded-lg bg-slate-800 text-rose-400 hover:bg-rose-500 hover:text-white">✕</button>
+          </div>
+        </div>
+      `).join('');
+
+      const datalist = document.getElementById('carriersDatalist');
+      datalist.innerHTML = carriersList.map(c => `<option value="${c}"></option>`).join('');
+
+      const carriersContainer = document.getElementById('carriersListContainer');
+      carriersContainer.innerHTML = carriersList.map((c, idx) => `
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200">
+          <span>🚛 ${c}</span>
+          <button onclick="removeCarrier(${idx})" class="text-slate-500 hover:text-rose-400 font-bold">✕</button>
+        </span>
+      `).join('');
+    }
+
+    function applyQuickShop(index) {
+      if (index === '' || index === null) return;
+      const sh = shopsDirectory[Number(index)];
+      if (!sh) return;
+      document.getElementById('shopName').value = sh.shopName;
+      document.getElementById('city').value = sh.city;
+      document.getElementById('customerName').value = sh.customerName || '';
+      document.getElementById('phone').value = sh.phone || '';
+      document.getElementById('carrier').value = sh.carrier || '';
+      updatePreview();
+      showToast(`تمت تعبئة بيانات: ${sh.shopName}`);
+    }
+
+    function addShopToDirectory() {
+      const newShop = {
+        shopName: document.getElementById('dirShopName').value.trim(),
+        city: document.getElementById('dirCity').value.trim(),
+        customerName: document.getElementById('dirCustomer').value.trim(),
+        phone: document.getElementById('dirPhone').value.trim(),
+        carrier: document.getElementById('dirCarrier').value.trim() || 'مخرج الصاعدي للنقل'
+      };
+      shopsDirectory.unshift(newShop);
+      localStorage.setItem('reeftek_shops_v36', JSON.stringify(shopsDirectory));
+      renderDirectory();
       document.getElementById('dirShopName').value = '';
       document.getElementById('dirCity').value = '';
       document.getElementById('dirCustomer').value = '';
       document.getElementById('dirPhone').value = '';
       document.getElementById('dirCarrier').value = '';
-      showToast('تمت إضافة المحل إلى الدليل بنجاح');
+      showToast('تمت إضافة المحل إلى الدليل الدائم ✓');
     }
 
-    function deleteShopFromDirectory(idx) {
-      savedShops.splice(idx, 1);
-      saveAllData();
-      populateDirectoryUI();
+    function removeShop(idx) {
+      shopsDirectory.splice(idx, 1);
+      localStorage.setItem('reeftek_shops_v36', JSON.stringify(shopsDirectory));
+      renderDirectory();
     }
 
-    function addCarrierToDirectory() {
-      const input = document.getElementById('newCarrierInput');
-      const val = input.value.trim();
+    function addCarrierToList() {
+      const val = document.getElementById('newCarrierName').value.trim();
       if (!val) return;
-      if (!savedCarriers.includes(val)) {
-        savedCarriers.push(val);
-        saveAllData();
-        populateDirectoryUI();
-      }
-      input.value = '';
-      showToast(`تمت إضافة "${val}" لقائمة المخرجين`);
+      carriersList.push(val);
+      localStorage.setItem('reeftek_carriers_v36', JSON.stringify(carriersList));
+      document.getElementById('newCarrierName').value = '';
+      renderDirectory();
     }
 
-    function deleteCarrierFromDirectory(idx) {
-      savedCarriers.splice(idx, 1);
-      saveAllData();
-      populateDirectoryUI();
+    function removeCarrier(idx) {
+      carriersList.splice(idx, 1);
+      localStorage.setItem('reeftek_carriers_v36', JSON.stringify(carriersList));
+      renderDirectory();
     }
 
-    // --- FORM HELPERS & CONTROLS ---
-    function generateNewShipmentId() {
-      const randomNum = Math.floor(10000 + Math.random() * 90000);
-      currentShipmentId = `RT-${randomNum}`;
-      document.getElementById('formShipmentIdDisplay').textContent = currentShipmentId;
-      updateLivePreview();
-    }
-
-    function adjustCartons(delta) {
-      const input = document.getElementById('cartonCount');
-      let val = parseInt(input.value, 10) || 1;
-      val = Math.max(1, Math.min(999, val + delta));
-      input.value = val;
-      handleCartonCountChange();
-    }
-
-    function handleCartonCountChange() {
-      const total = Math.max(1, parseInt(document.getElementById('cartonCount').value, 10) || 1);
-      if (previewCartonIndex > total) previewCartonIndex = total;
-      document.getElementById('previewCartonIndicator').textContent = `${previewCartonIndex} / ${total}`;
-      document.getElementById('multiCartonLabelHint').textContent = total > 1 ? `(1/${total} إلى ${total}/${total})` : `(ملصق واحد)`;
-      updateLivePreview();
-    }
-
-    function stepPreviewCarton(delta) {
-      const total = Math.max(1, parseInt(document.getElementById('cartonCount').value, 10) || 1);
-      previewCartonIndex += delta;
-      if (previewCartonIndex < 1) previewCartonIndex = total;
-      if (previewCartonIndex > total) previewCartonIndex = 1;
-      document.getElementById('previewCartonIndicator').textContent = `${previewCartonIndex} / ${total}`;
-      updateLivePreview();
-    }
-
-    function toggleWarning(key) {
-      activeWarnings[key] = !activeWarnings[key];
-      const btn = document.getElementById(`warnBtn-${key}`);
-      if (activeWarnings[key]) {
-        btn.className = 'warn-toggle-btn flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl border text-xs font-extrabold transition-all bg-amber-500/15 border-amber-500 text-amber-600 dark:text-amber-400';
-      } else {
-        btn.className = 'warn-toggle-btn flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl border text-xs font-extrabold transition-all bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400';
-      }
-      updateLivePreview();
-    }
-
-    function setLabelTemplate(tpl) {
-      currentTemplate = tpl;
-      ['industrial', 'dual', 'waybill'].forEach(t => {
-        const btn = document.getElementById(`tplBtn-${t}`);
-        if (t === tpl) {
-          btn.className = 'tpl-btn px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all bg-amber-500 text-slate-950 shadow-sm';
+    // ============================================================================
+    // 10. دوال الواجهة والاختصارات وفحص رابط الـ QR عند الفتح من الجوال
+    // ============================================================================
+    function switchTab(tab) {
+      ['create', 'shipments', 'directory'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tab);
+        const btn = document.getElementById(`tabBtn-${t}`);
+        if (t === tab) {
+          btn.className = 'px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-bold transition bg-amber-500 text-slate-950';
         } else {
-          btn.className = 'tpl-btn px-3 py-1.5 rounded-lg text-xs font-extrabold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all';
+          btn.className = 'px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-bold transition text-slate-300 hover:text-white';
         }
       });
-      updateLivePreview();
+      if (tab === 'shipments') renderShipmentsTable();
     }
 
-    function getFormData() {
-      return {
-        id: currentShipmentId,
-        shopName: document.getElementById('shopName').value.trim(),
-        city: document.getElementById('city').value.trim(),
-        customerName: document.getElementById('customerName').value.trim(),
-        carrierName: document.getElementById('carrierName').value.trim(),
-        phone: convertArabicDigits(document.getElementById('customerPhone').value.trim()),
-        cartons: Math.max(1, parseInt(document.getElementById('cartonCount').value, 10) || 1),
-        invoiceNo: document.getElementById('invoiceNo').value.trim(),
-        paymentStatus: document.getElementById('paymentStatus').value,
-        notes: document.getElementById('notes').value.trim(),
-        warnings: { ...activeWarnings }
-      };
-    }
-
-    function fillFormWithSample(item) {
-      currentShipmentId = item.id || 'RT-84920';
-      document.getElementById('formShipmentIdDisplay').textContent = currentShipmentId;
-      document.getElementById('shopName').value = item.shopName || '';
-      document.getElementById('city').value = item.city || '';
-      document.getElementById('customerName').value = item.customerName || '';
-      document.getElementById('carrierName').value = item.carrierName || '';
-      document.getElementById('customerPhone').value = item.phone || '';
-      document.getElementById('cartonCount').value = item.cartons || 1;
-      document.getElementById('invoiceNo').value = item.invoiceNo || '';
-      document.getElementById('paymentStatus').value = item.paymentStatus || 'مدفوع';
-      document.getElementById('notes').value = item.notes || '';
-
-      activeWarnings = {
-        fragile: !!(item.warnings && item.warnings.fragile),
-        heavy: !!(item.warnings && item.warnings.heavy),
-        upward: !!(item.warnings && item.warnings.upward),
-        urgent: !!(item.warnings && item.warnings.urgent)
-      };
-
-      ['fragile', 'heavy', 'upward', 'urgent'].forEach(k => {
-        activeWarnings[k] = !activeWarnings[k];
-        toggleWarning(k);
+    function setPrintTemplate(tpl) {
+      printTemplate = tpl;
+      ['single', 'dual', 'waybill'].forEach(k => {
+        const btn = document.getElementById(`tplBtn-${k}`);
+        btn.className = k === tpl
+          ? 'px-2.5 py-1 rounded-lg font-bold bg-amber-500 text-slate-950'
+          : 'px-2.5 py-1 rounded-lg font-bold text-slate-300 hover:text-white';
       });
+      updatePreview();
+    }
 
-      previewCartonIndex = 1;
-      handlePhoneInput(document.getElementById('customerPhone'));
-      handleCartonCountChange();
+    function adjustBoxes(delta) {
+      const input = document.getElementById('boxes');
+      const next = Math.max(1, Math.min(99, (parseInt(input.value) || 1) + delta));
+      input.value = next;
+      resetPreviewBoxIndex();
+      updatePreview();
+    }
+
+    function resetPreviewBoxIndex() {
+      previewBoxIndex = 1;
+    }
+
+    function stepPreviewBox(delta) {
+      const total = Math.max(1, parseInt(document.getElementById('boxes').value) || 1);
+      previewBoxIndex = previewBoxIndex + delta;
+      if (previewBoxIndex > total) previewBoxIndex = 1;
+      if (previewBoxIndex < 1) previewBoxIndex = total;
+      updatePreview();
+    }
+
+    function toggleCodField() {
+      const isCod = document.getElementById('paymentStatus').value === 'عند الاستلام';
+      document.getElementById('codAmountWrapper').classList.toggle('hidden', !isCod);
+    }
+
+    function normalizePhoneInput(el) {
+      const arabicNums = '٠١٢٣٤٥٦٧٨٩';
+      el.value = el.value.replace(/[٠-٩]/g, d => arabicNums.indexOf(d));
+    }
+
+    function generateNewShipmentId(notify = false) {
+      const randomNum = Math.floor(10000 + Math.random() * 90000);
+      document.getElementById('currentShipmentId').textContent = `RT-${randomNum}`;
+      updatePreview();
+      if (notify) showToast(`تم توليد رقم شحنة جديد: RT-${randomNum}`);
     }
 
     function resetForm() {
-      generateNewShipmentId();
-      document.getElementById('quickShopSelect').value = '';
+      generateNewShipmentId(false);
       document.getElementById('shopName').value = '';
       document.getElementById('city').value = '';
       document.getElementById('customerName').value = '';
-      document.getElementById('carrierName').value = '';
-      document.getElementById('customerPhone').value = '';
-      document.getElementById('cartonCount').value = 1;
+      document.getElementById('phone').value = '';
+      document.getElementById('carrier').value = '';
+      document.getElementById('boxes').value = 1;
       document.getElementById('invoiceNo').value = '';
-      document.getElementById('paymentStatus').value = 'مدفوع';
       document.getElementById('notes').value = '';
-      previewCartonIndex = 1;
-      handlePhoneInput(document.getElementById('customerPhone'));
-      handleCartonCountChange();
-      document.getElementById('shopName').focus();
+      updatePreview();
     }
 
-    // --- QR CODE & CODE-128 LINEAR BARCODE SVG GENERATORS ---
-    function generateQRCodeSVG(text, cellSize = 3) {
-      try {
-        if (typeof qrcode !== 'undefined') {
-          const qr = qrcode(0, 'M');
-          qr.addData(text);
-          qr.make();
-          return qr.createSvgTag({ cellSize: cellSize, margin: 0, scalable: true });
-        }
-      } catch (e) {
-        console.warn('QR fallback used', e);
-      }
-      // Crisp deterministic SVG matrix fallback
-      return `<svg viewBox="0 0 100 100" class="w-full h-full"><rect width="100" height="100" fill="#fff"/><rect x="8" y="8" width="26" height="26" fill="none" stroke="#000" stroke-width="6"/><rect x="16" y="16" width="10" height="10" fill="#000"/><rect x="66" y="8" width="26" height="26" fill="none" stroke="#000" stroke-width="6"/><rect x="74" y="16" width="10" height="10" fill="#000"/><rect x="8" y="66" width="26" height="26" fill="none" stroke="#000" stroke-width="6"/><rect x="16" y="74" width="10" height="10" fill="#000"/><rect x="44" y="44" width="14" height="14" fill="#000"/></svg>`;
+    function openSupabaseModal() {
+      document.getElementById('sbUrlInput').value = supabaseUrl;
+      document.getElementById('sbKeyInput').value = supabaseKey;
+      document.getElementById('supabaseModal').classList.remove('hidden');
     }
 
-    function generateLinearBarcodeSVG(codeStr) {
-      const clean = (codeStr || 'RT-84920').toUpperCase();
-      let bars = [];
-      // Start pattern
-      bars.push(3, 1, 2, 2, 1, 2);
-      for (let i = 0; i < clean.length; i++) {
-        const c = clean.charCodeAt(i);
-        bars.push(((c >> 0) & 1) ? 3 : 1);
-        bars.push(((c >> 1) & 1) ? 2 : 1);
-        bars.push(((c >> 2) & 1) ? 3 : 2);
-        bars.push(((c >> 3) & 1) ? 2 : 1);
-        bars.push(((c >> 4) & 1) ? 3 : 1);
-        bars.push(1);
-      }
-      // Stop pattern
-      bars.push(3, 2, 1, 1, 2, 3);
-
-      let totalWidth = bars.reduce((a, b) => a + b, 0);
-      let x = 0;
-      let rects = '';
-      for (let i = 0; i < bars.length; i++) {
-        const w = bars[i];
-        if (i % 2 === 0) {
-          rects += `<rect x="${x}" y="0" width="${w}" height="44" fill="#000000" />`;
-        }
-        x += w;
-      }
-      return `<svg viewBox="0 0 ${totalWidth} 44" preserveAspectRatio="none" class="w-full h-11 block">${rects}</svg>`;
+    function closeSupabaseModal() {
+      document.getElementById('supabaseModal').classList.add('hidden');
     }
 
-    // =========================================================================
-    // REDESIGNED INDUSTRIAL SHIPPING LABEL & WAYBILL GENERATOR
-    // =========================================================================
-    function buildSingleIndustrialLabelHTML(data, cartonNum, totalCartons, compact = false) {
-      const shopName = escapeHTML(data.shopName || 'اسم المحل / المستلم');
-      const city = escapeHTML(data.city || 'المدينة / الوجهة');
-      const customerName = escapeHTML(data.customerName || 'اسم الزبون');
-      const carrierName = escapeHTML(data.carrierName || 'اسم المخرج / شركة الشحن');
-      const phoneFormatted = escapeHTML(formatPhoneForDisplay(data.phone || '05XXXXXXXX'));
-      const invoiceNo = escapeHTML(data.invoiceNo || '—');
-      const paymentStatus = escapeHTML(data.paymentStatus || 'مدفوع');
-      const notes = escapeHTML(data.notes || 'قطع غيار شاحنات — مؤسسة الريف التقني');
-      const dateStr = data.createdAt || getFormattedNow();
-
-      const trackingUrl = `${window.location.origin}${window.location.pathname}#track=${encodeURIComponent(data.id)}`;
-      const qrSvg = generateQRCodeSVG(trackingUrl, 3);
-      const barcodeSvg = generateLinearBarcodeSVG(`${data.id}-${cartonNum}`);
-
-      // Build Warning Icons Strip
-      const warningsList = [];
-      if (data.warnings?.fragile) {
-        warningsList.push(`
-          <div class="flex items-center gap-1.5 px-2.5 py-1 border-2 border-black rounded bg-white font-black text-xs">
-            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><path d="M8 22h8M12 15v7M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z"/><path d="m10 7 3 3-2 3"/></svg>
-            <span>قابل للكسر</span>
-          </div>
-        `);
-      }
-      if (data.warnings?.heavy) {
-        warningsList.push(`
-          <div class="flex items-center gap-1.5 px-2.5 py-1 border-2 border-black rounded bg-white font-black text-xs">
-            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg>
-            <span>ثقيل الوزن</span>
-          </div>
-        `);
-      }
-      if (data.warnings?.upward) {
-        warningsList.push(`
-          <div class="flex items-center gap-1.5 px-2.5 py-1 border-2 border-black rounded bg-white font-black text-xs">
-            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/><path d="M5 21h14"/></svg>
-            <span>اتجاه للأعلى</span>
-          </div>
-        `);
-      }
-      if (data.warnings?.urgent) {
-        warningsList.push(`
-          <div class="flex items-center gap-1.5 px-2.5 py-1 border-2 border-black rounded print-black-box font-black text-xs">
-            <span>⚡ عاجل جداً</span>
-          </div>
-        `);
-      }
-
-      const paddingClass = compact ? 'p-3' : 'p-4 sm:p-5';
-      const destinationFontClass = compact ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl';
-      const shopFontClass = compact ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl';
-
-      return `
-        <div class="waybill-sheet rounded-none text-black w-full" dir="rtl">
-          
-          <!-- TOP HAZARD / INDUSTRIAL ACCENT BAR -->
-          <div class="h-2.5 w-full print-stripe-bg border-b-2 border-black"></div>
-
-          <!-- 1. HEADER: SENDER BRANDING + SHIPMENT NUMBER -->
-          <div class="grid grid-cols-12 border-b-[3px] border-black">
-            <div class="col-span-7 sm:col-span-8 ${paddingClass} flex items-center gap-3 border-l-[3px] border-black">
-              <div class="w-12 h-12 sm:w-14 sm:h-14 print-black-box flex flex-col items-center justify-center rounded shrink-0">
-                <span class="font-mono font-black text-sm sm:text-base tracking-tighter leading-none">REEF</span>
-                <span class="font-mono font-bold text-[10px] tracking-widest leading-none mt-0.5">TEK</span>
-              </div>
-              <div>
-                <div class="text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-neutral-700">بوليصة شحن طرود صناعية | WAYBILL</div>
-                <h2 class="text-base sm:text-xl font-black leading-tight text-black">مؤسسة الريف التقني لقطع غيار الشاحنات</h2>
-                <p class="text-[11px] font-bold text-neutral-700 mt-0.5">المرسل: مستودعات الريف التقني — قسم الشحن والتوزيع</p>
-              </div>
-            </div>
-
-            <div class="col-span-5 sm:col-span-4 flex flex-col justify-between">
-              <div class="print-black-box px-3 py-2 text-center border-b-2 border-black flex-1 flex flex-col justify-center">
-                <span class="text-[10px] font-bold uppercase tracking-widest opacity-80">رقم الشحنة / TRACKING NO</span>
-                <span class="font-mono font-black text-xl sm:text-2xl tracking-wider mt-0.5" dir="ltr">${escapeHTML(data.id)}</span>
-              </div>
-              <div class="px-3 py-1.5 text-center bg-white text-[11px] font-extrabold font-mono" dir="ltr">
-                ${escapeHTML(dateStr)}
-              </div>
-            </div>
-          </div>
-
-          <!-- 2. MASSIVE ROUTING & FREIGHT FORWARDER BANNER (وجهة الشحنة والمخرج) -->
-          <div class="grid grid-cols-12 border-b-[3px] border-black">
-            <!-- Destination City -->
-            <div class="col-span-6 ${paddingClass} border-l-[3px] border-black print-gray-box flex flex-col justify-center">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-black uppercase tracking-wider text-neutral-700">المدينة / الوجهة (DESTINATION)</span>
-                <span class="text-xs font-black px-1.5 py-0.5 border border-black rounded bg-white">فرز رئيسي</span>
-              </div>
-              <div class="${destinationFontClass} font-black tracking-tight text-black mt-1 leading-none break-words">
-                ${city}
-              </div>
-            </div>
-
-            <!-- Freight Forwarder / Carrier -->
-            <div class="col-span-6 ${paddingClass} bg-white flex flex-col justify-center">
-              <div class="text-[11px] font-black uppercase tracking-wider text-neutral-700">شركة الشحن / المخرج (CARRIER)</div>
-              <div class="text-xl sm:text-3xl font-black text-black mt-1 leading-tight break-words">
-                🚚 ${carrierName}
-              </div>
-            </div>
-          </div>
-
-          <!-- 3. RECIPIENT SHOP, CUSTOMER & PHONE + CARTON COUNTER -->
-          <div class="grid grid-cols-12 border-b-[3px] border-black">
-            
-            <!-- Recipient Details (8 Cols) -->
-            <div class="col-span-12 sm:col-span-8 ${paddingClass} border-b-[3px] sm:border-b-0 sm:border-l-[3px] border-black space-y-3">
-              <div>
-                <div class="text-[11px] font-black uppercase text-neutral-600">المرسل إليه / اسم المحل (RECIPIENT SHOP):</div>
-                <div class="${shopFontClass} font-black text-black leading-snug mt-0.5 break-words">
-                  ${shopName}
-                </div>
-              </div>
-
-              <div class="grid grid-cols-2 gap-3 pt-2 border-t-2 border-dashed border-black">
-                <div>
-                  <div class="text-[11px] font-black text-neutral-600">اسم الزبون المستلم:</div>
-                  <div class="text-base sm:text-lg font-extrabold text-black mt-0.5 break-words">${customerName}</div>
-                </div>
-                <div>
-                  <div class="text-[11px] font-black text-neutral-600">رقم جوال المستلم:</div>
-                  <div class="text-base sm:text-xl font-mono font-black text-black mt-0.5 tracking-wider" dir="ltr">
-                    📞 ${phoneFormatted}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Carton Counter & Payment Box (4 Cols) -->
-            <div class="col-span-12 sm:col-span-4 flex sm:flex-col justify-between divide-x sm:divide-x-0 sm:divide-y-[3px] divide-black">
-              <!-- Giant Carton Number Badge -->
-              <div class="print-black-box p-3 sm:p-4 text-center flex-1 flex flex-col items-center justify-center">
-                <span class="text-[11px] font-extrabold uppercase tracking-wider opacity-90">رقم الكرتون / CARTON</span>
-                <div class="font-mono font-black text-3xl sm:text-4xl tracking-tight my-1" dir="ltr">
-                  ${cartonNum} / ${totalCartons}
-                </div>
-                <span class="text-[11px] font-bold px-2 py-0.5 border border-white/50 rounded">
-                  إجمالي الطرود: ${totalCartons} كرتون
-                </span>
-              </div>
-
-              <!-- Payment & Invoice -->
-              <div class="p-3 bg-white text-center flex-1 flex flex-col justify-center">
-                <div class="text-[10px] font-black text-neutral-600">حالة الدفع / الفاتورة</div>
-                <div class="text-sm sm:text-base font-black text-black mt-0.5">
-                  [${paymentStatus}]
-                </div>
-                <div class="text-xs font-mono font-bold text-neutral-800 mt-0.5" dir="ltr">
-                  INV: ${invoiceNo}
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- 4. NOTES / CONTENTS & WARNING BADGES STRIP -->
-          <div class="grid grid-cols-12 border-b-[3px] border-black print-gray-box">
-            <div class="col-span-12 ${ compact ? 'px-3 py-2' : 'px-4 py-2.5' } flex flex-wrap items-center justify-between gap-2">
-              <div class="text-xs sm:text-sm font-bold text-black">
-                <span class="font-black underline ml-1">بيان المحتوى / ملاحظات:</span>
-                <span>${notes}</span>
-              </div>
-              <div class="flex flex-wrap items-center gap-1.5">
-                ${warningsList.join('')}
-              </div>
-            </div>
-          </div>
-
-          <!-- 5. FOOTER: QR CODE + LINEAR BARCODE + SIGNATURE -->
-          <div class="grid grid-cols-12 items-center ${paddingClass} gap-3 bg-white">
-            <!-- Real QR Code -->
-            <div class="col-span-3 sm:col-span-2 flex flex-col items-center justify-center border-2 border-black p-1.5 bg-white">
-              <div class="w-16 h-16 sm:w-20 sm:h-20">
-                ${qrSvg}
-              </div>
-              <span class="text-[9px] font-black mt-1 text-center leading-tight">امسح لتتبع الشحنة</span>
-            </div>
-
-            <!-- Linear Code-128 Barcode -->
-            <div class="col-span-9 sm:col-span-6 flex flex-col justify-center px-2">
-              ${barcodeSvg}
-              <div class="font-mono font-black text-xs sm:text-sm text-center tracking-[0.25em] mt-1" dir="ltr">
-                *${escapeHTML(data.id)}-${cartonNum}*
-              </div>
-              <div class="text-[10px] font-bold text-center text-neutral-600 mt-0.5">
-                مؤسسة الريف التقني لقطع غيار الشاحنات — REEFTEK PRO
-              </div>
-            </div>
-
-            <!-- Receiver / Carrier Stamp Box -->
-            <div class="col-span-12 sm:col-span-4 border-2 border-dashed border-black p-2.5 text-center h-full flex flex-col justify-between min-h-[76px]">
-              <span class="text-[10px] font-black text-neutral-700">توقيع المستلم / ختم مكتب المخرج</span>
-              <span class="text-[10px] font-bold text-neutral-500">تم استلام الطرد بحالة سليمة</span>
-            </div>
-          </div>
-
-        </div>
-      `;
+    function saveSupabaseSettings() {
+      supabaseUrl = document.getElementById('sbUrlInput').value.trim() || DEFAULT_SUPABASE_URL;
+      supabaseKey = document.getElementById('sbKeyInput').value.trim() || DEFAULT_SUPABASE_KEY;
+      localStorage.setItem('reeftek_sb_url', supabaseUrl);
+      localStorage.setItem('reeftek_sb_key', supabaseKey);
+      initSupabaseClient();
+      syncFromCloud(true);
+      closeSupabaseModal();
     }
 
-    function buildOfficialFullWaybillHTML(data, totalCartons) {
-      const dateStr = data.createdAt || getFormattedNow();
-      return `
-        <div class="space-y-4 bg-white text-black p-4 border-4 border-black" dir="rtl">
-          <div class="text-center border-b-2 border-black pb-2">
-            <h1 class="text-xl font-black">سند تسليم وبوليصة شحن رسمية — مؤسسة الريف التقني لقطع غيار الشاحنات</h1>
-            <p class="text-xs font-bold">نسخة رسمية لتوثيق التسليم للمخرج والعميل</p>
-          </div>
-
-          ${buildSingleIndustrialLabelHTML(data, 1, totalCartons, true)}
-
-          <!-- Official Signatures Table -->
-          <div class="grid grid-cols-3 gap-3 pt-2 text-xs font-bold text-black">
-            <div class="border-2 border-black p-3 min-h-[95px] flex flex-col justify-between">
-              <div class="font-black border-b border-black pb-1">1. مسؤول مستودع الريف التقني:</div>
-              <div>الاسم والتوقيع: ............................</div>
-            </div>
-            <div class="border-2 border-black p-3 min-h-[95px] flex flex-col justify-between">
-              <div class="font-black border-b border-black pb-1">2. مندوب المخرج (${escapeHTML(data.carrierName || 'شركة الشحن')}):</div>
-              <div>أقر باستلام (${totalCartons}) طرد سليمة: ..............</div>
-            </div>
-            <div class="border-2 border-black p-3 min-h-[95px] flex flex-col justify-between">
-              <div class="font-black border-b border-black pb-1">3. توقيع وختم العميل المستلم:</div>
-              <div>التاريخ والتوقيع: ............................</div>
-            </div>
-          </div>
-        </div>
-      `;
+    function copySqlCode() {
+      const sql = document.getElementById('sqlSetupCode').textContent;
+      navigator.clipboard.writeText(sql);
+      showToast('تم نسخ كود SQL! الصقه في Supabase SQL Editor واضغط Run');
     }
 
-    // --- LIVE PREVIEW UPDATER ---
-    function updateLivePreview() {
-      const data = getFormData();
-      const container = document.getElementById('livePreviewContainer');
-
-      // Update form completion progress bar
-      const requiredFields = [data.shopName, data.city, data.customerName, data.carrierName, data.phone];
-      const filledCount = requiredFields.filter(Boolean).length;
-      const pct = Math.round((filledCount / requiredFields.length) * 100);
-      const bar = document.getElementById('formProgressBar');
-      const txt = document.getElementById('formProgressText');
-      bar.style.width = `${pct}%`;
-
-      if (pct === 100) {
-        txt.textContent = 'البيانات الأساسية مكتملة وجاهزة للطباعة ✓';
-        txt.className = 'text-emerald-600 dark:text-emerald-400';
-      } else {
-        txt.textContent = `اكتمال الحقول الأساسية: ${pct}%`;
-        txt.className = 'text-amber-600 dark:text-amber-400';
-      }
-
-      if (currentTemplate === 'industrial') {
-        container.innerHTML = buildSingleIndustrialLabelHTML(data, previewCartonIndex, data.cartons, false);
-      } else if (currentTemplate === 'dual') {
-        const secondCarton = data.cartons > 1 ? Math.min(data.cartons, previewCartonIndex + 1) : 1;
-        container.innerHTML = `
-          <div class="space-y-4">
-            ${buildSingleIndustrialLabelHTML(data, previewCartonIndex, data.cartons, true)}
-            <div class="py-1 text-center font-mono font-black text-xs text-slate-600 dark:text-slate-400 border-y-2 border-dashed border-slate-500">
-              ✂️ خط القص — نسخه ثانية (${data.cartons > 1 ? `كرتون ${secondCarton} من ${data.cartons}` : 'نسخة المخرج / الأرشيف'}) ✂️
-            </div>
-            ${buildSingleIndustrialLabelHTML(data, secondCarton, data.cartons, true)}
-          </div>
-        `;
-      } else if (currentTemplate === 'waybill') {
-        container.innerHTML = buildOfficialFullWaybillHTML(data, data.cartons);
-      }
-    }
-
-    // --- PRINT ENGINE (Supports Single or Multi-Carton Sequential Printing) ---
-    function preparePrintMountAndTrigger(data) {
-      const printMount = document.getElementById('printMount');
-      const printAll = document.getElementById('printAllCartonsToggle').checked;
-      const total = Math.max(1, data.cartons || 1);
-
-      let pagesHTML = '';
-
-      if (currentTemplate === 'waybill') {
-        pagesHTML = `<div class="print-page">${buildOfficialFullWaybillHTML(data, total)}</div>`;
-      } else if (currentTemplate === 'dual') {
-        if (printAll && total > 1) {
-          for (let i = 1; i <= total; i += 2) {
-            const first = i;
-            const second = i + 1 <= total ? i + 1 : i;
-            const hasMore = (i + 2) <= total;
-            pagesHTML += `
-              <div class="${hasMore ? 'print-page-break' : ''} space-y-4">
-                ${buildSingleIndustrialLabelHTML(data, first, total, true)}
-                <div style="border-top: 2px dashed #000; text-align:center; font-size:11px; font-weight:bold; padding: 4px 0;">✂️ خط القص ✂️</div>
-                ${buildSingleIndustrialLabelHTML(data, second, total, true)}
-              </div>
-            `;
-          }
-        } else {
-          pagesHTML = `
-            <div class="space-y-4">
-              ${buildSingleIndustrialLabelHTML(data, 1, total, true)}
-              <div style="border-top: 2px dashed #000; text-align:center; font-size:11px; font-weight:bold; padding: 4px 0;">✂️ خط القص — نسخة المخرج ✂️</div>
-              ${buildSingleIndustrialLabelHTML(data, 1, total, true)}
-            </div>
-          `;
-        }
-      } else {
-        // Default Industrial Label
-        if (printAll && total > 1) {
-          for (let i = 1; i <= total; i++) {
-            const isLast = i === total;
-            pagesHTML += `
-              <div class="${!isLast ? 'print-page-break' : ''}">
-                ${buildSingleIndustrialLabelHTML(data, i, total, false)}
-              </div>
-            `;
-          }
-        } else {
-          pagesHTML = `<div>${buildSingleIndustrialLabelHTML(data, previewCartonIndex, total, false)}</div>`;
-        }
-      }
-
-      printMount.innerHTML = pagesHTML;
-      setTimeout(() => {
-        window.print();
-      }, 80);
-    }
-
-    function handleSaveAndPrint() {
-      const savedItem = saveShipmentInternal();
-      if (!savedItem) return;
-      preparePrintMountAndTrigger(savedItem);
-    }
-
-    function saveShipmentOnly() {
-      const savedItem = saveShipmentInternal();
-      if (savedItem) {
-        showToast(`تم حفظ الشحنة (${savedItem.id}) في السجل بنجاح`);
-        generateNewShipmentId();
-      }
-    }
-
-    function saveShipmentInternal() {
-      const data = getFormData();
-      if (!data.shopName || !data.city || !data.customerName || !data.carrierName) {
-        showToast('يرجى تعبئة الحقول الأساسية (اسم المحل، المدينة، الزبون، المخرج)', '⚠️');
-        return null;
-      }
-
-      const nowStr = getFormattedNow();
-      const shipmentRecord = {
-        ...data,
-        status: 'قيد التجهيز',
-        createdAt: nowStr
-      };
-
-      const existingIdx = shipments.findIndex(s => s.id === shipmentRecord.id);
-      if (existingIdx >= 0) {
-        shipmentRecord.status = shipments[existingIdx].status;
-        shipments[existingIdx] = shipmentRecord;
-      } else {
-        shipments.unshift(shipmentRecord);
-      }
-
-      // Also auto-save shop & carrier if new
-      if (!savedCarriers.includes(data.carrierName)) {
-        savedCarriers.push(data.carrierName);
-      }
-      const shopExists = savedShops.some(s => s.shopName === data.shopName);
-      if (!shopExists) {
-        savedShops.unshift({
-          shopName: data.shopName,
-          city: data.city,
-          customerName: data.customerName,
-          phone: data.phone,
-          carrier: data.carrierName
-        });
-      }
-
-      saveAllData();
-      populateDirectoryUI();
-      syncShipmentToCloud(shipmentRecord);
-      return shipmentRecord;
-    }
-
-    // --- WHATSAPP DIRECT CUSTOMER NOTIFICATION ---
-    function buildWhatsAppURL(item) {
-      let cleanPhone = convertArabicDigits(item.phone || '').replace(/\D/g, '');
-      if (cleanPhone.startsWith('05')) {
-        cleanPhone = '966' + cleanPhone.slice(1);
-      } else if (cleanPhone.startsWith('5') && cleanPhone.length === 9) {
-        cleanPhone = '966' + cleanPhone;
-      }
-
-      const trackingUrl = `${window.location.origin}${window.location.pathname}#track=${encodeURIComponent(item.id)}`;
-      const msg = [
-        `مرحباً بك من *مؤسسة الريف التقني لقطع غيار الشاحنات* 🚚`,
-        ``,
-        `تم تجهيز وإصدار بوليصة شحنتكم بنجاح:`,
-        `▪ *رقم الشحنة:* ${item.id}`,
-        `▪ *المرسل إليه:* ${item.shopName} (${item.customerName})`,
-        `▪ *الوجهة:* ${item.city}`,
-        `▪ *عدد الطرود:* ${item.cartons} كرتون`,
-        `▪ *شركة الشحن (المخرج):* ${item.carrierName}`,
-        item.invoiceNo ? `▪ *رقم الفاتورة:* ${item.invoiceNo}` : null,
-        `▪ *حالة الدفع:* ${item.paymentStatus}`,
-        ``,
-        `🔗 *رابط تتبع الشحنة:*`,
-        trackingUrl,
-        ``,
-        `نسعد بخدمتكم دائماً!`
-      ].filter(Boolean).join('\n');
-
-      return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
-    }
-
-    function sendWhatsAppFromForm() {
-      const data = getFormData();
-      if (!data.phone) {
-        showToast('يرجى إدخال رقم جوال الزبون أولاً لإرسال الإشعار عبر واتساب', '⚠️');
-        document.getElementById('customerPhone').focus();
-        return;
-      }
-      window.open(buildWhatsAppURL(data), '_blank', 'noopener,noreferrer');
-    }
-
-    function sendWhatsAppById(id) {
-      const item = shipments.find(s => s.id === id);
-      if (!item) return;
-      window.open(buildWhatsAppURL(item), '_blank', 'noopener,noreferrer');
-    }
-
-    // --- SHIPMENTS MANAGEMENT TABLE & KPIs ---
-    function updateStatsAndBadges() {
-      const total = shipments.length;
-      const totalCartons = shipments.reduce((acc, s) => acc + (Number(s.cartons) || 1), 0);
-      const prep = shipments.filter(s => s.status === 'قيد التجهيز').length;
-      const transit = shipments.filter(s => s.status === 'سُلمت للمخرج').length;
-      const delivered = shipments.filter(s => s.status === 'تم التسليم').length;
-
-      document.getElementById('navShipmentsCount').textContent = total;
-      document.getElementById('kpiTotal').textContent = total;
-      document.getElementById('kpiTotalCartons').textContent = `${totalCartons} كرتون إجمالي`;
-      document.getElementById('kpiPrep').textContent = prep;
-      document.getElementById('kpiTransit').textContent = transit;
-      document.getElementById('kpiDelivered').textContent = delivered;
-    }
-
-    function getStatusBadgeClasses(status) {
-      if (status === 'تم التسليم') return 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30';
-      if (status === 'سُلمت للمخرج') return 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30';
-      return 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30';
-    }
-
-    function renderShipmentsTable() {
-      updateStatsAndBadges();
-      const query = (document.getElementById('searchShipmentsInput')?.value || '').trim().toLowerCase();
-      const statusFilter = document.getElementById('filterStatusSelect')?.value || 'ALL';
-      const paymentFilter = document.getElementById('filterPaymentSelect')?.value || 'ALL';
-
-      const filtered = shipments.filter(item => {
-        const matchesStatus = statusFilter === 'ALL' || item.status === statusFilter;
-        const matchesPayment = paymentFilter === 'ALL' || item.paymentStatus === paymentFilter;
-        const hay = `${item.id} ${item.shopName} ${item.customerName} ${item.city} ${item.carrierName} ${item.phone} ${item.invoiceNo || ''}`.toLowerCase();
-        const matchesQuery = !query || hay.includes(query);
-        return matchesStatus && matchesPayment && matchesQuery;
-      });
-
-      const tbody = document.getElementById('shipmentsTableBody');
-      if (filtered.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="8" class="py-12 text-center text-slate-400 font-bold">
-              لا توجد شحنات مطابقة للبحث الحالي
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      tbody.innerHTML = filtered.map(item => `
-        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-          <td class="py-3.5 px-4 font-mono font-black text-amber-600 dark:text-amber-400" dir="ltr">
-            ${escapeHTML(item.id)}
-          </td>
-          <td class="py-3.5 px-4">
-            <div class="font-black text-slate-900 dark:text-white">${escapeHTML(item.shopName)}</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2 mt-0.5">
-              <span>👤 ${escapeHTML(item.customerName)}</span>
-              <span class="font-mono" dir="ltr">📞 ${escapeHTML(item.phone)}</span>
-            </div>
-          </td>
-          <td class="py-3.5 px-4">
-            <span class="inline-block px-2 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 font-extrabold text-xs mb-1">
-              📍 ${escapeHTML(item.city)}
-            </span>
-            <div class="text-xs font-bold text-slate-700 dark:text-slate-300">🚚 ${escapeHTML(item.carrierName)}</div>
-          </td>
-          <td class="py-3.5 px-4 text-center">
-            <span class="px-2.5 py-1 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-mono font-black text-xs">
-              ${item.cartons}
-            </span>
-          </td>
-          <td class="py-3.5 px-4">
-            <div class="font-extrabold text-xs">${escapeHTML(item.paymentStatus)}</div>
-            <div class="font-mono text-[11px] text-slate-400" dir="ltr">${escapeHTML(item.invoiceNo || '—')}</div>
-          </td>
-          <td class="py-3.5 px-4">
-            <select
-              onchange="updateShipmentStatus('${item.id}', this.value)"
-              class="px-2.5 py-1 rounded-lg border text-xs font-extrabold cursor-pointer focus:outline-none ${getStatusBadgeClasses(item.status)}"
-            >
-              <option value="قيد التجهيز" ${item.status === 'قيد التجهيز' ? 'selected' : ''}>قيد التجهيز</option>
-              <option value="سُلمت للمخرج" ${item.status === 'سُلمت للمخرج' ? 'selected' : ''}>سُلمت للمخرج</option>
-              <option value="تم التسليم" ${item.status === 'تم التسليم' ? 'selected' : ''}>تم التسليم</option>
-            </select>
-          </td>
-          <td class="py-3.5 px-4 font-mono text-xs text-slate-500 dark:text-slate-400" dir="ltr">
-            ${escapeHTML(item.createdAt)}
-          </td>
-          <td class="py-3.5 px-4">
-            <div class="flex items-center justify-center gap-1.5">
-              <button onclick="reprintShipment('${item.id}')" class="p-2 rounded-lg bg-amber-500/15 hover:bg-amber-500 text-amber-600 dark:text-amber-400 hover:text-slate-950 font-bold text-xs transition-all" title="تحميل بالمعاينة والطباعة">
-                🖨️ طباعة
-              </button>
-              <button onclick="sendWhatsAppById('${item.id}')" class="p-2 rounded-lg bg-emerald-500/15 hover:bg-emerald-500 text-emerald-500 hover:text-white font-bold text-xs transition-all" title="إرسال واتساب للعميل">
-                💬 واتساب
-              </button>
-              <button onclick="deleteShipment('${item.id}')" class="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white font-bold text-xs transition-all" title="حذف">
-                🗑️
-              </button>
-            </div>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function updateShipmentStatus(id, newStatus) {
-      const item = shipments.find(s => s.id === id);
-      if (!item) return;
-      item.status = newStatus;
-      saveAllData();
-      renderShipmentsTable();
-      syncShipmentToCloud(item);
-      showToast(`تم تحديث حالة الشحنة ${id} إلى "${newStatus}"`);
-    }
-
-    function reprintShipment(id) {
-      const item = shipments.find(s => s.id === id);
-      if (!item) return;
-      fillFormWithSample(item);
-      switchTab('create');
-      showToast(`تم تحميل الشحنة ${id} في المعاينة للطباعة أو التعديل`);
-    }
-
-    function deleteShipment(id) {
-      shipments = shipments.filter(s => s.id !== id);
-      saveAllData();
-      renderShipmentsTable();
-      showToast(`تم حذف الشحنة ${id}`);
-    }
-
-    // --- EXPORT TO EXCEL CSV (With Arabic UTF-8 BOM) ---
     function exportShipmentsCSV() {
-      if (shipments.length === 0) {
-        showToast('لا توجد شحنات لتصديرها', '⚠️');
-        return;
-      }
-      const headers = ['رقم الشحنة', 'اسم المحل', 'المدينة', 'اسم الزبون', 'رقم الجوال', 'اسم المخرج', 'عدد الكراتين', 'حالة الدفع', 'رقم الفاتورة', 'حالة الشحنة', 'التاريخ', 'الملاحظات'];
+      if (shipments.length === 0) return showToast('لا توجد شحنات لتصديرها');
+      const headers = ['رقم الشحنة', 'اسم المحل', 'المدينة', 'الزبون', 'الجوال', 'المخرج', 'الكراتين', 'الدفع', 'الحالة', 'التاريخ'];
       const rows = shipments.map(s => [
-        s.id,
-        s.shopName,
-        s.city,
-        s.customerName,
-        s.phone,
-        s.carrierName,
-        s.cartons,
-        s.paymentStatus,
-        s.invoiceNo || '',
-        s.status,
-        s.createdAt,
-        s.notes || ''
+        s.id, s.shopName, s.city, s.customerName, s.phone, s.carrier, s.boxes, s.paymentStatus, s.status, s.createdAt
       ]);
-
-      const csvContent = '\uFEFF' + [headers, ...rows]
-        .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
-        .join('\n');
-
+      const csvContent = '\uFEFF' + [headers, ...rows].map(r => r.map(v => `"${String(v || '').replace(/"/g, '""')}"`).join(',')).join('\n');
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `شحنات_الريف_التقني_${new Date().toISOString().slice(0, 10)}.csv`;
-      document.body.appendChild(a);
+      a.download = `REEFTEK_Shipments_${new Date().toISOString().slice(0,10)}.csv`;
       a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      showToast('تم تصدير ملف Excel (CSV) بنجاح');
     }
 
-    // --- QUICK TRACKING & QR SCANNER MODAL ---
-    function openTrackModal(prefillId = '') {
-      document.getElementById('trackModal').classList.remove('hidden');
-      const input = document.getElementById('trackLookupInput');
-      input.value = prefillId || currentShipmentId;
-      lookupShipmentById();
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      document.getElementById('toastText').textContent = msg;
+      box.classList.remove('hidden');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => box.classList.add('hidden'), 3200);
     }
 
-    function closeTrackModal() {
-      document.getElementById('trackModal').classList.add('hidden');
-    }
-
-    function lookupShipmentById() {
-      const q = document.getElementById('trackLookupInput').value.trim().toUpperCase();
-      const container = document.getElementById('trackResultContainer');
-      const item = shipments.find(s => s.id.toUpperCase() === q);
-
-      if (!item) {
-        container.innerHTML = `
-          <div class="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-center text-xs font-bold text-rose-500">
-            لم يتم العثور على شحنة برقم (${escapeHTML(q)}) في السجل الحالي.
-          </div>
-        `;
+    // اختصارات الكيبورد (Enter للتنقل و Ctrl+Enter للطباعة)
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        handleSaveAndPrint();
         return;
       }
-
-      container.innerHTML = `
-        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-2.5">
-            <div>
-              <span class="font-mono font-black text-base text-amber-500">${escapeHTML(item.id)}</span>
-              <h4 class="font-black text-sm text-slate-900 dark:text-white">${escapeHTML(item.shopName)}</h4>
-            </div>
-            <span class="px-2.5 py-1 rounded-lg border text-xs font-extrabold ${getStatusBadgeClasses(item.status)}">
-              ${escapeHTML(item.status)}
-            </span>
-          </div>
-
-          <div class="grid grid-cols-2 gap-2 text-xs">
-            <div><span class="text-slate-400">الوجهة:</span> <strong class="font-black">${escapeHTML(item.city)}</strong></div>
-            <div><span class="text-slate-400">المخرج:</span> <strong class="font-black">${escapeHTML(item.carrierName)}</strong></div>
-            <div><span class="text-slate-400">المستلم:</span> <strong>${escapeHTML(item.customerName)}</strong></div>
-            <div><span class="text-slate-400">عدد الطرود:</span> <strong>${item.cartons} كرتون</strong></div>
-          </div>
-
-          <!-- Instant 1-Tap Status Update for Warehouse Staff -->
-          <div class="pt-2 border-t border-slate-200 dark:border-slate-700">
-            <div class="text-[11px] font-bold text-slate-400 mb-1.5">تحديث فوري للحالة (عند المسح بالجوال):</div>
-            <div class="grid grid-cols-3 gap-2">
-              <button onclick="updateShipmentStatus('${item.id}', 'قيد التجهيز'); lookupShipmentById();" class="py-2 rounded-lg text-xs font-extrabold border ${item.status === 'قيد التجهيز' ? 'bg-amber-500 text-slate-950 border-amber-500' : 'border-slate-300 dark:border-slate-700'}">
-                قيد التجهيز
-              </button>
-              <button onclick="updateShipmentStatus('${item.id}', 'سُلمت للمخرج'); lookupShipmentById();" class="py-2 rounded-lg text-xs font-extrabold border ${item.status === 'سُلمت للمخرج' ? 'bg-sky-500 text-slate-950 border-sky-500' : 'border-slate-300 dark:border-slate-700'}">
-                سُلمت للمخرج
-              </button>
-              <button onclick="updateShipmentStatus('${item.id}', 'تم التسليم'); lookupShipmentById();" class="py-2 rounded-lg text-xs font-extrabold border ${item.status === 'تم التسليم' ? 'bg-emerald-500 text-slate-950 border-emerald-500' : 'border-slate-300 dark:border-slate-700'}">
-                تم التسليم ✓
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function checkUrlForTrackingHash() {
-      const hash = window.location.hash || '';
-      if (hash.startsWith('#track=')) {
-        const trackId = decodeURIComponent(hash.replace('#track=', ''));
-        if (trackId) {
-          openTrackModal(trackId);
+      if (e.key === 'Enter' && e.target.classList.contains('form-nav')) {
+        e.preventDefault();
+        const navs = Array.from(document.querySelectorAll('.form-nav'));
+        const idx = navs.indexOf(e.target);
+        if (idx >= 0 && idx < navs.length - 1) {
+          navs[idx + 1].focus();
+          if (navs[idx + 1].select) navs[idx + 1].select();
         }
       }
-    }
+    });
 
-    // --- KEYBOARD SHORTCUTS (Enter & Ctrl+Enter) ---
-    function setupKeyboardShortcuts() {
-      const inputs = Array.from(document.querySelectorAll('.form-nav-input'));
-      inputs.forEach((input, idx) => {
-        input.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' && !e.ctrlKey && !e.metaKey) {
-            e.preventDefault();
-            const next = inputs[idx + 1];
-            if (next) {
-              next.focus();
-              if (next.select) next.select();
-            }
-          }
-        });
-      });
+    // التشغيل الأولي وفحص رابط الباركود الذكي عند فتح الموقع من الجوال
+    window.addEventListener('DOMContentLoaded', async () => {
+      renderDirectory();
+      updatePreview();
+      renderShipmentsTable();
 
-      window.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-          e.preventDefault();
-          handleSaveAndPrint();
+      // مزامنة أولية مع Supabase
+      await syncFromCloud(false);
+
+      // إذا تم فتح الرابط عبر مسح كود الـ QR بالجوال (?track=RT-...)
+      const params = new URLSearchParams(window.location.search);
+      const trackId = params.get('track');
+      if (trackId) {
+        const shopFromQr = params.get('s');
+        let exists = shipments.find(s => s.id.toUpperCase() === trackId.toUpperCase());
+
+        // إذا لم تكن الشحنة مسجلة بعد، يلتقط بياناتها الكاملة من رابط الـ QR نفسه ويعرضها فوراً!
+        if (!exists && shopFromQr) {
+          const qrShipment = {
+            id: trackId.toUpperCase(),
+            shopName: shopFromQr,
+            city: params.get('c') || 'الرياض',
+            customerName: params.get('u') || '',
+            phone: params.get('p') || '',
+            carrier: params.get('m') || '',
+            boxes: parseInt(params.get('b')) || 1,
+            paymentStatus: params.get('pay') || 'مدفوع',
+            codAmount: '',
+            invoiceNo: params.get('inv') || '',
+            notes: '',
+            warnings: [],
+            status: 'قيد التجهيز',
+            createdAt: new Date().toISOString()
+          };
+          shipments.unshift(qrShipment);
+          localStorage.setItem('reeftek_shipments_v35', JSON.stringify(shipments));
+          pushShipmentToCloud(qrShipment);
+          renderShipmentsTable();
         }
-      });
-    }
 
-    // --- OPTIONAL SUPABASE CLOUD SYNC ---
-    function openCloudModal() {
-      document.getElementById('supaUrlInput').value = localStorage.getItem(STORAGE_KEYS.SUPA_URL) || '';
-      document.getElementById('supaKeyInput').value = localStorage.getItem(STORAGE_KEYS.SUPA_KEY) || '';
-      document.getElementById('cloudModal').classList.remove('hidden');
-    }
-
-    function closeCloudModal() {
-      document.getElementById('cloudModal').classList.add('hidden');
-    }
-
-    function initCloudSync() {
-      const url = localStorage.getItem(STORAGE_KEYS.SUPA_URL);
-      const key = localStorage.getItem(STORAGE_KEYS.SUPA_KEY);
-      const dot = document.getElementById('syncDot');
-      const txt = document.getElementById('syncText');
-
-      if (url && key && window.supabase) {
-        try {
-          supabaseClient = window.supabase.createClient(url, key);
-          dot.className = 'w-2 h-2 rounded-full bg-sky-400 animate-pulse';
-          txt.textContent = 'متصل سحابياً (Supabase)';
-        } catch (err) {
-          supabaseClient = null;
-        }
-      } else {
-        supabaseClient = null;
-        dot.className = 'w-2 h-2 rounded-full bg-emerald-500';
-        txt.textContent = 'حفظ محلي نشط';
+        openScannerModal(trackId);
       }
-    }
-
-    function saveCloudConfig() {
-      const url = document.getElementById('supaUrlInput').value.trim();
-      const key = document.getElementById('supaKeyInput').value.trim();
-      if (url && key) {
-        localStorage.setItem(STORAGE_KEYS.SUPA_URL, url);
-        localStorage.setItem(STORAGE_KEYS.SUPA_KEY, key);
-        initCloudSync();
-        closeCloudModal();
-        showToast('تم تفعيل الربط السحابي مع Supabase');
-      }
-    }
-
-    function disconnectCloudConfig() {
-      localStorage.removeItem(STORAGE_KEYS.SUPA_URL);
-      localStorage.removeItem(STORAGE_KEYS.SUPA_KEY);
-      initCloudSync();
-      closeCloudModal();
-      showToast('تم التبديل إلى وضع الحفظ المحلي');
-    }
-
-    async function syncShipmentToCloud(record) {
-      if (!supabaseClient) return;
-      try {
-        await supabaseClient.from('shipments').upsert({
-          shipment_id: record.id,
-          shop_name: record.shopName,
-          city: record.city,
-          customer_name: record.customerName,
-          carrier_name: record.carrierName,
-          phone: record.phone,
-          cartons: record.cartons,
-          invoice_no: record.invoiceNo,
-          payment_status: record.paymentStatus,
-          status: record.status,
-          notes: record.notes,
-          created_at: record.createdAt
-        });
-      } catch (e) {
-        // Silent fallback to local storage
-      }
-    }
-
-    // --- UTILITIES ---
-    function getFormattedNow() {
-      const d = new Date();
-      const yyyy = d.getFullYear();
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
-      const hh = String(d.getHours()).padStart(2, '0');
-      const min = String(d.getMinutes()).padStart(2, '0');
-      return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
-    }
-
-    function escapeHTML(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    let toastTimeout = null;
-    function showToast(msg, icon = '✓') {
-      const banner = document.getElementById('toastBanner');
-      document.getElementById('toastMessage').textContent = msg;
-      document.getElementById('toastIcon').textContent = icon;
-      banner.classList.remove('hidden');
-      clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => {
-        banner.classList.add('hidden');
-      }, 3200);
-    }
-
-  
+    });
   </script>
-
-    <!-- مكتبة Supabase الرسمية -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-  // 1. ضع بيانات مشروعك من Supabase هنا:
-  const SUPABASE_URL = "https://sefvjkaosxicjqrxbcax.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_p-vchq14hqGkUknZI_-42g_7-EY2T1g";
-
-  // تهيئة الاتصال
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  // 2. دالة جلب الشحنات من الداتا بيس عند فتح الموقع
-  async function syncFromSupabase() {
-    try {
-      const { data, error } = await supabaseClient
-        .from('shipments')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-
-      if (data) {
-        // تحديث البيانات المحلية بالبيانات السحابية
-        localStorage.setItem('reeftek_shipments_v2', JSON.stringify(data));
-        // تحديث حالة الاتصال في الواجهة إذا كان هناك عنصر يعرضها
-        console.log("✅ تم التزامن مع قاعدة البيانات بنجاح:", data.length, "شحنة");
-        if (typeof renderShipmentsTable === "function") renderShipmentsTable();
-      }
-    } catch (err) {
-      console.warn("⚠️ يعمل النظام في الوضع المحلي (تعذر الاتصال بـ Supabase):", err.message);
-    }
-  }
-
-  // 3. دالة حفظ أو تحديث شحنة في الداتا بيس
-  async function saveShipmentToSupabase(shipmentObj) {
-    try {
-      const { error } = await supabaseClient
-        .from('shipments')
-        .upsert({
-          id: shipmentObj.id,
-          shop_name: shipmentObj.shopName || shipmentObj.shop_name,
-          city: shipmentObj.city,
-          customer_name: shipmentObj.customerName || shipmentObj.customer_name,
-          phone: shipmentObj.phone,
-          carrier: shipmentObj.carrier,
-          boxes: Number(shipmentObj.boxes) || 1,
-          payment_status: shipmentObj.paymentStatus || shipmentObj.payment_status,
-          cod_amount: Number(shipmentObj.codAmount || shipmentObj.cod_amount || 0),
-          invoice_no: shipmentObj.invoiceNo || shipmentObj.invoice_no || '',
-          notes: shipmentObj.notes || '',
-          warnings: shipmentObj.warnings || [],
-          status: shipmentObj.status || 'جديدة',
-          updated_at: new Date().toISOString()
-        });
-
-      if (error) throw error;
-      console.log("✅ تم حفظ الشحنة سحابياً:", shipmentObj.id);
-    } catch (err) {
-      console.error("❌ خطأ في الحفظ السحابي:", err.message);
-    }
-  }
-
-  // 4. دالة تحديث حالة الشحنة فقط (مثلاً من: جديدة -> خرجت للتوصيل)
-  async function updateStatusInSupabase(shipmentId, newStatus) {
-    try {
-      const { error } = await supabaseClient
-        .from('shipments')
-        .update({ status: newStatus, updated_at: new Date().toISOString() })
-        .eq('id', shipmentId);
-
-      if (error) throw error;
-    } catch (err) {
-      console.error("❌ خطأ في تحديث الحالة:", err.message);
-    }
-  }
-
-  // تشغيل المزامنة فور فتح الصفحة
-  window.addEventListener('DOMContentLoaded', syncFromSupabase);
-</script>
 </body>
-
 </html>
