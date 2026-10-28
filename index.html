@@ -3,17 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الريف للشحنات | REEFTEK PRO v3.7</title>
+  <title>الريف للشحنات | REEFTEK PRO v3.8</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&family=Libre+Barcode+128&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Supabase JS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- JsBarcode لتوليد باركود خطي حقيقي يقرأه أي جهاز -->
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -21,8 +23,7 @@
         extend: {
           fontFamily: {
             sans: ['Cairo', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-            barcode: ['"Libre Barcode 128"', 'cursive']
+            mono: ['JetBrains Mono', 'monospace']
           }
         }
       }
@@ -36,7 +37,6 @@
       color: #f1f5f9;
     }
 
-    /* حركة الاهتزاز عند إدخال رمز خاطئ */
     @keyframes shakeError {
       0%, 100% { transform: translateX(0); }
       20%, 60% { transform: translateX(-10px); }
@@ -46,7 +46,7 @@
       animation: shakeError 0.4s ease-in-out;
     }
 
-    /* شكل ورقة الطباعة الصناعية في المعاينة والطباعة */
+    /* شكل ورقة الطباعة الصناعية */
     .label-sheet {
       background: #ffffff;
       color: #000000;
@@ -58,15 +58,14 @@
       print-color-adjust: exact !important;
     }
 
-    .barcode-text {
-      font-family: 'Libre Barcode 128', cursive;
-      font-size: 54px;
-      line-height: 1;
-      letter-spacing: 0;
-      white-space: nowrap;
+    /* دقة حادة جداً لكود الـ QR لكي تلتقطه كاميرا الجوال من الشاشة فوراً */
+    .qr-code-img {
+      image-rendering: -moz-crisp-edges;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
     }
 
-    /* إعدادات الطباعة الاحترافية */
     @media print {
       @page {
         size: A4 portrait;
@@ -113,7 +112,6 @@
   <div id="authLockScreen" class="no-print fixed inset-0 z-[100] bg-slate-950 flex flex-col justify-between p-4 overflow-y-auto"
        style="background-image: radial-gradient(circle at 50% 15%, rgba(245, 158, 11, 0.14), transparent 60%);">
     
-    <!-- شريط علوي بسيط -->
     <div class="max-w-6xl w-full mx-auto flex items-center justify-between py-2 text-xs text-slate-400">
       <div class="flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
@@ -122,11 +120,9 @@
       <div id="lockScreenDate" class="font-mono text-slate-400"></div>
     </div>
 
-    <!-- بطاقة الترحيب ورمز الدخول في المنتصف -->
     <div class="my-auto max-w-md w-full mx-auto">
       <div id="loginCardBox" class="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl text-center space-y-6">
         
-        <!-- الشعار والترحيب الزمني -->
         <div class="space-y-3">
           <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 mx-auto flex items-center justify-center text-slate-950 font-black text-3xl shadow-xl shadow-amber-500/25">
             RT
@@ -143,7 +139,6 @@
           </div>
         </div>
 
-        <!-- مميزات سريعة -->
         <div class="grid grid-cols-3 gap-2 text-[11px] font-bold text-slate-300 bg-slate-950/70 p-2.5 rounded-2xl border border-slate-800/80">
           <div class="flex flex-col items-center gap-1 py-1">
             <span class="text-amber-400 text-base">🖨️</span>
@@ -151,7 +146,7 @@
           </div>
           <div class="flex flex-col items-center gap-1 py-1 border-x border-slate-800">
             <span class="text-emerald-400 text-base">📱</span>
-            <span>باركود تتبع حي</span>
+            <span>باركود فائق الوضوح</span>
           </div>
           <div class="flex flex-col items-center gap-1 py-1">
             <span class="text-sky-400 text-base">☁️</span>
@@ -159,14 +154,12 @@
           </div>
         </div>
 
-        <!-- قسم إدخال رمز الموظفين (6 أرقام) -->
         <div class="space-y-3 pt-1">
           <div class="flex items-center justify-between text-xs">
             <span class="font-bold text-slate-300">🔐 أدخل رمز دخول الموظفين (6 أرقام):</span>
             <button type="button" onclick="clearPinBoxes()" class="text-slate-400 hover:text-amber-400 text-[11px]">مسح الحقول</button>
           </div>
 
-          <!-- خانات الأرقام الستة -->
           <div class="flex items-center justify-center gap-2 sm:gap-2.5" dir="ltr">
             <input type="password" inputmode="numeric" maxlength="1" class="pin-box w-11 h-13 sm:w-12 sm:h-14 text-center text-xl font-mono font-black bg-slate-950 border-2 border-slate-700 rounded-xl text-amber-400 focus:border-amber-400 focus:outline-none transition" />
             <input type="password" inputmode="numeric" maxlength="1" class="pin-box w-11 h-13 sm:w-12 sm:h-14 text-center text-xl font-mono font-black bg-slate-950 border-2 border-slate-700 rounded-xl text-amber-400 focus:border-amber-400 focus:outline-none transition" />
@@ -176,20 +169,20 @@
             <input type="password" inputmode="numeric" maxlength="1" class="pin-box w-11 h-13 sm:w-12 sm:h-14 text-center text-xl font-mono font-black bg-slate-950 border-2 border-slate-700 rounded-xl text-amber-400 focus:border-amber-400 focus:outline-none transition" />
           </div>
 
-          <!-- رسالة الخطأ عند إدخال رمز غير صحيح -->
           <p id="pinErrorAlert" role="alert" class="hidden text-xs font-bold text-rose-400 bg-rose-950/50 border border-rose-500/30 rounded-xl py-2 px-3">
             ❌ رمز الدخول غير صحيح، حاول مرة أخرى.
           </p>
 
-          <!-- خيار تذكر الدخول على الجهاز -->
           <div class="flex items-center justify-between pt-1 text-xs text-slate-400">
             <label class="flex items-center gap-2 cursor-pointer select-none">
               <input type="checkbox" id="rememberSessionCheck" checked class="accent-amber-500 rounded" />
               <span>تذكر دخولي على هذا الجهاز اليوم</span>
             </label>
+            <button type="button" onclick="openScannerModal()" class="text-amber-400 hover:underline font-bold">
+              🔍 تتبع شحنة برقمها
+            </button>
           </div>
 
-          <!-- زر الدخول -->
           <button type="button" onclick="verifyPinAndUnlock()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/20 transition">
             دخول إلى النظام ⬅
           </button>
@@ -198,26 +191,23 @@
       </div>
     </div>
 
-    <!-- تذييل شاشة الدخول -->
     <div class="max-w-6xl w-full mx-auto text-center py-2 text-xs text-slate-500">
       REEFTEK © 2026 · مؤسسة الريف التقني لقطع غيار الشاحنات · تصميم وتطوير: <strong class="text-slate-300">سعيد عبدالله</strong>
     </div>
   </div>
 
-  <!-- حاوية صفحات الطباعة الفعلية (تظهر وقت الطباعة فقط) -->
+  <!-- حاوية صفحات الطباعة الفعلية -->
   <div id="printMount" class="hidden"></div>
 
   <!-- ========================================================================= -->
-  <!-- محتوى النظام المحمي (يظهر فقط بعد تسجيل الدخول الصحيح) -->
+  <!-- محتوى النظام المحمي (يظهر بعد تسجيل الدخول) -->
   <!-- ========================================================================= -->
   <div id="protectedAppWrapper" class="hidden min-h-screen flex flex-col">
 
-    <!-- الترويسة العلوية -->
     <header class="no-print sticky top-0 z-30 bg-slate-900/95 backdrop-blur border-b border-slate-800">
       <div class="max-w-7xl mx-auto px-4 py-3">
         <div class="flex flex-wrap items-center justify-between gap-4">
           
-          <!-- الشعار والاسم -->
           <div class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-amber-500/20">
               RT
@@ -226,14 +216,13 @@
               <div class="flex items-center gap-2">
                 <h1 class="text-lg md:text-xl font-black tracking-tight text-white">الريف للشحنات</h1>
                 <span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/30">
-                  REEFTEK PRO v3.7
+                  REEFTEK PRO v3.8
                 </span>
               </div>
               <p class="text-xs text-slate-400">مؤسسة الريف التقني لقطع غيار الشاحنات — نظام البوليصات وتتبع الطرود السحابي</p>
             </div>
           </div>
 
-          <!-- التبويبات -->
           <nav class="flex items-center bg-slate-950/80 p-1 rounded-xl border border-slate-800">
             <button onclick="switchTab('create')" id="tabBtn-create" class="px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-bold transition bg-amber-500 text-slate-950">
               إصدار بوليصة وملصق
@@ -246,9 +235,8 @@
             </button>
           </nav>
 
-          <!-- أزرار الفحص وحالة السحابة والقفل -->
           <div class="flex items-center gap-2">
-            <button onclick="openScannerModal()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 text-xs font-bold transition">
+            <button onclick="openScannerModal(document.getElementById('currentShipmentId').textContent)" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 text-xs font-bold transition">
               <span>🔍</span>
               <span class="hidden sm:inline">فحص شحنة</span>
             </button>
@@ -272,7 +260,6 @@
       </div>
     </header>
 
-    <!-- المحتوى الرئيسي -->
     <main class="no-print flex-1 max-w-7xl w-full mx-auto px-4 py-6">
 
       <!-- القسم 1: إصدار البوليصة والمعاينة الحية -->
@@ -299,7 +286,6 @@
             </div>
           </div>
 
-          <!-- شريط اكتمال الحقول -->
           <div class="mb-4">
             <div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
               <div id="formProgressBar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 100%"></div>
@@ -310,7 +296,6 @@
             </div>
           </div>
 
-          <!-- اختيار سريع من دليل المحلات -->
           <div class="mb-4 p-3 rounded-xl bg-slate-950/70 border border-slate-800/80">
             <label class="block text-xs font-bold text-amber-400 mb-1.5">⚡ تعبئة سريعة من المحلات المحفوظة:</label>
             <select id="quickShopSelect" onchange="applyQuickShop(this.value)" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:border-amber-500 focus:outline-none">
@@ -318,7 +303,6 @@
             </select>
           </div>
 
-          <!-- الحقول الأساسية -->
           <form id="shipmentForm" onsubmit="event.preventDefault(); handleSaveAndPrint();" class="space-y-3.5">
             
             <div>
@@ -377,7 +361,6 @@
               </div>
             </div>
 
-            <!-- عدد الكراتين وحالة الدفع -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
                 <label class="block text-xs font-bold text-slate-300 mb-1.5">عدد الكراتين / الطرود</label>
@@ -410,7 +393,6 @@
               </div>
             </div>
 
-            <!-- تفاصيل الفاتورة والتنبيهات -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="block text-xs font-bold text-slate-400 mb-1">رقم الفاتورة / طلب المبيعات (اختياري)</label>
@@ -426,7 +408,6 @@
               </div>
             </div>
 
-            <!-- رموز تنبيهية على الكرتون -->
             <div>
               <label class="block text-xs font-bold text-slate-300 mb-1.5">رموز تنبيهية مطبوعة على الملصق:</label>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
@@ -449,7 +430,6 @@
               </div>
             </div>
 
-            <!-- أزرار الإجراءات والحفظ والطباعة -->
             <div class="pt-3 space-y-2.5">
               <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-base shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 transition">
                 <span>🖨️</span>
@@ -478,10 +458,9 @@
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-              <h3 class="font-bold text-sm text-white">معاينة حية لورقة الطباعة</h3>
+              <h3 class="font-bold text-sm text-white">معاينة حية لورقة الطباعة (امسح الكود بالجوال أو اضغط عليه للتجربة)</h3>
             </div>
 
-            <!-- اختيار قالب الطباعة -->
             <div class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
               <button type="button" onclick="setPrintTemplate('single')" id="tplBtn-single" class="px-2.5 py-1 rounded-lg font-bold bg-amber-500 text-slate-950">
                 ملصق صناعي كبير
@@ -494,7 +473,6 @@
               </button>
             </div>
 
-            <!-- التنقل بين الكراتين في المعاينة -->
             <div class="flex items-center gap-2 text-xs bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
               <span class="text-slate-400">معاينة الكرتون:</span>
               <button type="button" onclick="stepPreviewBox(-1)" class="px-1.5 py-0.5 bg-slate-800 rounded hover:bg-slate-700 font-bold">◀</button>
@@ -503,7 +481,6 @@
             </div>
           </div>
 
-          <!-- منطقة عرض الورقة البيضاء -->
           <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-4 md:p-6 overflow-x-auto">
             <div id="livePreviewContainer" class="max-w-[680px] mx-auto"></div>
           </div>
@@ -515,7 +492,6 @@
       <!-- القسم 2: سجل وإدارة الشحنات -->
       <section id="tab-shipments" class="hidden space-y-6">
         
-        <!-- بطاقات الإحصائيات -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center justify-between">
             <div>
@@ -554,7 +530,6 @@
           </div>
         </div>
 
-        <!-- أدوات البحث والفلترة -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
           <div class="flex flex-wrap items-center gap-3 flex-1">
             <input type="text" id="searchShipmentsInput" oninput="renderShipmentsTable()"
@@ -587,7 +562,6 @@
           </div>
         </div>
 
-        <!-- جدول الشحنات -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-right text-xs">
@@ -612,7 +586,6 @@
       <!-- القسم 3: دليل المحلات والمخرجين -->
       <section id="tab-directory" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- دليل المحلات الدائمة -->
         <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
           <div class="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
@@ -636,7 +609,6 @@
           <div id="directoryShopsList" class="space-y-2 max-h-96 overflow-y-auto"></div>
         </div>
 
-        <!-- قائمة المخرجين -->
         <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
           <div class="border-b border-slate-800 pb-3">
             <h3 class="font-extrabold text-base text-white">قائمة المخرجين وشركات الشحن</h3>
@@ -655,7 +627,6 @@
 
     </main>
 
-    <!-- التذييل -->
     <footer class="no-print border-t border-slate-900 bg-slate-950/80 py-4 mt-8">
       <div class="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
         <div>الريف للشحنات - REEFTEK PRO | مؤسسة الريف التقني لقطع غيار الشاحنات</div>
@@ -666,10 +637,9 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- النوافذ المنبثقة (التتبع + إعدادات رمز الدخول + إعدادات Supabase) -->
+  <!-- النوافذ المنبثقة -->
   <!-- ========================================================================= -->
 
-  <!-- نافذة فحص وتتبع الشحنة (تفتح فوق شاشة القفل للعميل أو للموظف) -->
   <div id="scannerModal" class="no-print fixed inset-0 z-[120] hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-5 shadow-2xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -695,7 +665,6 @@
     </div>
   </div>
 
-  <!-- نافذة تغيير رمز الدخول (للموظفين) -->
   <div id="pinSettingsModal" class="no-print fixed inset-0 z-[110] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-5 shadow-2xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -720,7 +689,6 @@
     </div>
   </div>
 
-  <!-- نافذة إعدادات الربط السحابي Supabase -->
   <div id="supabaseModal" class="no-print fixed inset-0 z-[110] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-xl w-full p-5 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -776,7 +744,6 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
     </div>
   </div>
 
-  <!-- إشعار منبثق Toast -->
   <div id="toastBox" class="no-print fixed bottom-5 left-5 z-[130] hidden bg-slate-900 border border-amber-500/50 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs font-bold">
     <span class="text-amber-400 text-base">✓</span>
     <span id="toastText">تمت العملية بنجاح</span>
@@ -787,7 +754,7 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
     // ============================================================================
     // 1. إعدادات الحماية ورمز دخول الموظفين (الافتراضي: 123456)
     // ============================================================================
-    const DEFAULT_PIN = "123456"; // يمكنك تغيير الرمز الافتراضي من هنا أو من داخل الموقع
+    const DEFAULT_PIN = "123456";
     let currentAccessPin = localStorage.getItem('reeftek_access_pin') || DEFAULT_PIN;
     let isEmployeeAuthenticated = false;
 
@@ -811,11 +778,9 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
       });
 
-      // برمجة خانات الـ 6 أرقام للتنقل التلقائي والتحقق الفوري
       const boxes = Array.from(document.querySelectorAll('.pin-box'));
       boxes.forEach((box, idx) => {
         box.addEventListener('input', (e) => {
-          // تحويل الأرقام العربية إلى إنجليزية
           const arabicNums = '٠١٢٣٤٥٦٧٨٩';
           let val = e.target.value.replace(/[٠-٩]/g, d => arabicNums.indexOf(d)).replace(/\D/g, '');
           e.target.value = val.slice(-1);
@@ -826,7 +791,6 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
             boxes[idx + 1].focus();
           }
 
-          // إذا اكتملت الـ 6 خانات يتحقق تلقائياً
           const fullCode = boxes.map(b => b.value).join('');
           if (fullCode.length === 6) {
             verifyPinAndUnlock();
@@ -841,7 +805,6 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
           }
         });
 
-        // دعم لصق الرمز كاملاً
         box.addEventListener('paste', (e) => {
           e.preventDefault();
           const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
@@ -852,7 +815,6 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
         });
       });
 
-      // التحقق مما إذا كانت الجلسة محفوظة لليوم
       const savedSessionDay = localStorage.getItem('reeftek_auth_day');
       const todayKey = new Date().toISOString().slice(0, 10);
       if (savedSessionDay === todayKey) {
@@ -883,7 +845,7 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
         const err = document.getElementById('pinErrorAlert');
         err.classList.remove('hidden');
         card.classList.remove('shake-anim');
-        void card.offsetWidth; // trigger reflow
+        void card.offsetWidth;
         card.classList.add('shake-anim');
         boxes.forEach(b => b.value = '');
         if (boxes[0]) boxes[0].focus();
@@ -897,7 +859,7 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
       if (showWelcomeToast) {
         showToast('أهلاً بك! تم فتح نظام الريف للشحنات بنجاح ✓');
       }
-      // إذا كانت نافذة التتبع مفتوحة، نعيد عرضها مع صلاحيات الموظف
+      renderAllBarcodes();
       const currentScanId = document.getElementById('scannerInput')?.value;
       if (!document.getElementById('scannerModal').classList.contains('hidden') && currentScanId) {
         lookupShipment(currentScanId);
@@ -935,7 +897,7 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
     }
 
     // ============================================================================
-    // 2. بيانات الربط السحابي (Supabase) المدمجة لمشروع سعيد عبدالله
+    // 2. بيانات الربط السحابي (Supabase)
     // ============================================================================
     const DEFAULT_SUPABASE_URL = "https://sefvjkaosxicjqrxbcax.supabase.co";
     const DEFAULT_SUPABASE_KEY = "sb_publishable_p-vchq14hqGkUknZI_-42g_7-EY2T1g";
@@ -958,7 +920,7 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
     initSupabaseClient();
 
     // ============================================================================
-    // 3. حالة النظام والبيانات الافتراضية
+    // 3. حالة النظام والبيانات الافتراضية (مع تسجيل الشحنة الافتراضية RT-84920 مسبقاً)
     // ============================================================================
     let printTemplate = 'single';
     let previewBoxIndex = 1;
@@ -980,9 +942,31 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
       'مندوب خاص / استلام من المستودع'
     ];
 
+    const initialSampleShipment = {
+      id: 'RT-84920',
+      shopName: 'مؤسسة الصقر لقطع غيار الشاحنات',
+      city: 'الرياض',
+      customerName: 'أبو فهد العتيبي',
+      phone: '0501234567',
+      carrier: 'مخرج الصاعدي للنقل',
+      boxes: 3,
+      paymentStatus: 'مدفوع',
+      codAmount: '',
+      invoiceNo: 'INV-2026-994',
+      notes: 'فلاتر + طقم اصلاح + اصطبات',
+      warnings: ['قابل للكسر', 'اتجاه للأعلى'],
+      status: 'قيد التجهيز',
+      createdAt: new Date().toISOString()
+    };
+
     let shopsDirectory = JSON.parse(localStorage.getItem('reeftek_shops_v36') || 'null') || defaultShops;
     let carriersList = JSON.parse(localStorage.getItem('reeftek_carriers_v36') || 'null') || defaultCarriers;
-    let shipments = JSON.parse(localStorage.getItem('reeftek_shipments_v35') || '[]');
+    let shipments = JSON.parse(localStorage.getItem('reeftek_shipments_v35') || 'null');
+
+    if (!Array.isArray(shipments) || shipments.length === 0) {
+      shipments = [initialSampleShipment];
+      localStorage.setItem('reeftek_shipments_v35', JSON.stringify(shipments));
+    }
 
     // ============================================================================
     // 4. المزامنة مع Supabase
@@ -1080,22 +1064,42 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
     }
 
     // ============================================================================
-    // 5. الباركود الذكي وبناء ورقة الطباعة الصناعية
+    // 5. بناء رابط QR مضغوط وخفيف جداً ليقرأه الجوال في جزء من الثانية
     // ============================================================================
     function buildSmartTrackingUrl(data) {
       const baseUrl = window.location.origin + window.location.pathname;
-      const params = new URLSearchParams({
-        track: data.id,
-        s: data.shopName || '',
-        c: data.city || '',
-        u: data.customerName || '',
-        p: data.phone || '',
-        m: data.carrier || '',
-        b: String(data.boxes || 1),
-        pay: data.paymentStatus || 'مدفوع',
-        inv: data.invoiceNo || ''
-      });
-      return `${baseUrl}?${params.toString()}`;
+      // إذا كان المحل موجوداً في دليل المحلات، نرسل رقم الفهرس فقط (i=0) ليكون كود الـ QR صغيراً وواضحاً جداً!
+      const shopIdx = shopsDirectory.findIndex(sh => sh.shopName === data.shopName);
+      if (shopIdx >= 0) {
+        return `${baseUrl}?t=${data.id}&i=${shopIdx}&b=${data.boxes || 1}`;
+      }
+      // وإذا كان محلاً جديداً، نرسل نصاً مختصراً بدون تشفير مزدوج ليبقى الكود خفيفاً وسريع المسح
+      const s = (data.shopName || '').slice(0, 22);
+      const c = (data.city || '').slice(0, 12);
+      const p = (data.phone || '').slice(0, 10);
+      const m = (data.carrier || '').slice(0, 14);
+      return `${baseUrl}?t=${data.id}&s=${s}&c=${c}&p=${p}&m=${m}&b=${data.boxes || 1}`;
+    }
+
+    function renderAllBarcodes() {
+      if (typeof JsBarcode === 'function') {
+        document.querySelectorAll('.js-barcode-svg').forEach(svgEl => {
+          const codeVal = svgEl.getAttribute('data-code') || 'RT-84920';
+          try {
+            JsBarcode(svgEl, codeVal, {
+              format: "CODE128",
+              lineColor: "#000000",
+              background: "#ffffff",
+              width: 2.1,
+              height: 48,
+              displayValue: false,
+              margin: 2
+            });
+          } catch (e) {
+            console.warn("Barcode render error:", e);
+          }
+        });
+      }
     }
 
     function getFormData() {
@@ -1120,7 +1124,8 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
 
     function renderIndustrialLabelHTML(data, boxNum, totalBoxes, isCompact = false) {
       const smartUrl = buildSmartTrackingUrl(data);
-      const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=2&data=${encodeURIComponent(smartUrl)}`;
+      // ecc=L و margin=4 يعطي مربعات كبيرة جداً وواضحة لأي كاميرا جوال
+      const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&ecc=L&margin=4&data=${encodeURIComponent(smartUrl)}`;
       const dateFormatted = new Date(data.createdAt || Date.now()).toLocaleDateString('ar-SA', {
         year: 'numeric', month: '2-digit', day: '2-digit'
       });
@@ -1135,6 +1140,8 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
             return `<span style="border:2px solid #000; padding:2px 8px; font-weight:900; font-size:${isCompact ? '11px' : '13px'}; display:inline-flex; align-items:center; gap:4px; background:#fff; color:#000;">${icon} ${w}</span>`;
           }).join(' ')
         : `<span style="font-size:12px; font-weight:700;">قطع غيار شاحنات قياسية</span>`;
+
+      const qrSizePx = isCompact ? '104px' : '128px';
 
       return `
         <div class="label-sheet" style="padding:${isCompact ? '10px' : '16px'}; font-family:'Cairo', sans-serif; direction:rtl;">
@@ -1204,20 +1211,27 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
             ${data.notes ? `<div style="font-size:12px; font-weight:800; color:#000;">محتوى الطرد: ${data.notes}</div>` : ''}
           </div>
 
-          <!-- الباركود الخطي + كود QR -->
-          <div style="padding:${isCompact ? '8px 12px' : '12px 16px'}; display:flex; justify-content:space-between; align-items:center; gap:12px;">
-            <div style="text-align:center; flex:1;">
-              <div class="barcode-text">*${data.id}*</div>
-              <div style="font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:800; letter-spacing:2px; margin-top:2px;">${data.id} · BOX ${boxNum}/${totalBoxes}</div>
-              <div style="font-size:11px; font-weight:700; color:#334155; margin-top:4px;">الريف التقني لقطع غيار الشاحنات - جدة | REEFTEK</div>
+          <!-- الباركود الخطي الحقيقي (Code-128 SVG) + كود QR فائق الوضوح (قابل للنقر والمسح) -->
+          <div onclick="openScannerModal('${data.id}')" title="اضغط هنا لمعاينة بطاقة تتبع الشحنة أو امسح الكود بالجوال"
+               style="cursor:pointer; padding:${isCompact ? '10px 12px' : '14px 16px'}; display:flex; justify-content:space-between; align-items:center; gap:14px; background:#ffffff;">
+            
+            <div style="text-align:center; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+              <svg class="js-barcode-svg" data-code="${data.id}" style="max-width:260px; width:100%; height:${isCompact ? '44px' : '54px'};"></svg>
+              <div style="font-family:'JetBrains Mono', monospace; font-size:13px; font-weight:900; letter-spacing:2px; margin-top:4px; color:#000;" dir="ltr">
+                ${data.id} · BOX ${boxNum}/${totalBoxes}
+              </div>
+              <div style="font-size:11px; font-weight:700; color:#334155; margin-top:2px;">الريف التقني لقطع غيار الشاحنات - جدة | REEFTEK</div>
             </div>
 
-            <div style="display:flex; align-items:center; gap:10px; border-right:2px dashed #000; padding-right:12px;">
-              <img src="${qrSrc}" alt="QR" class="qr-code-img" style="width:${isCompact ? '76px' : '96px'}; height:${isCompact ? '76px' : '96px'}; border:2px solid #000; padding:2px; background:#fff;" />
-              <div style="max-width:95px; font-size:11px; font-weight:800; line-height:1.35;">
+            <div style="display:flex; align-items:center; gap:12px; border-right:2px dashed #000; padding-right:14px;">
+              <div style="background:#ffffff; padding:6px; border:2px solid #000000; border-radius:4px; display:inline-block;">
+                <img src="${qrSrc}" alt="QR Code" class="qr-code-img" style="width:${qrSizePx}; height:${qrSizePx}; display:block;" />
+              </div>
+              <div style="max-width:95px; font-size:11px; font-weight:900; line-height:1.4; color:#000;">
                 امسح الكود بالجوال لتتبع الشحنة وتأكيد الاستلام فوراً
               </div>
             </div>
+
           </div>
 
         </div>
@@ -1289,6 +1303,8 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
       } else {
         container.innerHTML = renderWaybillHTML(data);
       }
+
+      renderAllBarcodes();
     }
 
     // ============================================================================
@@ -1348,8 +1364,9 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
       }
 
       mount.innerHTML = pagesHtml;
+      renderAllBarcodes();
       showToast(`جاري تحضير الطباعة للشحنة ${data.id}...`);
-      setTimeout(() => { window.print(); }, 250);
+      setTimeout(() => { window.print(); }, 300);
     }
 
     // ============================================================================
@@ -1372,6 +1389,11 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
       const box = document.getElementById('scannerResultBox');
       if (!id) return;
 
+      const currentForm = getFormData();
+      if (currentForm.id.toUpperCase() === id) {
+        saveCurrentShipmentRecord();
+      }
+
       let found = shipments.find(s => s.id.toUpperCase() === id);
 
       if (!found && supabaseClient) {
@@ -1393,11 +1415,6 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
         }
       }
 
-      const currentForm = getFormData();
-      if (!found && isEmployeeAuthenticated && currentForm.id.toUpperCase() === id) {
-        found = saveCurrentShipmentRecord();
-      }
-
       if (!found) {
         box.innerHTML = `
           <div class="p-4 rounded-xl bg-rose-950/40 border border-rose-500/40 text-rose-300 text-xs font-bold text-center">
@@ -1413,7 +1430,6 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
         'تم التسليم': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
       };
 
-      // إذا كان المستخدم موظفاً مسجلاً للدخول، تظهر له أزرار تعديل الحالة؛ وإلا يظهر زر دخول الموظفين
       const employeeControlsHTML = isEmployeeAuthenticated ? `
         <div class="pt-2 border-t border-slate-800">
           <span class="block text-[11px] font-bold text-slate-400 mb-2">تحديث فوري لحالة الشحنة (صلاحية موظف):</span>
@@ -1462,7 +1478,7 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
             </div>
             <div class="bg-slate-900 p-2.5 rounded-xl">
               <span class="text-slate-500 block text-[10px]">المستلم والجوال:</span>
-              <strong class="text-white">${found.customerName || '—'} (${found.phone})</strong>
+              <strong class="text-white">${found.customerName || '—'} (${found.phone || '—'})</strong>
             </div>
             <div class="bg-slate-900 p-2.5 rounded-xl">
               <span class="text-slate-500 block text-[10px]">عدد الطرود والدفع:</span>
@@ -1872,20 +1888,25 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
 
       await syncFromCloud(false);
 
+      // قراءة رابط الباركود عند فتحه من كاميرا الجوال (يدعم الرابط المختصر الجديد والقديم)
       const params = new URLSearchParams(window.location.search);
-      const trackId = params.get('track');
+      const trackId = (params.get('t') || params.get('track') || '').trim();
+
       if (trackId) {
-        const shopFromQr = params.get('s');
         let exists = shipments.find(s => s.id.toUpperCase() === trackId.toUpperCase());
 
-        if (!exists && shopFromQr) {
+        if (!exists) {
+          const dirIdx = params.get('i');
+          const shopObj = dirIdx !== null && shopsDirectory[Number(dirIdx)] ? shopsDirectory[Number(dirIdx)] : null;
+          const shopFromQr = shopObj ? shopObj.shopName : (params.get('s') || 'عميل مؤسسة الريف التقني');
+
           const qrShipment = {
             id: trackId.toUpperCase(),
             shopName: shopFromQr,
-            city: params.get('c') || 'الرياض',
-            customerName: params.get('u') || '',
-            phone: params.get('p') || '',
-            carrier: params.get('m') || '',
+            city: shopObj ? shopObj.city : (params.get('c') || 'الرياض'),
+            customerName: shopObj ? shopObj.customerName : (params.get('u') || ''),
+            phone: shopObj ? shopObj.phone : (params.get('p') || ''),
+            carrier: shopObj ? shopObj.carrier : (params.get('m') || 'مخرج معتمد'),
             boxes: parseInt(params.get('b')) || 1,
             paymentStatus: params.get('pay') || 'مدفوع',
             codAmount: '',
@@ -1895,6 +1916,7 @@ create policy "Public shipments access" on public.shipments for all to anon, aut
             status: 'قيد التجهيز',
             createdAt: new Date().toISOString()
           };
+
           shipments.unshift(qrShipment);
           localStorage.setItem('reeftek_shipments_v35', JSON.stringify(shipments));
           pushShipmentToCloud(qrShipment);
