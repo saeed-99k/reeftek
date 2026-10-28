@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <meta name="theme-color" content="#020617" />
-    <title>الريف للشحنات | REEFTEK PRO v4.0 — مؤسسة الريف التقني لقطع غيار الشاحنات</title>
-    <meta name="description" content="النظام المتكامل لإدارة الشحنات، الملصقات الصناعية، الخط الزمني للطرود، تقفيل الـ COD، ولوحة التحليلات لمؤسسة الريف التقني لقطع غيار الشاحنات." />
+    <title>الريف للشحنات | مؤسسة الريف التقني لقطع غيار الشاحنات</title>
+    <meta name="description" content="نظام إدارة الشحنات وتتبع الطرود لمؤسسة الريف التقني لقطع غيار الشاحنات." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet" />
@@ -506,6 +506,7 @@ body{color:#f1f5f9;background-color:#070b14;font-family:Cairo,sans-serif}
 @supports (color:color-mix(in lab, red, red)){.shadow-amber-500\/25{--tw-shadow-color:color-mix(in oklab, color-mix(in oklab, var(--color-amber-500) 25%, transparent) var(--tw-shadow-alpha), transparent)}
 }
 .blur{--tw-blur:blur(8px);filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}
+.filter{filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)}
 .filter\!{filter:var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,)!important}
 .backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,)}
 .backdrop-blur-sm{--tw-backdrop-blur:blur(var(--blur-sm));-webkit-backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);backdrop-filter:var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,)}
@@ -665,7 +666,6 @@ body{color:#000!important;background:#fff!important;margin:0!important;padding:0
   </head>
   <body class="bg-slate-950 text-slate-100 antialiased selection:bg-amber-500 selection:text-slate-950">
     <div id="root"></div>
-    <!-- مكتبات النظام المدمجة (React 19 + QRCode + JsBarcode + Lucide Icons) -->
     <script>
 (()=>{var Bx=Object.create;var O0=Object.defineProperty;var Rx=Object.getOwnPropertyDescriptor;var qx=Object.getOwnPropertyNames;var Ux=Object.getPrototypeOf,kx=Object.prototype.hasOwnProperty;var x=(e,a)=>()=>(a||e((a={exports:{}}).exports,a),a.exports);var zx=(e,a,t,u)=>{if(a&&typeof a=="object"||typeof a=="function")for(let l of qx(a))!kx.call(e,l)&&l!==t&&O0(e,l,{get:()=>a[l],enumerable:!(u=Rx(a,l))||u.enumerable});return e};var Pt=(e,a,t)=>(t=e!=null?Bx(Ux(e)):{},zx(a||!e||!e.__esModule?O0(t,"default",{value:e,enumerable:!0}):t,e));var G0=x(O=>{"use strict";var Wr=Symbol.for("react.transitional.element"),Nx=Symbol.for("react.portal"),Hx=Symbol.for("react.fragment"),Px=Symbol.for("react.strict_mode"),Gx=Symbol.for("react.profiler"),Fx=Symbol.for("react.consumer"),Vx=Symbol.for("react.context"),Xx=Symbol.for("react.forward_ref"),jx=Symbol.for("react.suspense"),Yx=Symbol.for("react.memo"),R0=Symbol.for("react.lazy"),Qx=Symbol.for("react.activity"),Zx=Symbol.for("react.view_transition"),M0=Symbol.iterator;function Kx(e){return e===null||typeof e!="object"?null:(e=M0&&e[M0]||e["@@iterator"],typeof e=="function"?e:null)}var q0={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},U0=Object.assign,k0={};function xu(e,a,t){this.props=e,this.context=a,this.refs=k0,this.updater=t||q0}xu.prototype.isReactComponent={};xu.prototype.setState=function(e,a){if(typeof e!="object"&&typeof e!="function"&&e!=null)throw Error("takes an object of state variables to update or a function which returns an object of state variables.");this.updater.enqueueSetState(this,e,a,"setState")};xu.prototype.forceUpdate=function(e){this.updater.enqueueForceUpdate(this,e,"forceUpdate")};function z0(){}z0.prototype=xu.prototype;function $r(e,a,t){this.props=e,this.context=a,this.refs=k0,this.updater=t||q0}var ei=$r.prototype=new z0;ei.constructor=$r;U0(ei,xu.prototype);ei.isPureReactComponent=!0;var w0=Array.isArray;function Jr(){}var Y={H:null,A:null,T:null,S:null},N0=Object.prototype.hasOwnProperty;function ai(e,a,t){var u=t.ref;return{$$typeof:Wr,type:e,key:a,ref:u!==void 0?u:null,props:t}}function Jx(e,a){return ai(e.type,a,e.props)}function ti(e){return typeof e=="object"&&e!==null&&e.$$typeof===Wr}function Wx(e){var a={"=":"=0",":":"=2"};return"$"+e.replace(/[=:]/g,function(t){return a[t]})}var D0=/\/+/g;function Kr(e,a){return typeof e=="object"&&e!==null&&e.key!=null?Wx(""+e.key):a.toString(36)}function $x(e){switch(e.status){case"fulfilled":return e.value;case"rejected":throw e.reason;default:switch(typeof e.status=="string"?e.then(Jr,Jr):(e.status="pending",e.then(function(a){e.status==="pending"&&(e.status="fulfilled",e.value=a)},function(a){e.status==="pending"&&(e.status="rejected",e.reason=a)})),e.status){case"fulfilled":return e.value;case"rejected":throw e.reason}}throw e}function yu(e,a,t,u,l){var f=typeof e;(f==="undefined"||f==="boolean")&&(e=null);var o=!1;if(e===null)o=!0;else switch(f){case"bigint":case"string":case"number":o=!0;break;case"object":switch(e.$$typeof){case Wr:case Nx:o=!0;break;case R0:return o=e._init,yu(o(e._payload),a,t,u,l)}}if(o)return l=l(e),o=u===""?"."+Kr(e,0):u,w0(l)?(t="",o!=null&&(t=o.replace(D0,"$&/")+"/"),yu(l,a,t,"",function(i){return i})):l!=null&&(ti(l)&&(l=Jx(l,t+(l.key==null||e&&e.key===l.key?"":(""+l.key).replace(D0,"$&/")+"/")+o)),a.push(l)),1;o=0;var n=u===""?".":u+":";if(w0(e))for(var r=0;r<e.length;r++)u=e[r],f=n+Kr(u,r),o+=yu(u,a,t,f,l);else if(r=Kx(e),typeof r=="function")for(e=r.call(e),r=0;!(u=e.next()).done;)u=u.value,f=n+Kr(u,r++),o+=yu(u,a,t,f,l);else if(f==="object"){if(typeof e.then=="function")return yu($x(e),a,t,u,l);throw a=String(e),Error("Objects are not valid as a React child (found: "+(a==="[object Object]"?"object with keys {"+Object.keys(e).join(", ")+"}":a)+"). If you meant to render a collection of children, use an array instead.")}return o}function Uo(e,a,t){if(e==null)return e;var u=[],l=0;return yu(e,u,"","",function(f){return a.call(t,f,l++)}),u}function eS(e){if(e._status===-1){var a=e._result,t=a();t.then(function(u){(e._status===0||e._status===-1)&&(e._status=1,e._result=u,t.status===void 0&&(t.status="fulfilled",t.value=u))},function(u){(e._status===0||e._status===-1)&&(e._status=2,e._result=u,t.status===void 0&&(t.status="rejected",t.reason=u))}),e._status===-1&&(e._status=0,e._result=t)}if(e._status===1)return e._result.default;throw e._result}var B0=typeof reportError=="function"?reportError:function(e){if(typeof window=="object"&&typeof window.ErrorEvent=="function"){var a=new window.ErrorEvent("error",{bubbles:!0,cancelable:!0,message:typeof e=="object"&&e!==null&&typeof e.message=="string"?String(e.message):String(e),error:e});if(!window.dispatchEvent(a))return}else if(typeof process=="object"&&typeof process.emit=="function"){process.emit("uncaughtException",e);return}console.error(e)};function H0(e){var a=Y.T,t={};t.types=a!==null?a.types:null,Y.T=t;try{var u=e(),l=Y.S;l!==null&&l(t,u),typeof u=="object"&&u!==null&&typeof u.then=="function"&&u.then(Jr,B0)}catch(f){B0(f)}finally{a!==null&&t.types!==null&&(a.types=t.types),Y.T=a}}function P0(e){var a=Y.T;if(a!==null){var t=a.types;t===null?a.types=[e]:t.indexOf(e)===-1&&t.push(e)}else H0(P0.bind(null,e))}var aS={map:Uo,forEach:function(e,a,t){Uo(e,function(){a.apply(this,arguments)},t)},count:function(e){var a=0;return Uo(e,function(){a++}),a},toArray:function(e){return Uo(e,function(a){return a})||[]},only:function(e){if(!ti(e))throw Error("React.Children.only expected to receive a single React element child.");return e}};O.Activity=Qx;O.Children=aS;O.Component=xu;O.Fragment=Hx;O.Profiler=Gx;O.PureComponent=$r;O.StrictMode=Px;O.Suspense=jx;O.ViewTransition=Zx;O.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE=Y;O.__COMPILER_RUNTIME={__proto__:null,c:function(e){return Y.H.useMemoCache(e)}};O.addTransitionType=P0;O.cache=function(e){return function(){return e.apply(null,arguments)}};O.cacheSignal=function(){return null};O.cloneElement=function(e,a,t){if(e==null)throw Error("The argument must be a React element, but you passed "+e+".");var u=U0({},e.props),l=e.key;if(a!=null)for(f in a.key!==void 0&&(l=""+a.key),a)!N0.call(a,f)||f==="key"||f==="__self"||f==="__source"||f==="ref"&&a.ref===void 0||(u[f]=a[f]);var f=arguments.length-2;if(f===1)u.children=t;else if(1<f){for(var o=Array(f),n=0;n<f;n++)o[n]=arguments[n+2];u.children=o}return ai(e.type,l,u)};O.createContext=function(e){return e={$$typeof:Vx,_currentValue:e,_currentValue2:e,_threadCount:0,Provider:null,Consumer:null},e.Provider=e,e.Consumer={$$typeof:Fx,_context:e},e};O.createElement=function(e,a,t){var u,l={},f=null;if(a!=null)for(u in a.key!==void 0&&(f=""+a.key),a)N0.call(a,u)&&u!=="key"&&u!=="__self"&&u!=="__source"&&(l[u]=a[u]);var o=arguments.length-2;if(o===1)l.children=t;else if(1<o){for(var n=Array(o),r=0;r<o;r++)n[r]=arguments[r+2];l.children=n}if(e&&e.defaultProps)for(u in o=e.defaultProps,o)l[u]===void 0&&(l[u]=o[u]);return ai(e,f,l)};O.createRef=function(){return{current:null}};O.forwardRef=function(e){return{$$typeof:Xx,render:e}};O.isValidElement=ti;O.lazy=function(e){return{$$typeof:R0,_payload:{_status:-1,_result:e},_init:eS}};O.memo=function(e,a){return{$$typeof:Yx,type:e,compare:a===void 0?null:a}};O.startTransition=H0;O.unstable_useCacheRefresh=function(){return Y.H.useCacheRefresh()};O.use=function(e){return Y.H.use(e)};O.useActionState=function(e,a,t){return Y.H.useActionState(e,a,t)};O.useCallback=function(e,a){return Y.H.useCallback(e,a)};O.useContext=function(e){return Y.H.useContext(e)};O.useDebugValue=function(){};O.useDeferredValue=function(e,a){return Y.H.useDeferredValue(e,a)};O.useEffect=function(e,a){return Y.H.useEffect(e,a)};O.useEffectEvent=function(e){return Y.H.useEffectEvent(e)};O.useId=function(){return Y.H.useId()};O.useImperativeHandle=function(e,a,t){return Y.H.useImperativeHandle(e,a,t)};O.useInsertionEffect=function(e,a){return Y.H.useInsertionEffect(e,a)};O.useLayoutEffect=function(e,a){return Y.H.useLayoutEffect(e,a)};O.useMemo=function(e,a){return Y.H.useMemo(e,a)};O.useOptimistic=function(e,a){return Y.H.useOptimistic(e,a)};O.useReducer=function(e,a,t){return Y.H.useReducer(e,a,t)};O.useRef=function(e){return Y.H.useRef(e)};O.useState=function(e){return Y.H.useState(e)};O.useSyncExternalStore=function(e,a,t){return Y.H.useSyncExternalStore(e,a,t)};O.useTransition=function(){return Y.H.useTransition()};O.version="19.3.1"});var Su=x((YO,F0)=>{"use strict";F0.exports=G0()});var $0=x(W=>{"use strict";function oi(e,a){var t=e.length;e.push(a);e:for(;0<t;){var u=t-1>>>1,l=e[u];if(0<ko(l,a))e[u]=a,e[t]=l,t=u;else break e}}function ya(e){return e.length===0?null:e[0]}function No(e){if(e.length===0)return null;var a=e[0],t=e.pop();if(t!==a){e[0]=t;e:for(var u=0,l=e.length,f=l>>>1;u<f;){var o=2*(u+1)-1,n=e[o],r=o+1,i=e[r];if(0>ko(n,t))r<l&&0>ko(i,n)?(e[u]=i,e[r]=t,u=r):(e[u]=n,e[o]=t,u=o);else if(r<l&&0>ko(i,t))e[u]=i,e[r]=t,u=r;else break e}}return a}function ko(e,a){var t=e.sortIndex-a.sortIndex;return t!==0?t:e.id-a.id}W.unstable_now=void 0;typeof performance=="object"&&typeof performance.now=="function"?(V0=performance,W.unstable_now=function(){return V0.now()}):(ui=Date,X0=ui.now(),W.unstable_now=function(){return ui.now()-X0});var V0,ui,X0,Ra=[],$a=[],tS=1,$e=null,_e=3,ni=!1,Dl=!1,Bl=!1,ri=!1,Q0=typeof setTimeout=="function"?setTimeout:null,Z0=typeof clearTimeout=="function"?clearTimeout:null,j0=typeof setImmediate<"u"?setImmediate:null;function zo(e){for(var a=ya($a);a!==null;){if(a.callback===null)No($a);else if(a.startTime<=e)No($a),a.sortIndex=a.expirationTime,oi(Ra,a);else break;a=ya($a)}}function ii(e){if(Bl=!1,zo(e),!Dl)if(ya(Ra)!==null)Dl=!0,Cu||(Cu=!0,vu());else{var a=ya($a);a!==null&&di(ii,a.startTime-e)}}var Cu=!1,Rl=-1,K0=5,J0=-1;function W0(){return ri?!0:!(W.unstable_now()-J0<K0)}function li(){if(ri=!1,Cu){var e=W.unstable_now();J0=e;var a=!0;try{e:{Dl=!1,Bl&&(Bl=!1,Z0(Rl),Rl=-1),ni=!0;var t=_e;try{a:{for(zo(e),$e=ya(Ra);$e!==null&&!($e.expirationTime>e&&W0());){var u=$e.callback;if(typeof u=="function"){$e.callback=null,_e=$e.priorityLevel;var l=u($e.expirationTime<=e);if(e=W.unstable_now(),typeof l=="function"){$e.callback=l,zo(e),a=!0;break a}$e===ya(Ra)&&No(Ra),zo(e)}else No(Ra);$e=ya(Ra)}if($e!==null)a=!0;else{var f=ya($a);f!==null&&di(ii,f.startTime-e),a=!1}}break e}finally{$e=null,_e=t,ni=!1}a=void 0}}finally{a?vu():Cu=!1}}}var vu;typeof j0=="function"?vu=function(){j0(li)}:typeof MessageChannel<"u"?(fi=new MessageChannel,Y0=fi.port2,fi.port1.onmessage=li,vu=function(){Y0.postMessage(null)}):vu=function(){Q0(li,0)};var fi,Y0;function di(e,a){Rl=Q0(function(){e(W.unstable_now())},a)}W.unstable_IdlePriority=5;W.unstable_ImmediatePriority=1;W.unstable_LowPriority=4;W.unstable_NormalPriority=3;W.unstable_Profiling=null;W.unstable_UserBlockingPriority=2;W.unstable_cancelCallback=function(e){e.callback=null};W.unstable_forceFrameRate=function(e){0>e||125<e?console.error("forceFrameRate takes a positive int between 0 and 125, forcing frame rates higher than 125 fps is not supported"):K0=0<e?Math.floor(1e3/e):5};W.unstable_getCurrentPriorityLevel=function(){return _e};W.unstable_next=function(e){switch(_e){case 1:case 2:case 3:var a=3;break;default:a=_e}var t=_e;_e=a;try{return e()}finally{_e=t}};W.unstable_requestPaint=function(){ri=!0};W.unstable_runWithPriority=function(e,a){switch(e){case 1:case 2:case 3:case 4:case 5:break;default:e=3}var t=_e;_e=e;try{return a()}finally{_e=t}};W.unstable_scheduleCallback=function(e,a,t){var u=W.unstable_now();switch(typeof t=="object"&&t!==null?(t=t.delay,t=typeof t=="number"&&0<t?u+t:u):t=u,e){case 1:var l=-1;break;case 2:l=250;break;case 5:l=1073741823;break;case 4:l=1e4;break;default:l=5e3}return l=t+l,e={id:tS++,callback:a,priorityLevel:e,startTime:t,expirationTime:l,sortIndex:-1},t>u?(e.sortIndex=t,oi($a,e),ya(Ra)===null&&e===ya($a)&&(Bl?(Z0(Rl),Rl=-1):Bl=!0,di(ii,t-u))):(e.sortIndex=l,oi(Ra,e),Dl||ni||(Dl=!0,Cu||(Cu=!0,vu()))),e};W.unstable_shouldYield=W0;W.unstable_wrapCallback=function(e){var a=_e;return function(){var t=_e;_e=a;try{return e.apply(this,arguments)}finally{_e=t}}}});var am=x((ZO,em)=>{"use strict";em.exports=$0()});var lm=x(Ae=>{"use strict";var uS=Su();function um(e){var a="https://react.dev/errors/"+e;if(1<arguments.length){a+="?args[]="+encodeURIComponent(arguments[1]);for(var t=2;t<arguments.length;t++)a+="&args[]="+encodeURIComponent(arguments[t])}return"Minified React error #"+e+"; visit "+a+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}function et(){}var be={d:{f:et,r:function(){throw Error(um(522))},D:et,C:et,L:et,m:et,X:et,S:et,M:et},p:0,findDOMNode:null},lS=Symbol.for("react.portal"),fS=Symbol.for("react.recoverable"),tm=Symbol.for("react.optimistic_key");function oS(e,a,t){var u=3<arguments.length&&arguments[3]!==void 0?arguments[3]:null;return{$$typeof:lS,key:u==null?null:u===tm?tm:""+u,children:e,containerInfo:a,implementation:t}}var ql=uS.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;function Ho(e,a){if(e==="font")return"";if(typeof a=="string")return a==="use-credentials"?a:""}Ae.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE=be;Ae.browser=function(e){return{$$typeof:fS,_reason:e}};Ae.createPortal=function(e,a){var t=2<arguments.length&&arguments[2]!==void 0?arguments[2]:null;if(!a||a.nodeType!==1&&a.nodeType!==9&&a.nodeType!==11)throw Error(um(299));return oS(e,a,null,t)};Ae.flushSync=function(e){var a=ql.T,t=be.p;try{if(ql.T=null,be.p=2,e)return e()}finally{ql.T=a,be.p=t,be.d.f()}};Ae.preconnect=function(e,a){typeof e=="string"&&(a?(a=a.crossOrigin,a=typeof a=="string"?a==="use-credentials"?a:"":void 0):a=null,be.d.C(e,a))};Ae.prefetchDNS=function(e){typeof e=="string"&&be.d.D(e)};Ae.preinit=function(e,a){if(typeof e=="string"&&a&&typeof a.as=="string"){var t=a.as,u=Ho(t,a.crossOrigin),l=typeof a.integrity=="string"?a.integrity:void 0,f=typeof a.fetchPriority=="string"?a.fetchPriority:void 0;t==="style"?be.d.S(e,typeof a.precedence=="string"?a.precedence:void 0,{crossOrigin:u,integrity:l,fetchPriority:f}):t==="script"&&be.d.X(e,{crossOrigin:u,integrity:l,fetchPriority:f,nonce:typeof a.nonce=="string"?a.nonce:void 0})}};Ae.preinitModule=function(e,a){if(typeof e=="string")if(typeof a=="object"&&a!==null){if(a.as==null||a.as==="script"){var t=Ho(a.as,a.crossOrigin);be.d.M(e,{crossOrigin:t,integrity:typeof a.integrity=="string"?a.integrity:void 0,nonce:typeof a.nonce=="string"?a.nonce:void 0,fetchPriority:typeof a.fetchPriority=="string"?a.fetchPriority:void 0})}}else a==null&&be.d.M(e)};Ae.preload=function(e,a){if(typeof e=="string"&&typeof a=="object"&&a!==null&&typeof a.as=="string"){var t=a.as,u=Ho(t,a.crossOrigin);be.d.L(e,t,{crossOrigin:u,integrity:typeof a.integrity=="string"?a.integrity:void 0,nonce:typeof a.nonce=="string"?a.nonce:void 0,type:typeof a.type=="string"?a.type:void 0,fetchPriority:typeof a.fetchPriority=="string"?a.fetchPriority:void 0,referrerPolicy:typeof a.referrerPolicy=="string"?a.referrerPolicy:void 0,imageSrcSet:typeof a.imageSrcSet=="string"?a.imageSrcSet:void 0,imageSizes:typeof a.imageSizes=="string"?a.imageSizes:void 0,media:typeof a.media=="string"?a.media:void 0})}};Ae.preloadModule=function(e,a){if(typeof e=="string")if(a){var t=Ho(a.as,a.crossOrigin);be.d.m(e,{as:typeof a.as=="string"&&a.as!=="script"?a.as:void 0,crossOrigin:t,integrity:typeof a.integrity=="string"?a.integrity:void 0,nonce:typeof a.nonce=="string"?a.nonce:void 0,fetchPriority:typeof a.fetchPriority=="string"?a.fetchPriority:void 0})}else be.d.m(e)};Ae.requestFormReset=function(e){be.d.r(e)};Ae.unstable_batchedUpdates=function(e,a){return e(a)};Ae.useFormState=function(e,a,t){return ql.H.useFormState(e,a,t)};Ae.useFormStatus=function(){return ql.H.useHostTransitionStatus()};Ae.version="19.3.1"});var nm=x((JO,om)=>{"use strict";function fm(){if(!(typeof __REACT_DEVTOOLS_GLOBAL_HOOK__>"u"||typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE!="function"))try{__REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(fm)}catch(e){console.error(e)}}fm(),om.exports=lm()});var Yg=x(Cr=>{"use strict";var se=am(),jp=Su(),nS=nm();function y(e){var a="https://react.dev/errors/"+e;if(1<arguments.length){a+="?args[]="+encodeURIComponent(arguments[1]);for(var t=2;t<arguments.length;t++)a+="&args[]="+encodeURIComponent(arguments[t])}return"Minified React error #"+e+"; visit "+a+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}function Yp(e){return!(!e||e.nodeType!==1&&e.nodeType!==9&&e.nodeType!==11)}function If(e){for(var a=e,t=a;t&&!t.alternate;)a=t,(a.flags&4098)!==0&&(e=a.return),t=a.return;for(;a.return;)a=a.return;return a.tag===3?e:null}function Qp(e){if(e.tag===13){var a=e.memoizedState;if(a===null&&(e=e.alternate,e!==null&&(a=e.memoizedState)),a!==null)return a.dehydrated}return null}function Zp(e){if(e.tag===31){var a=e.memoizedState;if(a===null&&(e=e.alternate,e!==null&&(a=e.memoizedState)),a!==null)return a.dehydrated}return null}function rm(e){if(If(e)!==e)throw Error(y(188))}function rS(e){var a=e.alternate;if(!a){if(a=If(e),a===null)throw Error(y(188));return a!==e?null:e}for(var t=e,u=a;;){var l=t.return;if(l===null)break;var f=l.alternate;if(f===null){if(u=l.return,u!==null){t=u;continue}break}if(l.child===f.child){for(f=l.child;f;){if(f===t)return rm(l),e;if(f===u)return rm(l),a;f=f.sibling}throw Error(y(188))}if(t.return!==u.return)t=l,u=f;else{for(var o=!1,n=l.child;n;){if(n===t){o=!0,t=l,u=f;break}if(n===u){o=!0,u=l,t=f;break}n=n.sibling}if(!o){for(n=f.child;n;){if(n===t){o=!0,t=f,u=l;break}if(n===u){o=!0,u=f,t=l;break}n=n.sibling}if(!o)throw Error(y(189))}}if(t.alternate!==u)throw Error(y(190))}if(t.tag!==3)throw Error(y(188));return t.stateNode.current===t?e:a}function Kp(e){var a=e.tag;if(a===5||a===26||a===27||a===6)return e;for(e=e.child;e!==null;){if(a=Kp(e),a!==null)return a;e=e.sibling}return null}function ke(e,a,t,u,l,f){for(;e!==null;){if((e.tag===5||e.tag===27||e.tag===6)&&t(e,u,l,f)||(e.tag!==22||e.memoizedState===null)&&(a||e.tag!==5&&e.tag!==27)&&ke(e.child,a,t,u,l,f))return!0;e=e.sibling}return!1}function ru(e){for(e=e.return;e!==null;){if(e.tag===3||e.tag===5||e.tag===27)return e;e=e.return}return null}function im(e){var a=!1;for(e=e.return;e!==null&&(e.tag===4&&(a=!0),!(e.tag===3||e.tag===5||e.tag===27));)e=e.return;return a}function Jp(e){var a=[null,null],t=ru(e);return t===null||Wp(a,e,t.child,{foundSelf:!1}),a}function Wp(e,a,t,u){for(;t!==null;){if(t===a)u.foundSelf=!0;else if(t.tag===5||t.tag===27||t.tag===6){if(u.foundSelf)return e[1]=t,!0;e[0]=t}else if((t.tag!==22||t.memoizedState===null)&&Wp(e,a,t.child,u))return!0;t=t.sibling}return!1}function ce(e){switch(e.tag){case 5:case 27:case 6:return e.stateNode;case 3:return e.stateNode.containerInfo;default:throw Error(y(559))}}var Ou=null,Gi=null;function iS(e,a,t){return e===t?!0:e===a?(Ou=e,!0):!1}function dS(e,a,t){return e===t?(Gi=e,!1):e===a?(Gi!==null&&(Ou=e),!0):!1}function dm(e){if(e===null)return null;do e=e===null?null:e.return;while(e&&e.tag!==5&&e.tag!==27&&e.tag!==3);return e||null}function Fi(e,a,t){for(var u=0,l=e;l;l=t(l))u++;l=0;for(var f=a;f;f=t(f))l++;for(;0<u-l;)e=t(e),u--;for(;0<l-u;)a=t(a),l--;for(;u--;){if(e===a||a!==null&&e===a.alternate)return e;e=t(e),a=t(a)}return null}var j=Object.assign,cS=Symbol.for("react.element"),Po=Symbol.for("react.transitional.element"),Gl=Symbol.for("react.portal"),Mu=Symbol.for("react.fragment"),$p=Symbol.for("react.strict_mode"),Vi=Symbol.for("react.profiler"),e1=Symbol.for("react.consumer"),_a=Symbol.for("react.context"),$d=Symbol.for("react.forward_ref"),Xi=Symbol.for("react.suspense"),ji=Symbol.for("react.suspense_list"),ec=Symbol.for("react.memo"),lt=Symbol.for("react.lazy");Symbol.for("react.scope");var Yi=Symbol.for("react.activity"),sS=Symbol.for("react.legacy_hidden");Symbol.for("react.tracing_marker");var mS=Symbol.for("react.memo_cache_sentinel"),Qi=Symbol.for("react.view_transition"),pS=Symbol.for("react.recoverable"),cm=Symbol.iterator;function Ul(e){return e===null||typeof e!="object"?null:(e=cm&&e[cm]||e["@@iterator"],typeof e=="function"?e:null)}var hS=Symbol.for("react.client.reference");function Zi(e){if(e==null)return null;if(typeof e=="function")return e.$$typeof===hS?null:e.displayName||e.name||null;if(typeof e=="string")return e;switch(e){case Mu:return"Fragment";case Vi:return"Profiler";case $p:return"StrictMode";case Xi:return"Suspense";case ji:return"SuspenseList";case Yi:return"Activity";case Qi:return"ViewTransition"}if(typeof e=="object")switch(e.$$typeof){case Gl:return"Portal";case _a:return e.displayName||"Context";case e1:return(e._context.displayName||"Context")+".Consumer";case $d:var a=e.render;return e=e.displayName,e||(e=a.displayName||a.name||"",e=e!==""?"ForwardRef("+e+")":"ForwardRef"),e;case ec:return a=e.displayName||null,a!==null?a:Zi(e.type)||"Memo";case lt:a=e._payload,e=e._init;try{return Zi(e(a))}catch{}}return null}var Fl=Array.isArray,T=jp.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,z=nS.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,Zt={pending:!1,data:null,method:null,action:null},Ki=[],wu=-1;function wa(e){return{current:e}}function Se(e){0>wu||(e.current=Ki[wu],Ki[wu]=null,wu--)}function K(e,a){wu++,Ki[wu]=e.current,e.current=a}var Ea=wa(null),of=wa(null),mt=wa(null),En=wa(null);function On(e,a){switch(K(mt,a),K(of,e),K(Ea,null),a.nodeType){case 9:case 11:e=(e=a.documentElement)&&(e=e.namespaceURI)?Ap(e):0;break;default:if(e=a.tagName,a=a.namespaceURI)a=Ap(a),e=Cg(a,e);else switch(e){case"svg":e=1;break;case"math":e=2;break;default:e=0}}Se(Ea),K(Ea,e)}function Ju(){Se(Ea),Se(of),Se(mt)}function Ji(e){var a=e.memoizedState;a!==null&&(nl._currentValue=a.memoizedState,K(En,e)),a=Ea.current;var t=Cg(a,e.type);a!==t&&(K(of,e),K(Ea,t))}function Mn(e){of.current===e&&(Se(Ea),Se(of)),En.current===e&&(Se(En),nl._currentValue=Zt)}var ci,sm;function tt(e){if(ci===void 0)try{throw Error()}catch(t){var a=t.stack.trim().match(/\n( *(at )?)/);ci=a&&a[1]||"",sm=-1<t.stack.indexOf(`
     at`)?" (<anonymous>)":-1<t.stack.indexOf("@")?"@unknown:0:0":""}return`
@@ -791,7 +791,6 @@ lucide-react/dist/esm/lucide-react.js:
 */
 
     </script>
-    <!-- الكود البرمجي الكامل لنظام الريف للشحنات REEFTEK PRO v4.0 -->
     <script>
 (() => {
   var __create = Object.create;
@@ -2039,6 +2038,11 @@ lucide-react/dist/esm/lucide-react.js:
   var import_react2 = __toESM(require_react(), 1);
   var import_lucide_react = __toESM(require_lucide_react(), 1);
   var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
+  function maskPhoneNumber(phone) {
+    const clean = (phone || "").trim();
+    if (clean.length < 7) return "\u2022\u2022\u2022\u2022\u2022\u2022\u2022";
+    return `${clean.slice(0, 3)}\u2022\u2022\u2022\u2022${clean.slice(-3)}`;
+  }
   var TrackingTimelineModal = ({
     isOpen,
     onClose,
@@ -2050,24 +2054,22 @@ lucide-react/dist/esm/lucide-react.js:
     onAddPhotoProof,
     onSendWhatsApp
   }) => {
-    const [searchId, setSearchId] = (0, import_react2.useState)(initialShipmentId || "RT-84920");
+    const [searchId, setSearchId] = (0, import_react2.useState)(initialShipmentId || "");
     const [statusNote, setStatusNote] = (0, import_react2.useState)("");
     const [autoSendWa, setAutoSendWa] = (0, import_react2.useState)(true);
     const [photoCaption, setPhotoCaption] = (0, import_react2.useState)("");
     const [photoStage, setPhotoStage] = (0, import_react2.useState)("\u0625\u062B\u0628\u0627\u062A \u0627\u0633\u062A\u0644\u0627\u0645 \u0627\u0644\u0639\u0645\u064A\u0644");
     const [selectedPhotoPreview, setSelectedPhotoPreview] = (0, import_react2.useState)(null);
     import_react2.default.useEffect(() => {
-      if (initialShipmentId) {
-        setSearchId(initialShipmentId);
-      }
+      setSearchId(initialShipmentId || "");
     }, [initialShipmentId]);
     if (!isOpen) return null;
     const cleanQuery = searchId.trim().toUpperCase();
-    const found = shipments.find((s) => s.id.toUpperCase() === cleanQuery);
+    const found = cleanQuery ? shipments.find((s) => s.id.toUpperCase() === cleanQuery) : void 0;
     const currentStepIndex = found ? STATUS_STEPS.indexOf(found.status) : 0;
     const handleFileUpload = (e) => {
       const file = e.target.files?.[0];
-      if (!file || !found) return;
+      if (!file || !found || !isAuthenticated) return;
       const reader = new FileReader();
       reader.onload = () => {
         const dataUrl = String(reader.result || "");
@@ -2095,8 +2097,8 @@ lucide-react/dist/esm/lucide-react.js:
             /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-2.5", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.Package, { className: "w-5 h-5 text-amber-400" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h3", { id: "tracking-modal-title", className: "font-bold text-base text-white", children: "\u0628\u0637\u0627\u0642\u0629 \u062A\u062A\u0628\u0639 \u0627\u0644\u0634\u062D\u0646\u0629 \u0648\u0627\u0644\u062E\u0637 \u0627\u0644\u0632\u0645\u0646\u064A \u0648\u062A\u0648\u062B\u064A\u0642 \u0627\u0644\u0635\u0648\u0631" }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-xs text-slate-400", children: "\u062A\u062A\u0628\u0639 \u0645\u0631\u0627\u062D\u0644 \u0627\u0644\u0637\u0631\u062F (\u062A\u062C\u0647\u064A\u0632 \u2190 \u062A\u0633\u0644\u064A\u0645 \u0644\u0644\u0645\u062E\u0631\u062C \u2190 \u0648\u0635\u0644\u062A) \u0645\u0639 \u0635\u0648\u0631 \u062D\u0627\u0644\u0629 \u0627\u0644\u0643\u0631\u062A\u0648\u0646 \u0648\u0625\u062B\u0628\u0627\u062A \u0627\u0644\u0627\u0633\u062A\u0644\u0627\u0645" })
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h3", { id: "tracking-modal-title", className: "font-bold text-base text-white", children: "\u062A\u062A\u0628\u0639 \u062D\u0627\u0644\u0629 \u0627\u0644\u0634\u062D\u0646\u0629" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-xs text-slate-400", children: "\u0645\u0624\u0633\u0633\u0629 \u0627\u0644\u0631\u064A\u0641 \u0627\u0644\u062A\u0642\u0646\u064A \u0644\u0642\u0637\u0639 \u063A\u064A\u0627\u0631 \u0627\u0644\u0634\u0627\u062D\u0646\u0627\u062A" })
               ] })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
@@ -2110,59 +2112,42 @@ lucide-react/dist/esm/lucide-react.js:
               }
             )
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "space-y-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex gap-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-                "input",
-                {
-                  type: "text",
-                  value: searchId,
-                  onChange: (e) => setSearchId(e.target.value),
-                  placeholder: "\u0623\u062F\u062E\u0644 \u0631\u0642\u0645 \u0627\u0644\u0634\u062D\u0646\u0629 (\u0645\u062B\u0627\u0644: RT-84920)",
-                  dir: "ltr",
-                  "aria-label": "\u0631\u0642\u0645 \u0627\u0644\u0634\u062D\u0646\u0629 \u0644\u0644\u0628\u062D\u062B",
-                  className: "w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm font-mono font-bold text-center text-amber-400 focus:border-amber-500 focus:outline-none"
-                }
-              ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
-                "button",
-                {
-                  type: "button",
-                  onClick: () => setSearchId(searchId.trim()),
-                  className: "px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 whitespace-nowrap shrink-0",
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.Search, { className: "w-4 h-4" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0627\u0633\u062A\u0639\u0644\u0627\u0645" })
-                  ]
-                }
-              )
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-2 flex-wrap text-xs text-slate-400", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0634\u062D\u0646\u0627\u062A \u0646\u0634\u0637\u0629 \u0644\u0644\u062A\u062C\u0631\u0628\u0629 \u0627\u0644\u0633\u0631\u064A\u0639\u0629:" }),
-              shipments.slice(0, 4).map((s) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
-                "button",
-                {
-                  type: "button",
-                  onClick: () => setSearchId(s.id),
-                  className: `px-2.5 py-1 rounded-md font-mono text-xs transition-colors ${s.id.toUpperCase() === cleanQuery ? "bg-amber-500 text-slate-950 font-bold" : "bg-slate-950 text-slate-300 hover:text-white border border-slate-800"}`,
-                  children: [
-                    s.id,
-                    " (",
-                    s.city,
-                    ")"
-                  ]
-                },
-                s.id
-              ))
-            ] })
-          ] }),
-          !found ? /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-6 rounded-xl bg-slate-950 border border-slate-800 text-center space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "space-y-2", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex gap-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+              "input",
+              {
+                type: "text",
+                value: searchId,
+                onChange: (e) => setSearchId(e.target.value),
+                placeholder: "\u0623\u062F\u062E\u0644 \u0631\u0642\u0645 \u0627\u0644\u0634\u062D\u0646\u0629 (\u0645\u062B\u0627\u0644: RT-84920)",
+                dir: "ltr",
+                "aria-label": "\u0631\u0642\u0645 \u0627\u0644\u0634\u062D\u0646\u0629 \u0644\u0644\u0628\u062D\u062B",
+                className: "w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm font-mono font-bold text-center text-amber-400 focus:border-amber-500 focus:outline-none"
+              }
+            ) }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
+              "button",
+              {
+                type: "button",
+                onClick: () => setSearchId(searchId.trim()),
+                className: "px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 whitespace-nowrap shrink-0",
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.Search, { className: "w-4 h-4" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0627\u0633\u062A\u0639\u0644\u0627\u0645" })
+                ]
+              }
+            )
+          ] }) }),
+          !cleanQuery ? /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-6 rounded-xl bg-slate-950 border border-slate-800 text-center space-y-1.5", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-sm font-bold text-slate-200", children: "\u0623\u062F\u062E\u0644 \u0631\u0642\u0645 \u0627\u0644\u0628\u0648\u0644\u064A\u0635\u0629 \u0627\u0644\u0645\u0637\u0628\u0648\u0639 \u0639\u0644\u0649 \u0627\u0644\u0645\u0644\u0635\u0642 \u0644\u0644\u0627\u0633\u062A\u0639\u0644\u0627\u0645 \u0639\u0646 \u062D\u0627\u0644\u0629 \u0627\u0644\u0634\u062D\u0646\u0629" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-xs text-slate-500", children: "\u062A\u0638\u0647\u0631 \u0628\u064A\u0627\u0646\u0627\u062A \u0627\u0644\u0634\u062D\u0646\u0629 \u0641\u0642\u0637 \u0644\u0645\u0646 \u064A\u0645\u0644\u0643 \u0631\u0642\u0645 \u0627\u0644\u0628\u0648\u0644\u064A\u0635\u0629 \u0627\u0644\u0635\u062D\u064A\u062D \u062D\u0641\u0627\u0638\u0627\u064B \u0639\u0644\u0649 \u062E\u0635\u0648\u0635\u064A\u0629 \u0627\u0644\u0639\u0645\u0644\u0627\u0621" })
+          ] }) : !found ? /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-6 rounded-xl bg-slate-950 border border-slate-800 text-center space-y-1.5", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-sm font-bold text-rose-400", children: [
               "\u0644\u0645 \u064A\u062A\u0645 \u0627\u0644\u0639\u062B\u0648\u0631 \u0639\u0644\u0649 \u0634\u062D\u0646\u0629 \u0628\u0631\u0642\u0645 (",
-              cleanQuery || "\u2014",
+              cleanQuery,
               ")"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-xs text-slate-400", children: "\u062A\u0623\u0643\u062F \u0645\u0646 \u0643\u062A\u0627\u0628\u0629 \u0631\u0642\u0645 \u0627\u0644\u0634\u062D\u0646\u0629 \u0628\u0634\u0643\u0644 \u0635\u062D\u064A\u062D (\u0645\u062B\u0627\u0644: RT-84920 \u0623\u0648 RT-73105)" })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-xs text-slate-400", children: "\u064A\u0631\u062C\u0649 \u0627\u0644\u062A\u0623\u0643\u062F \u0645\u0646 \u0643\u062A\u0627\u0628\u0629 \u0631\u0642\u0645 \u0627\u0644\u0628\u0648\u0644\u064A\u0635\u0629 \u0628\u0634\u0643\u0644 \u0635\u062D\u064A\u062D \u0643\u0645\u0627 \u064A\u0638\u0647\u0631 \u0639\u0644\u0649 \u0627\u0644\u0645\u0644\u0635\u0642" })
           ] }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "space-y-5", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3", children: [
@@ -2177,10 +2162,10 @@ lucide-react/dist/esm/lucide-react.js:
                     found.customerName || "\u2014",
                     " \xB7 \u062C\u0648\u0627\u0644:",
                     " ",
-                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "font-mono", dir: "ltr", children: found.phone })
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "font-mono", dir: "ltr", children: isAuthenticated ? found.phone : maskPhoneNumber(found.phone) })
                   ] })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
+                isAuthenticated && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
                   "button",
                   {
                     type: "button",
@@ -2188,14 +2173,14 @@ lucide-react/dist/esm/lucide-react.js:
                     className: "px-3 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 text-xs font-bold flex items-center gap-1.5",
                     children: [
                       /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.MessageCircle, { className: "w-3.5 h-3.5" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0625\u0631\u0633\u0627\u0644 \u062A\u062D\u062F\u064A\u062B \u0648\u0627\u062A\u0633\u0627\u0628" })
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0625\u0634\u0639\u0627\u0631 \u0648\u0627\u062A\u0633\u0627\u0628" })
                     ]
                   }
                 ) })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "grid grid-cols-3 gap-3 text-xs", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-slate-400 block text-[11px]", children: "\u0627\u0644\u0648\u062C\u0647\u0629 \u0627\u0644\u0646\u0647\u0627\u0626\u064A\u0629" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-slate-400 block text-[11px]", children: "\u0627\u0644\u0648\u062C\u0647\u0629" }),
                   /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("strong", { className: "text-amber-400 text-sm", children: found.city })
                 ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80", children: [
@@ -2208,27 +2193,14 @@ lucide-react/dist/esm/lucide-react.js:
                     found.boxes,
                     " \u0643\u0631\u062A\u0648\u0646"
                   ] })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bg-slate-900/90 p-2.5 rounded-lg border border-slate-800/80", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-slate-400 block text-[11px]", children: "\u062D\u0627\u0644\u0629 \u0627\u0644\u062F\u0641\u0639" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("strong", { className: "text-white text-sm", children: [
-                    found.paymentStatus,
-                    found.paymentStatus === "\u0639\u0646\u062F \u0627\u0644\u0627\u0633\u062A\u0644\u0627\u0645" && found.codAmount > 0 ? ` (${found.codAmount} \u0631.\u0633)` : ""
-                  ] })
                 ] })
               ] })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center justify-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h4", { className: "text-xs font-bold text-white flex items-center gap-1.5", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.Clock, { className: "w-4 h-4 text-amber-400" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0627\u0644\u062E\u0637 \u0627\u0644\u0632\u0645\u0646\u064A \u0644\u0645\u0633\u0627\u0631 \u0627\u0644\u0634\u062D\u0646\u0629 (\u062A\u062C\u0647\u064A\u0632 \u2190 \u062A\u0633\u0644\u064A\u0645 \u0644\u0644\u0645\u062E\u0631\u062C \u2190 \u0648\u0635\u0644\u062A)" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "text-xs text-slate-400 tabular-nums", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("strong", { className: "font-mono", children: found.statusHistory?.length || 1 }),
-                  " \u062A\u062D\u062F\u064A\u062B\u0627\u062A \u0645\u0633\u062C\u0644\u0629"
-                ] })
-              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex items-center justify-between", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h4", { className: "text-xs font-bold text-white flex items-center gap-1.5", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.Clock, { className: "w-4 h-4 text-amber-400" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0627\u0644\u062E\u0637 \u0627\u0644\u0632\u0645\u0646\u064A \u0644\u0645\u0633\u0627\u0631 \u0627\u0644\u0634\u062D\u0646\u0629" })
+              ] }) }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "grid grid-cols-3 gap-2 pt-1", children: STATUS_STEPS.map((step, idx) => {
                 const isCompleted = idx <= currentStepIndex;
                 const isCurrent = idx === currentStepIndex;
@@ -2254,7 +2226,7 @@ lucide-react/dist/esm/lucide-react.js:
                 );
               }) }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "space-y-2 pt-2 border-t border-slate-800/80", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "text-[11px] font-bold text-slate-400", children: "\u0633\u062C\u0644 \u0627\u0644\u062D\u0631\u0643\u0627\u062A \u0627\u0644\u062A\u0641\u0635\u064A\u0644\u064A:" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "text-[11px] font-bold text-slate-400", children: "\u0633\u062C\u0644 \u0627\u0644\u062D\u0631\u0643\u0627\u062A:" }),
                 (found.statusHistory || []).map((ev, i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
                   "div",
                   {
@@ -2263,8 +2235,10 @@ lucide-react/dist/esm/lucide-react.js:
                       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "space-y-0.5", children: [
                         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "font-bold text-white flex items-center gap-2", children: [
                           /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: ev.status }),
-                          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-slate-500", children: "\xB7" }),
-                          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-amber-400 font-normal", children: ev.actor })
+                          isAuthenticated && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+                            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-slate-500", children: "\xB7" }),
+                            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-amber-400 font-normal", children: ev.actor })
+                          ] })
                         ] }),
                         ev.note && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-slate-300 text-[11px]", children: ev.note })
                       ] }),
@@ -2281,13 +2255,10 @@ lucide-react/dist/esm/lucide-react.js:
               ] })
             ] }),
             found.status === "\u062A\u0645 \u0627\u0644\u062A\u0633\u0644\u064A\u0645" && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 flex flex-wrap items-center justify-between gap-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "space-y-0.5", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "text-xs font-bold text-amber-300 flex items-center gap-1.5", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.Star, { className: "w-4 h-4 fill-amber-400 text-amber-400" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0648\u0635\u0644\u062A \u0627\u0644\u0634\u062D\u0646\u0629 \u0628\u0633\u0644\u0627\u0645! \u0642\u064A\u0651\u0645 \u062A\u062C\u0631\u0628\u062A\u0643 \u0645\u0639 \u0627\u0644\u0631\u064A\u0641 \u0627\u0644\u062A\u0642\u0646\u064A \u0639\u0644\u0649 Google Maps" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[11px] text-slate-300", children: "\u064A\u0633\u0627\u0639\u062F\u0646\u0627 \u062A\u0642\u064A\u064A\u0645\u0643 \u0641\u064A \u062A\u062D\u0633\u064A\u0646 \u062C\u0648\u062F\u0629 \u0627\u0644\u062A\u063A\u0644\u064A\u0641 \u0648\u0633\u0631\u0639\u0629 \u0627\u0644\u062A\u0633\u0644\u064A\u0645 \u0644\u0644\u0645\u062E\u0631\u062C\u064A\u0646." })
-              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "space-y-0.5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "text-xs font-bold text-amber-300 flex items-center gap-1.5", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.Star, { className: "w-4 h-4 fill-amber-400 text-amber-400" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0646\u0633\u0639\u062F \u0628\u062A\u0642\u064A\u064A\u0645 \u062A\u062C\u0631\u0628\u062A\u0643 \u0645\u0639 \u0645\u0624\u0633\u0633\u0629 \u0627\u0644\u0631\u064A\u0641 \u0627\u0644\u062A\u0642\u0646\u064A \u0639\u0644\u0649 Google Maps" })
+              ] }) }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
                 "a",
                 {
@@ -2296,24 +2267,21 @@ lucide-react/dist/esm/lucide-react.js:
                   rel: "noreferrer",
                   className: "px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 whitespace-nowrap shrink-0",
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u062A\u0642\u064A\u064A\u0645 \u0639\u0644\u0649 Google Maps" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u062A\u0642\u064A\u064A\u0645 \u0627\u0644\u062E\u062F\u0645\u0629" }),
                     /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.ExternalLink, { className: "w-3.5 h-3.5" })
                   ]
                 }
               )
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center justify-between", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h4", { className: "text-xs font-bold text-white flex items-center gap-1.5", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.Image, { className: "w-4 h-4 text-amber-400" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { children: [
-                    "\u0635\u0648\u0631 \u062D\u0627\u0644\u0629 \u0627\u0644\u0643\u0631\u062A\u0648\u0646 \u0648\u0625\u062B\u0628\u0627\u062A \u0627\u0644\u062A\u0633\u0644\u064A\u0645 (",
-                    found.photos?.length || 0,
-                    ")"
-                  ] })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[11px] text-slate-400", children: "\u062A\u064F\u062D\u0641\u0638 \u0644\u0644\u0631\u062C\u0648\u0639 \u0625\u0644\u064A\u0647\u0627 \u0641\u064A \u0627\u0644\u0645\u0637\u0627\u0644\u0628\u0627\u062A \u0648\u0627\u0644\u062A\u0644\u0641\u064A\u0627\u062A" })
-              ] }),
+            (isAuthenticated || found.photos && found.photos.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex items-center justify-between", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h4", { className: "text-xs font-bold text-white flex items-center gap-1.5", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.Image, { className: "w-4 h-4 text-amber-400" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { children: [
+                  "\u0635\u0648\u0631 \u062A\u0648\u062B\u064A\u0642 \u0627\u0644\u0637\u0631\u062F (",
+                  found.photos?.length || 0,
+                  ")"
+                ] })
+              ] }) }),
               found.photos && found.photos.length > 0 ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-3", children: found.photos.map((ph) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
                 "div",
                 {
@@ -2346,8 +2314,8 @@ lucide-react/dist/esm/lucide-react.js:
                   ]
                 },
                 ph.id
-              )) }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-xs text-slate-500 py-2", children: "\u0644\u0627 \u062A\u0648\u062C\u062F \u0635\u0648\u0631 \u0645\u0631\u0641\u0642\u0629 \u0644\u0647\u0630\u0647 \u0627\u0644\u0634\u062D\u0646\u0629 \u062D\u062A\u0649 \u0627\u0644\u0622\u0646. \u064A\u0645\u0643\u0646\u0643 \u0625\u0631\u0641\u0627\u0642 \u0635\u0648\u0631\u0629 \u0627\u0644\u0643\u0631\u062A\u0648\u0646 \u0623\u0648 \u0633\u0646\u062F \u0627\u0644\u0645\u062E\u0631\u062C \u0628\u0627\u0644\u0623\u0633\u0641\u0644." }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "pt-2 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-2", children: [
+              )) }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-xs text-slate-500 py-1", children: "\u0644\u0627 \u062A\u0648\u062C\u062F \u0635\u0648\u0631 \u0645\u0631\u0641\u0642\u0629 \u0644\u0647\u0630\u0647 \u0627\u0644\u0634\u062D\u0646\u0629." }),
+              isAuthenticated && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "pt-2 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-2", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
                   "select",
                   {
@@ -2369,13 +2337,13 @@ lucide-react/dist/esm/lucide-react.js:
                     type: "text",
                     value: photoCaption,
                     onChange: (e) => setPhotoCaption(e.target.value),
-                    placeholder: "\u0648\u0635\u0641 \u0627\u0644\u0635\u0648\u0631\u0629 (\u0627\u062E\u062A\u064A\u0627\u0631\u064A)...",
+                    placeholder: "\u0645\u0644\u0627\u062D\u0638\u0629 \u0627\u0644\u0635\u0648\u0631\u0629...",
                     className: "bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white"
                   }
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("label", { className: "cursor-pointer bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors", children: [
                   /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.Camera, { className: "w-4 h-4" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0627\u0644\u062A\u0642\u0627\u0637 / \u0631\u0641\u0639 \u0635\u0648\u0631\u0629 \u0625\u062B\u0628\u0627\u062A" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0625\u0631\u0641\u0627\u0642 \u0635\u0648\u0631\u0629" }),
                   /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                     "input",
                     {
@@ -2389,15 +2357,11 @@ lucide-react/dist/esm/lucide-react.js:
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3", children: [
+            isAuthenticated && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-wrap items-center justify-between gap-2", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "text-xs font-bold text-white flex items-center gap-1.5", children: [
                   /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react.Truck, { className: "w-4 h-4 text-amber-400" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { children: [
-                    "\u062A\u062D\u062F\u064A\u062B \u062D\u0627\u0644\u0629 \u0627\u0644\u0634\u062D\u0646\u0629 \u0627\u0644\u0622\u0646 ",
-                    isAuthenticated ? "" : "(\u0648\u0636\u0639 \u0627\u0644\u0645\u0627\u0633\u062D \u0627\u0644\u0633\u0631\u064A\u0639)",
-                    ":"
-                  ] })
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u062A\u062D\u062F\u064A\u062B \u062D\u0627\u0644\u0629 \u0627\u0644\u0634\u062D\u0646\u0629:" })
                 ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("label", { className: "flex items-center gap-1.5 text-xs text-emerald-400 cursor-pointer", children: [
                   /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
@@ -2409,7 +2373,7 @@ lucide-react/dist/esm/lucide-react.js:
                       className: "accent-emerald-500 rounded"
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0625\u0634\u0639\u0627\u0631 \u0648\u0627\u062A\u0633\u0627\u0628 \u062A\u0644\u0642\u0627\u0626\u064A \u0644\u0644\u0639\u0645\u064A\u0644 \u0645\u0639 \u0627\u0644\u062A\u062D\u062F\u064A\u062B" })
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "\u0625\u0634\u0639\u0627\u0631 \u0648\u0627\u062A\u0633\u0627\u0628 \u062A\u0644\u0642\u0627\u0626\u064A" })
                 ] })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
@@ -2418,7 +2382,7 @@ lucide-react/dist/esm/lucide-react.js:
                   type: "text",
                   value: statusNote,
                   onChange: (e) => setStatusNote(e.target.value),
-                  placeholder: "\u0645\u0644\u0627\u062D\u0638\u0629 \u062A\u0636\u0627\u0641 \u0641\u064A \u0627\u0644\u062E\u0637 \u0627\u0644\u0632\u0645\u0646\u064A (\u0645\u062B\u0627\u0644: \u062A\u0645 \u0627\u0644\u062A\u0633\u0644\u064A\u0645 \u0644\u0644\u0645\u0646\u062F\u0648\u0628 \u0641\u0647\u062F - \u0628\u0648\u0644\u064A\u0635\u0629 \u0631\u0642\u0645 412)...",
+                  placeholder: "\u0645\u0644\u0627\u062D\u0638\u0629 \u062A\u062D\u062F\u064A\u062B \u0627\u0644\u062D\u0627\u0644\u0629 (\u0627\u062E\u062A\u064A\u0627\u0631\u064A)...",
                   className: "w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white"
                 }
               ),
@@ -2427,7 +2391,13 @@ lucide-react/dist/esm/lucide-react.js:
                 {
                   type: "button",
                   onClick: () => {
-                    onUpdateStatus(found.id, st, statusNote.trim() || void 0, void 0, autoSendWa);
+                    onUpdateStatus(
+                      found.id,
+                      st,
+                      statusNote.trim() || void 0,
+                      void 0,
+                      autoSendWa
+                    );
                     setStatusNote("");
                   },
                   className: `py-2.5 px-3 rounded-xl font-bold border transition-colors ${found.status === st ? "bg-amber-500 text-slate-950 border-amber-400" : "bg-slate-900 hover:bg-slate-800 text-slate-200 border-slate-700"}`,
@@ -2483,6 +2453,7 @@ lucide-react/dist/esm/lucide-react.js:
     const [cameraActive, setCameraActive] = (0, import_react3.useState)(false);
     const [cameraError, setCameraError] = (0, import_react3.useState)(null);
     const [manualCode, setManualCode] = (0, import_react3.useState)("");
+    const [scanError, setScanError] = (0, import_react3.useState)(null);
     const [targetStatus, setTargetStatus] = (0, import_react3.useState)("\u0633\u064F\u0644\u0645\u062A \u0644\u0644\u0645\u062E\u0631\u062C");
     const [sendWhatsAppOnScan, setSendWhatsAppOnScan] = (0, import_react3.useState)(true);
     const [attachedPhoto, setAttachedPhoto] = (0, import_react3.useState)(void 0);
@@ -2519,10 +2490,8 @@ lucide-react/dist/esm/lucide-react.js:
               }
             }, 500);
           }
-        } catch (err) {
-          setCameraError(
-            "\u062A\u0639\u0630\u0631 \u062A\u0634\u063A\u064A\u0644 \u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627 \u0645\u0628\u0627\u0634\u0631\u0629 \u0641\u064A \u0647\u0630\u0627 \u0627\u0644\u0645\u062A\u0635\u0641\u062D \u2014 \u064A\u0645\u0643\u0646\u0643 \u0627\u0633\u062A\u062E\u062F\u0627\u0645 \u0642\u0627\u0631\u0626 \u0627\u0644\u0628\u0627\u0631\u0643\u0648\u062F \u0627\u0644\u0644\u064A\u0632\u0631\u064A \u0623\u0648 \u0627\u0644\u0646\u0642\u0631 \u0627\u0644\u0633\u0631\u064A\u0639 \u0623\u062F\u0646\u0627\u0647."
-          );
+        } catch {
+          setCameraError("\u062A\u0639\u0630\u0631 \u062A\u0634\u063A\u064A\u0644 \u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627 \u2014 \u0627\u0633\u062A\u062E\u062F\u0645 \u0642\u0627\u0631\u0626 \u0627\u0644\u0628\u0627\u0631\u0643\u0648\u062F \u0623\u0648 \u0623\u062F\u062E\u0644 \u0631\u0642\u0645 \u0627\u0644\u0628\u0648\u0644\u064A\u0635\u0629 \u0645\u0628\u0627\u0634\u0631\u0629.");
           setCameraActive(false);
         }
       }
@@ -2548,14 +2517,18 @@ lucide-react/dist/esm/lucide-react.js:
       return trimmed.toUpperCase();
     };
     const handleDetectedRawValue = (raw) => {
+      setScanError(null);
       const id = extractShipmentId(raw);
       if (!id) return;
       const found = shipments.find((s) => s.id.toUpperCase() === id);
-      if (!found) return;
+      if (!found) {
+        setScanError(`\u0644\u0645 \u064A\u062A\u0645 \u0627\u0644\u0639\u062B\u0648\u0631 \u0639\u0644\u0649 \u0634\u062D\u0646\u0629 \u0628\u0631\u0642\u0645 (${id})`);
+        return;
+      }
       onQuickScanUpdate(
         found.id,
         targetStatus,
-        scanNote.trim() || `\u062A\u062D\u062F\u064A\u062B \u0628\u0627\u0644\u0645\u0627\u0633\u062D \u0627\u0644\u0636\u0648\u0626\u064A \u0628\u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627 (${targetStatus})`,
+        scanNote.trim() || `\u062A\u062D\u062F\u064A\u062B \u0628\u0627\u0644\u0645\u0627\u0633\u062D \u0627\u0644\u0636\u0648\u0626\u064A (${targetStatus})`,
         attachedPhoto,
         sendWhatsAppOnScan
       );
@@ -2588,10 +2561,7 @@ lucide-react/dist/esm/lucide-react.js:
           /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center justify-between border-b border-slate-800 pb-3", children: [
             /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-2.5", children: [
               /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_lucide_react2.ScanLine, { className: "w-5 h-5 text-amber-400" }),
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h3", { id: "warehouse-scanner-title", className: "font-bold text-base text-white", children: "\u0645\u0627\u0633\u062D \u0628\u0627\u0631\u0643\u0648\u062F \u0627\u0644\u0645\u0633\u062A\u0648\u062F\u0639 \u0627\u0644\u0633\u0631\u064A\u0639 (\u0628\u062F\u0648\u0646 \u0641\u062A\u062D \u0627\u0644\u0646\u0638\u0627\u0645)" }),
-                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs text-slate-400", children: "\u0627\u0645\u0633\u062D \u0643\u0648\u062F \u0627\u0644\u0643\u0631\u062A\u0648\u0646 \u0628\u0643\u0627\u0645\u064A\u0631\u0627 \u0627\u0644\u062C\u0648\u0627\u0644 \u0623\u0648 \u0627\u0644\u0642\u0627\u0631\u0626 \u0644\u062A\u062D\u062F\u064A\u062B \u0627\u0644\u062D\u0627\u0644\u0629 \u0648\u0625\u0634\u0639\u0627\u0631 \u0627\u0644\u0639\u0645\u064A\u0644 \u0641\u0648\u0631\u0627\u064B" })
-              ] })
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h3", { id: "warehouse-scanner-title", className: "font-bold text-base text-white", children: "\u0645\u0627\u0633\u062D \u0628\u0627\u0631\u0643\u0648\u062F \u0627\u0644\u0645\u0633\u062A\u0648\u062F\u0639" })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
               "button",
@@ -2605,14 +2575,14 @@ lucide-react/dist/esm/lucide-react.js:
             )
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2.5", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "block text-xs font-bold text-slate-300", children: "1. \u0627\u062E\u062A\u0631 \u0627\u0644\u062D\u0627\u0644\u0629 \u0627\u0644\u062A\u064A \u0633\u064A\u062A\u0645 \u062A\u0637\u0628\u064A\u0642\u0647\u0627 \u0641\u0648\u0631 \u0645\u0633\u062D \u0627\u0644\u0643\u0631\u062A\u0648\u0646:" }),
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "block text-xs font-bold text-slate-300", children: "\u0627\u0644\u062D\u0627\u0644\u0629 \u0627\u0644\u062C\u062F\u064A\u062F\u0629 \u0639\u0646\u062F \u0627\u0644\u0645\u0633\u062D:" }),
             /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "grid grid-cols-3 gap-2 text-xs", children: ["\u0642\u064A\u062F \u0627\u0644\u062A\u062C\u0647\u064A\u0632", "\u0633\u064F\u0644\u0645\u062A \u0644\u0644\u0645\u062E\u0631\u062C", "\u062A\u0645 \u0627\u0644\u062A\u0633\u0644\u064A\u0645"].map((st) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
               "button",
               {
                 type: "button",
                 onClick: () => setTargetStatus(st),
                 className: `py-2.5 px-2 rounded-xl font-bold border transition-colors ${targetStatus === st ? "bg-amber-500 text-slate-950 border-amber-400" : "bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700"}`,
-                children: st === "\u0642\u064A\u062F \u0627\u0644\u062A\u062C\u0647\u064A\u0632" ? "\u{1F6E0}\uFE0F \u0642\u064A\u062F \u0627\u0644\u062A\u062C\u0647\u064A\u0632" : st === "\u0633\u064F\u0644\u0645\u062A \u0644\u0644\u0645\u062E\u0631\u062C" ? "\u{1F69B} \u062A\u0633\u0644\u064A\u0645 \u0644\u0644\u0645\u062E\u0631\u062C" : "\u2705 \u0648\u0635\u0644\u062A \u0644\u0644\u0639\u0645\u064A\u0644"
+                children: st === "\u0642\u064A\u062F \u0627\u0644\u062A\u062C\u0647\u064A\u0632" ? "\u{1F6E0}\uFE0F \u0642\u064A\u062F \u0627\u0644\u062A\u062C\u0647\u064A\u0632" : st === "\u0633\u064F\u0644\u0645\u062A \u0644\u0644\u0645\u062E\u0631\u062C" ? "\u{1F69B} \u062A\u0633\u0644\u064A\u0645 \u0644\u0644\u0645\u062E\u0631\u062C" : "\u2705 \u062A\u0645 \u0627\u0644\u062A\u0633\u0644\u064A\u0645"
               },
               st
             )) }),
@@ -2627,11 +2597,11 @@ lucide-react/dist/esm/lucide-react.js:
                     className: "accent-emerald-500 rounded"
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: "\u0625\u0631\u0633\u0627\u0644 \u0625\u0634\u0639\u0627\u0631 \u0648\u0627\u062A\u0633\u0627\u0628 \u062A\u0644\u0642\u0627\u0626\u064A \u0644\u0644\u0639\u0645\u064A\u0644 \u0639\u0646\u062F \u0627\u0644\u0645\u0633\u062D" })
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: "\u0625\u0634\u0639\u0627\u0631 \u0648\u0627\u062A\u0633\u0627\u0628 \u062A\u0644\u0642\u0627\u0626\u064A \u0644\u0644\u0639\u0645\u064A\u0644" })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("label", { className: "cursor-pointer px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold flex items-center gap-1.5", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_lucide_react2.Upload, { className: "w-3.5 h-3.5" }),
-                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: attachedPhoto ? "\u062A\u0645 \u0625\u0631\u0641\u0627\u0642 \u0635\u0648\u0631\u0629 \u0627\u0644\u0643\u0631\u062A\u0648\u0646 \u2713" : "\u0625\u0631\u0641\u0627\u0642 \u0635\u0648\u0631\u0629 \u0627\u0644\u0643\u0631\u062A\u0648\u0646" }),
+                /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: attachedPhoto ? "\u062A\u0645 \u0625\u0631\u0641\u0627\u0642 \u0627\u0644\u0635\u0648\u0631\u0629 \u2713" : "\u0625\u0631\u0641\u0627\u0642 \u0635\u0648\u0631\u0629 \u0627\u0644\u0643\u0631\u062A\u0648\u0646" }),
                 /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
                   "input",
                   {
@@ -2647,7 +2617,7 @@ lucide-react/dist/esm/lucide-react.js:
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3", children: [
             /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "text-xs font-bold text-slate-300", children: "2. \u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627 \u0623\u0648 \u0627\u0644\u0625\u062F\u062E\u0627\u0644 \u0627\u0644\u0645\u0628\u0627\u0634\u0631:" }),
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "text-xs font-bold text-slate-300", children: "\u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627 \u0623\u0648 \u0642\u0627\u0631\u0626 \u0627\u0644\u0628\u0627\u0631\u0643\u0648\u062F:" }),
               /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
                 "button",
                 {
@@ -2656,16 +2626,17 @@ lucide-react/dist/esm/lucide-react.js:
                   className: `px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors ${cameraActive ? "bg-rose-500/20 text-rose-300 border border-rose-500/30" : "bg-amber-500 text-slate-950"}`,
                   children: [
                     /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_lucide_react2.Camera, { className: "w-3.5 h-3.5" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: cameraActive ? "\u0625\u064A\u0642\u0627\u0641 \u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627" : "\u062A\u0634\u063A\u064A\u0644 \u0643\u0627\u0645\u064A\u0631\u0627 \u0627\u0644\u062C\u0648\u0627\u0644 \u0644\u0644\u0645\u0633\u062D" })
+                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: cameraActive ? "\u0625\u064A\u0642\u0627\u0641 \u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627" : "\u062A\u0634\u063A\u064A\u0644 \u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627" })
                   ]
                 }
               )
             ] }),
             cameraActive && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "relative rounded-xl overflow-hidden bg-black aspect-video border border-amber-500/40 flex items-center justify-center", children: [
               /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("video", { ref: videoRef, className: "w-full h-full object-cover", playsInline: true, muted: true }),
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "absolute inset-6 border-2 border-dashed border-amber-400/80 rounded-xl pointer-events-none flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "px-3 py-1 rounded bg-black/70 text-amber-400 text-xs font-bold", children: "\u0648\u062C\u0651\u0647 \u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627 \u0646\u062D\u0648 \u0627\u0644\u0628\u0627\u0631\u0643\u0648\u062F \u0623\u0648 QR \u0627\u0644\u0645\u0644\u0635\u0642" }) })
+              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "absolute inset-6 border-2 border-dashed border-amber-400/80 rounded-xl pointer-events-none flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "px-3 py-1 rounded bg-black/70 text-amber-400 text-xs font-bold", children: "\u0648\u062C\u0651\u0647 \u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627 \u0646\u062D\u0648 \u0628\u0627\u0631\u0643\u0648\u062F \u0627\u0644\u0645\u0644\u0635\u0642" }) })
             ] }),
             cameraError && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs text-amber-400", children: cameraError }),
+            scanError && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("p", { className: "text-xs font-bold text-rose-400", children: scanError }),
             /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
               "form",
               {
@@ -2681,7 +2652,7 @@ lucide-react/dist/esm/lucide-react.js:
                       type: "text",
                       value: manualCode,
                       onChange: (e) => setManualCode(e.target.value),
-                      placeholder: "\u0627\u0645\u0633\u062D \u0628\u0642\u0627\u0631\u0626 \u0627\u0644\u0628\u0627\u0631\u0643\u0648\u062F \u0623\u0648 \u0627\u0643\u062A\u0628 \u0627\u0644\u0631\u0642\u0645 (\u0645\u062B\u0627\u0644: RT-84920)",
+                      placeholder: "\u0627\u0645\u0633\u062D \u0627\u0644\u0628\u0627\u0631\u0643\u0648\u062F \u0623\u0648 \u0623\u062F\u062E\u0644 \u0631\u0642\u0645 \u0627\u0644\u0634\u062D\u0646\u0629",
                       dir: "ltr",
                       className: "flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm font-mono font-bold text-center text-white focus:border-amber-500 focus:outline-none"
                     }
@@ -2691,7 +2662,7 @@ lucide-react/dist/esm/lucide-react.js:
                     {
                       type: "submit",
                       className: "px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs whitespace-nowrap shrink-0",
-                      children: "\u062A\u062D\u062F\u064A\u062B \u0641\u0648\u0631\u064A"
+                      children: "\u062A\u062D\u062F\u064A\u062B"
                     }
                   )
                 ]
@@ -2703,36 +2674,17 @@ lucide-react/dist/esm/lucide-react.js:
                 type: "text",
                 value: scanNote,
                 onChange: (e) => setScanNote(e.target.value),
-                placeholder: "\u0645\u0644\u0627\u062D\u0638\u0629 \u0633\u0631\u064A\u0639\u0629 \u0645\u0639 \u0627\u0644\u0645\u0633\u062D (\u0627\u062E\u062A\u064A\u0627\u0631\u064A: \u0633\u064F\u0644\u0645 \u0644\u0644\u0645\u0646\u062F\u0648\u0628 / \u0643\u0631\u062A\u0648\u0646 \u0633\u0644\u064A\u0645)...",
+                placeholder: "\u0645\u0644\u0627\u062D\u0638\u0629 \u0627\u0644\u062A\u0633\u0644\u064A\u0645 (\u0627\u062E\u062A\u064A\u0627\u0631\u064A)...",
                 className: "w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white"
               }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "pt-2 border-t border-slate-800/80 space-y-1.5", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "block text-[11px] text-slate-400", children: "\u0645\u0633\u062D \u0641\u0648\u0631\u064A \u0644\u0637\u0631\u062F \u0645\u0648\u062C\u0648\u062F \u0641\u064A \u0627\u0644\u0645\u0633\u062A\u0648\u062F\u0639 (\u0627\u0636\u063A\u0637 \u0644\u0645\u062D\u0627\u0643\u0627\u0629 \u0645\u0633\u062D \u0627\u0644\u0628\u0627\u0631\u0643\u0648\u062F):" }),
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "grid grid-cols-2 gap-2", children: shipments.slice(0, 4).map((s) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
-                "button",
-                {
-                  type: "button",
-                  onClick: () => handleDetectedRawValue(s.id),
-                  className: "p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-right flex items-center justify-between text-xs transition-colors",
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "font-mono font-bold text-amber-400", children: s.id }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "text-[11px] text-slate-400 truncate max-w-[140px]", children: s.shopName })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_lucide_react2.QrCode, { className: "w-4 h-4 text-slate-400 shrink-0" })
-                  ]
-                },
-                s.id
-              )) })
-            ] })
+            )
           ] }),
           lastScannedResult && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "p-3.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-between text-xs", children: [
             /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "flex items-center gap-2", children: [
               /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(import_lucide_react2.CheckCircle2, { className: "w-5 h-5 text-emerald-400 shrink-0" }),
               /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
                 /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "font-bold text-white", children: [
-                  "\u062A\u0645 \u062A\u062D\u062F\u064A\u062B \u0627\u0644\u0634\u062D\u0646\u0629 ",
+                  "\u062A\u0645 \u062A\u062D\u062F\u064A\u062B ",
                   /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { className: "font-mono text-amber-300", children: lastScannedResult.id }),
                   " \u0625\u0644\u0649:",
                   " ",
@@ -2740,7 +2692,7 @@ lucide-react/dist/esm/lucide-react.js:
                 ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "text-[11px] text-slate-300", children: [
                   lastScannedResult.shopName,
-                  " \xB7 \u0627\u0644\u0633\u0627\u0639\u0629 ",
+                  " \xB7 ",
                   lastScannedResult.time
                 ] })
               ] })
@@ -3666,28 +3618,34 @@ lucide-react/dist/esm/lucide-react.js:
     const [autoWhatsAppOnStatusChange, setAutoWhatsAppOnStatusChange] = (0, import_react9.useState)(true);
     const [activeTab, setActiveTab] = (0, import_react9.useState)("create");
     const [trackingModalOpen, setTrackingModalOpen] = (0, import_react9.useState)(false);
-    const [trackingModalShipmentId, setTrackingModalShipmentId] = (0, import_react9.useState)("RT-84920");
+    const [trackingModalShipmentId, setTrackingModalShipmentId] = (0, import_react9.useState)("");
     const [scannerModalOpen, setScannerModalOpen] = (0, import_react9.useState)(false);
     const [pinSettingsModalOpen, setPinSettingsModalOpen] = (0, import_react9.useState)(false);
     const [githubModalOpen, setGithubModalOpen] = (0, import_react9.useState)(false);
     const [githubHtmlCode, setGithubHtmlCode] = (0, import_react9.useState)("");
     const [githubCopySuccess, setGithubCopySuccess] = (0, import_react9.useState)(false);
-    const [newManagerPin, setNewManagerPin] = (0, import_react9.useState)("123456");
-    const [newWarehousePin, setNewWarehousePin] = (0, import_react9.useState)("111111");
+    const [newManagerPin, setNewManagerPin] = (0, import_react9.useState)(
+      () => localStorage.getItem("reeftek_v4_mgr_pin") || "123456"
+    );
+    const [newWarehousePin, setNewWarehousePin] = (0, import_react9.useState)(
+      () => localStorage.getItem("reeftek_v4_wh_pin") || "111111"
+    );
     const [toastMessage, setToastMessage] = (0, import_react9.useState)(null);
     const [pendingWhatsAppBanner, setPendingWhatsAppBanner] = (0, import_react9.useState)(null);
-    const [currentShipmentId, setCurrentShipmentId] = (0, import_react9.useState)("RT-84920");
-    const [shopName, setShopName] = (0, import_react9.useState)("\u0645\u0624\u0633\u0633\u0629 \u0627\u0644\u0635\u0642\u0631 \u0644\u0642\u0637\u0639 \u063A\u064A\u0627\u0631 \u0627\u0644\u0634\u0627\u062D\u0646\u0627\u062A");
-    const [city, setCity] = (0, import_react9.useState)("\u0627\u0644\u0631\u064A\u0627\u0636");
-    const [carrier, setCarrier] = (0, import_react9.useState)("\u0645\u062E\u0631\u062C \u0627\u0644\u0635\u0627\u0639\u062F\u064A \u0644\u0644\u0646\u0642\u0644");
-    const [customerName, setCustomerName] = (0, import_react9.useState)("\u0623\u0628\u0648 \u0641\u0647\u062F \u0627\u0644\u0639\u062A\u064A\u0628\u064A");
-    const [phone, setPhone] = (0, import_react9.useState)("0501234567");
-    const [boxes, setBoxes] = (0, import_react9.useState)(3);
+    const [currentShipmentId, setCurrentShipmentId] = (0, import_react9.useState)(
+      () => `RT-${Math.floor(1e4 + Math.random() * 9e4)}`
+    );
+    const [shopName, setShopName] = (0, import_react9.useState)("");
+    const [city, setCity] = (0, import_react9.useState)("");
+    const [carrier, setCarrier] = (0, import_react9.useState)("");
+    const [customerName, setCustomerName] = (0, import_react9.useState)("");
+    const [phone, setPhone] = (0, import_react9.useState)("");
+    const [boxes, setBoxes] = (0, import_react9.useState)(1);
     const [printAllBoxes, setPrintAllBoxes] = (0, import_react9.useState)(true);
     const [paymentStatus, setPaymentStatus] = (0, import_react9.useState)("\u0645\u062F\u0641\u0648\u0639");
     const [codAmount, setCodAmount] = (0, import_react9.useState)("");
-    const [invoiceNo, setInvoiceNo] = (0, import_react9.useState)("INV-2026-994");
-    const [notes, setNotes] = (0, import_react9.useState)("\u0641\u0644\u0627\u062A\u0631 + \u0637\u0642\u0645 \u0627\u0635\u0644\u0627\u062D + \u0627\u0635\u0637\u0628\u0627\u062A");
+    const [invoiceNo, setInvoiceNo] = (0, import_react9.useState)("");
+    const [notes, setNotes] = (0, import_react9.useState)("");
     const [warnings, setWarnings] = (0, import_react9.useState)(["\u0642\u0627\u0628\u0644 \u0644\u0644\u0643\u0633\u0631", "\u0627\u062A\u062C\u0627\u0647 \u0644\u0644\u0623\u0639\u0644\u0649"]);
     const [draftCartonPhoto, setDraftCartonPhoto] = (0, import_react9.useState)(void 0);
     const [printTemplate, setPrintTemplate] = (0, import_react9.useState)("single");
@@ -3826,7 +3784,7 @@ lucide-react/dist/esm/lucide-react.js:
         }
       } catch {
       }
-      setPinError("\u0631\u0645\u0632 \u0627\u0644\u062F\u062E\u0648\u0644 \u063A\u064A\u0631 \u0635\u062D\u064A\u062D. (\u0627\u0644\u0645\u062F\u064A\u0631: 123456 \xB7 \u0645\u0648\u0638\u0641 \u0627\u0644\u0645\u0633\u062A\u0648\u062F\u0639: 111111)");
+      setPinError("\u0631\u0645\u0632 \u0627\u0644\u062F\u062E\u0648\u0644 \u063A\u064A\u0631 \u0635\u062D\u064A\u062D\u060C \u064A\u0631\u062C\u0649 \u0627\u0644\u0645\u062D\u0627\u0648\u0644\u0629 \u0645\u0631\u0629 \u0623\u062E\u0631\u0649");
       setPinDigits(["", "", "", "", "", ""]);
       pinInputRefs.current[0]?.focus();
     };
@@ -4139,13 +4097,13 @@ lucide-react/dist/esm/lucide-react.js:
           id: "authLockScreen",
           className: "no-print fixed inset-0 z-[100] bg-slate-950 flex flex-col justify-between p-4 overflow-y-auto",
           style: {
-            backgroundImage: "radial-gradient(circle at 50% 15%, rgba(245, 158, 11, 0.14), transparent 60%)"
+            backgroundImage: "radial-gradient(circle at 50% 15%, rgba(245, 158, 11, 0.12), transparent 60%)"
           },
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "max-w-6xl w-full mx-auto flex items-center justify-between py-2 text-xs text-slate-400", children: [
               /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex items-center gap-2", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.ShieldCheck, { className: "w-4 h-4 text-amber-400" }),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0628\u0648\u0627\u0628\u0629 \u0627\u0644\u0645\u0648\u0638\u0641\u064A\u0646 \u0648\u0627\u0644\u0635\u0644\u0627\u062D\u064A\u0627\u062A \u0627\u0644\u0645\u062D\u0645\u064A\u0629 \xB7 REEFTEK SECURITY v4.0" })
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0628\u0648\u0627\u0628\u0629 \u0627\u0644\u0645\u0648\u0638\u0641\u064A\u0646 \u0627\u0644\u0645\u062D\u0645\u064A\u0629 \xB7 REEFTEK" })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "font-mono text-slate-400", children: (/* @__PURE__ */ new Date()).toLocaleDateString("ar-SA", {
                 weekday: "long",
@@ -4155,45 +4113,29 @@ lucide-react/dist/esm/lucide-react.js:
               }) })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "my-auto max-w-md w-full mx-auto py-4", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "bg-slate-900/95 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl text-center space-y-5", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "space-y-2.5", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "space-y-2", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 mx-auto flex items-center justify-center text-slate-950 font-black text-3xl shadow-xl shadow-amber-500/20", children: "RT" }),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("h1", { className: "text-2xl font-black text-white tracking-tight", children: [
-                  "\u0627\u0644\u0631\u064A\u0641 \u0644\u0644\u0634\u062D\u0646\u0627\u062A ",
-                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "text-amber-400 font-mono text-base", children: "PRO v4.0" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-xs text-slate-400", children: "\u0646\u0638\u0627\u0645 \u0625\u0635\u062F\u0627\u0631 \u0645\u0644\u0635\u0642\u0627\u062A \u0627\u0644\u0634\u062D\u0646\u060C \u0627\u0644\u062E\u0637 \u0627\u0644\u0632\u0645\u0646\u064A \u0644\u0644\u0637\u0631\u0648\u062F\u060C \u062A\u0642\u0641\u064A\u0644 COD\u060C \u0648\u0627\u0644\u0645\u0627\u0633\u062D \u0627\u0644\u0636\u0648\u0626\u064A \u2014 \u0645\u0624\u0633\u0633\u0629 \u0627\u0644\u0631\u064A\u0641 \u0627\u0644\u062A\u0642\u0646\u064A \u0644\u0642\u0637\u0639 \u063A\u064A\u0627\u0631 \u0627\u0644\u0634\u0627\u062D\u0646\u0627\u062A" })
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h1", { className: "text-2xl font-black text-white tracking-tight", children: "\u0627\u0644\u0631\u064A\u0641 \u0644\u0644\u0634\u062D\u0646\u0627\u062A" }),
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-xs text-slate-400", children: "\u0645\u0624\u0633\u0633\u0629 \u0627\u0644\u0631\u064A\u0641 \u0627\u0644\u062A\u0642\u0646\u064A \u0644\u0642\u0637\u0639 \u063A\u064A\u0627\u0631 \u0627\u0644\u0634\u0627\u062D\u0646\u0627\u062A" })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "grid grid-cols-2 gap-2.5 pt-1", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
-                  "button",
-                  {
-                    type: "button",
-                    onClick: () => setScannerModalOpen(true),
-                    className: "p-3 rounded-2xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-xs font-bold flex flex-col items-center gap-1.5 transition-colors",
-                    children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.Camera, { className: "w-5 h-5 text-amber-400" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0645\u0627\u0633\u062D \u0627\u0644\u0645\u0633\u062A\u0648\u062F\u0639 \u0628\u0627\u0644\u0643\u0627\u0645\u064A\u0631\u0627" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "text-[10px] text-slate-400 font-normal", children: "\u062A\u062D\u062F\u064A\u062B \u0633\u0631\u064A\u0639 \u0628\u062F\u0648\u0646 \u0641\u062A\u062D \u0627\u0644\u0646\u0638\u0627\u0645" })
-                    ]
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
-                  "button",
-                  {
-                    type: "button",
-                    onClick: () => setTrackingModalOpen(true),
-                    className: "p-3 rounded-2xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-200 text-xs font-bold flex flex-col items-center gap-1.5 transition-colors",
-                    children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.Search, { className: "w-5 h-5 text-emerald-400" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u062A\u062A\u0628\u0639 \u0634\u062D\u0646\u0629 \u0648\u0627\u0644\u062E\u0637 \u0627\u0644\u0632\u0645\u0646\u064A" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "text-[10px] text-slate-400 font-normal", children: "\u0645\u0639\u0627\u064A\u0646\u0629 \u0627\u0644\u0645\u0631\u0627\u062D\u0644 \u0648\u0635\u0648\u0631 \u0627\u0644\u0637\u0631\u062F" })
-                    ]
-                  }
-                )
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "space-y-3 pt-2 border-t border-slate-800/80", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "pt-1", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => {
+                    setTrackingModalShipmentId("");
+                    setTrackingModalOpen(true);
+                  },
+                  className: "w-full p-3.5 rounded-2xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-200 text-xs font-bold flex items-center justify-center gap-2 transition-colors",
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.Search, { className: "w-4 h-4 text-amber-400" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0627\u0633\u062A\u0639\u0644\u0627\u0645 \u0648\u062A\u062A\u0628\u0639 \u0634\u062D\u0646\u0629 \u0628\u0631\u0642\u0645 \u0627\u0644\u0628\u0648\u0644\u064A\u0635\u0629" })
+                  ]
+                }
+              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "space-y-3 pt-3 border-t border-slate-800/80", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex items-center justify-between text-xs", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "font-bold text-slate-300", children: "\u0623\u062F\u062E\u0644 \u0631\u0645\u0632 \u0627\u0644\u062F\u062E\u0648\u0644 \u062D\u0633\u0628 \u0627\u0644\u0635\u0644\u0627\u062D\u064A\u0629 (6 \u0623\u0631\u0642\u0627\u0645):" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "font-bold text-slate-300", children: "\u0631\u0645\u0632 \u062F\u062E\u0648\u0644 \u0627\u0644\u0645\u0648\u0638\u0641\u064A\u0646:" }),
                   /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
                     "button",
                     {
@@ -4204,7 +4146,7 @@ lucide-react/dist/esm/lucide-react.js:
                         pinInputRefs.current[0]?.focus();
                       },
                       className: "text-slate-400 hover:text-amber-400 text-[11px]",
-                      children: "\u0645\u0633\u062D \u0627\u0644\u062D\u0642\u0648\u0644"
+                      children: "\u0645\u0633\u062D"
                     }
                   )
                 ] }),
@@ -4239,32 +4181,6 @@ lucide-react/dist/esm/lucide-react.js:
                     children: pinError
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "grid grid-cols-2 gap-2 pt-1 text-[11px]", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
-                    "button",
-                    {
-                      type: "button",
-                      onClick: () => verifyPinCode("123456"),
-                      className: "py-2 px-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-amber-400 font-bold flex items-center justify-center gap-1.5",
-                      children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.ShieldCheck, { className: "w-3.5 h-3.5" }),
-                        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u062F\u062E\u0648\u0644 \u0643\u0645\u062F\u064A\u0631 (123456)" })
-                      ]
-                    }
-                  ),
-                  /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
-                    "button",
-                    {
-                      type: "button",
-                      onClick: () => verifyPinCode("111111"),
-                      className: "py-2 px-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-sky-400 font-bold flex items-center justify-center gap-1.5",
-                      children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.UserCheck, { className: "w-3.5 h-3.5" }),
-                        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u062F\u062E\u0648\u0644 \u0645\u0633\u062A\u0648\u062F\u0639 (111111)" })
-                      ]
-                    }
-                  )
-                ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "flex items-center justify-between pt-1 text-xs text-slate-400", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { className: "flex items-center gap-2 cursor-pointer select-none", children: [
                   /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
                     "input",
@@ -4275,7 +4191,7 @@ lucide-react/dist/esm/lucide-react.js:
                       className: "accent-amber-500 rounded"
                     }
                   ),
-                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u062A\u0630\u0643\u0631 \u062F\u062E\u0648\u0644\u064A \u0639\u0644\u0649 \u0647\u0630\u0627 \u0627\u0644\u062C\u0647\u0627\u0632 \u0627\u0644\u064A\u0648\u0645" })
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u062A\u0630\u0643\u0631 \u0627\u0644\u062F\u062E\u0648\u0644 \u0639\u0644\u0649 \u0647\u0630\u0627 \u0627\u0644\u062C\u0647\u0627\u0632 \u0627\u0644\u064A\u0648\u0645" })
                 ] }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
                   "button",
@@ -4283,28 +4199,12 @@ lucide-react/dist/esm/lucide-react.js:
                     type: "button",
                     onClick: () => verifyPinCode(),
                     className: "w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/20 transition",
-                    children: "\u062F\u062E\u0648\u0644 \u0625\u0644\u0649 \u0627\u0644\u0646\u0638\u0627\u0645 \u2B05"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
-                  "button",
-                  {
-                    type: "button",
-                    onClick: openGithubCodeModal,
-                    className: "w-full py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-amber-300 font-bold text-xs flex items-center justify-center gap-2 transition",
-                    children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.Download, { className: "w-3.5 h-3.5 text-amber-400" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0646\u0633\u062E \u0623\u0648 \u062A\u062D\u0645\u064A\u0644 \u0643\u0648\u062F GitHub \u0627\u0644\u0643\u0627\u0645\u0644 (\u0645\u0644\u0641 index.html \u0648\u0627\u062D\u062F)" })
-                    ]
+                    children: "\u062F\u062E\u0648\u0644 \u0644\u0644\u0646\u0638\u0627\u0645 \u2B05"
                   }
                 )
               ] })
             ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "max-w-6xl w-full mx-auto text-center py-2 text-xs text-slate-500", children: [
-              "REEFTEK \xA9 2026 \xB7 \u0645\u0624\u0633\u0633\u0629 \u0627\u0644\u0631\u064A\u0641 \u0627\u0644\u062A\u0642\u0646\u064A \u0644\u0642\u0637\u0639 \u063A\u064A\u0627\u0631 \u0627\u0644\u0634\u0627\u062D\u0646\u0627\u062A \xB7 \u062A\u0635\u0645\u064A\u0645 \u0648\u062A\u0637\u0648\u064A\u0631:",
-              " ",
-              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("strong", { className: "text-slate-300", children: "\u0633\u0639\u064A\u062F \u0639\u0628\u062F\u0627\u0644\u0644\u0647" })
-            ] })
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "max-w-6xl w-full mx-auto text-center py-2 text-xs text-slate-500", children: "REEFTEK \xA9 2026 \xB7 \u0645\u0624\u0633\u0633\u0629 \u0627\u0644\u0631\u064A\u0641 \u0627\u0644\u062A\u0642\u0646\u064A \u0644\u0642\u0637\u0639 \u063A\u064A\u0627\u0631 \u0627\u0644\u0634\u0627\u062D\u0646\u0627\u062A" })
           ]
         }
       ),
@@ -4407,26 +4307,13 @@ lucide-react/dist/esm/lucide-react.js:
         /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex flex-wrap items-center gap-3", children: [
           /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "text-slate-300 font-bold", children: "\u0645\u0624\u0633\u0633\u0629 \u0627\u0644\u0631\u064A\u0641 \u0627\u0644\u062A\u0642\u0646\u064A \u0644\u0642\u0637\u0639 \u063A\u064A\u0627\u0631 \u0627\u0644\u0634\u0627\u062D\u0646\u0627\u062A" }),
           /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "text-slate-600", children: "\xB7" }),
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex items-center gap-1.5 bg-slate-950 p-1 rounded-lg border border-slate-800", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
-              "button",
-              {
-                type: "button",
-                onClick: () => completeLogin("manager", "\u0633\u0639\u064A\u062F \u0639\u0628\u062F\u0627\u0644\u0644\u0647 (\u0645\u062F\u064A\u0631 \u0627\u0644\u0646\u0638\u0627\u0645)"),
-                className: `px-2.5 py-1 rounded-md font-bold transition-colors whitespace-nowrap ${userRole === "manager" ? "bg-amber-500 text-slate-950" : "text-slate-400 hover:text-white"}`,
-                children: "\u0635\u0644\u0627\u062D\u064A\u0629: \u0645\u062F\u064A\u0631 \u0627\u0644\u0646\u0638\u0627\u0645 (\u062A\u0642\u0627\u0631\u064A\u0631 \u0648\u062A\u0642\u0641\u064A\u0644)"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
-              "button",
-              {
-                type: "button",
-                onClick: () => completeLogin("warehouse", "\u0645\u0648\u0638\u0641 \u0627\u0644\u0645\u0633\u062A\u0648\u062F\u0639 \u0648\u0627\u0644\u062A\u063A\u0644\u064A\u0641"),
-                className: `px-2.5 py-1 rounded-md font-bold transition-colors whitespace-nowrap ${userRole === "warehouse" ? "bg-sky-400 text-slate-950" : "text-slate-400 hover:text-white"}`,
-                children: "\u0635\u0644\u0627\u062D\u064A\u0629: \u0645\u0648\u0638\u0641 \u0645\u0633\u062A\u0648\u062F\u0639 (\u0625\u0636\u0627\u0641\u0629 \u0648\u0637\u0628\u0627\u0639\u0629 \u0641\u0642\u0637)"
-              }
-            )
-          ] })
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+            "span",
+            {
+              className: `px-2.5 py-1 rounded-lg font-bold border whitespace-nowrap ${userRole === "manager" ? "bg-amber-500/15 text-amber-400 border-amber-500/30" : "bg-sky-500/15 text-sky-400 border-sky-500/30"}`,
+              children: userRole === "manager" ? "\u0635\u0644\u0627\u062D\u064A\u0629: \u0645\u062F\u064A\u0631 \u0627\u0644\u0646\u0638\u0627\u0645" : "\u0635\u0644\u0627\u062D\u064A\u0629: \u0645\u0648\u0638\u0641 \u0627\u0644\u0645\u0633\u062A\u0648\u062F\u0639"
+            }
+          )
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex flex-wrap items-center gap-2", children: [
           /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { className: "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-emerald-400 cursor-pointer select-none whitespace-nowrap", children: [
@@ -4439,62 +4326,65 @@ lucide-react/dist/esm/lucide-react.js:
                 className: "accent-emerald-500 rounded"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0625\u0634\u0639\u0627\u0631 \u0648\u0627\u062A\u0633\u0627\u0628 \u062A\u0644\u0642\u0627\u0626\u064A \u0639\u0646\u062F \u062A\u063A\u064A\u0651\u0631 \u0627\u0644\u062D\u0627\u0644\u0629" })
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0625\u0634\u0639\u0627\u0631 \u0648\u0627\u062A\u0633\u0627\u0628 \u062A\u0644\u0642\u0627\u0626\u064A" })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
             "button",
             {
               type: "button",
               onClick: () => {
-                setTrackingModalShipmentId(currentShipmentId);
+                setTrackingModalShipmentId("");
                 setTrackingModalOpen(true);
               },
               className: "px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold flex items-center gap-1.5 whitespace-nowrap",
               children: [
                 /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.Clock, { className: "w-3.5 h-3.5 text-amber-400" }),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0627\u0644\u062E\u0637 \u0627\u0644\u0632\u0645\u0646\u064A \u0648\u0627\u0644\u062A\u062A\u0628\u0639" })
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
-            "button",
-            {
-              type: "button",
-              onClick: openGithubCodeModal,
-              className: "px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 font-bold flex items-center gap-1.5 whitespace-nowrap",
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.Download, { className: "w-3.5 h-3.5 text-amber-400" }),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0646\u0633\u062E \u0643\u0648\u062F GitHub (index.html)" })
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u062A\u062A\u0628\u0639 \u0634\u062D\u0646\u0629" })
               ]
             }
           ),
           /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(PWAInstallButton, {}),
           /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-300 flex items-center gap-1.5 whitespace-nowrap", children: isOnline ? /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.Cloud, { className: "w-3.5 h-3.5 text-emerald-400" }),
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0645\u062A\u0635\u0644 \u0648\u0645\u0632\u0627\u0645\u0646" })
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0645\u062A\u0635\u0644" })
           ] }) : /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.WifiOff, { className: "w-3.5 h-3.5 text-amber-400" }),
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0648\u0636\u0639 \u0639\u062F\u0645 \u0627\u0644\u0627\u062A\u0635\u0627\u0644 (PWA)" })
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0648\u0636\u0639 \u0639\u062F\u0645 \u0627\u0644\u0627\u062A\u0635\u0627\u0644" })
           ] }) }),
-          userRole === "manager" && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
-            "button",
-            {
-              type: "button",
-              onClick: () => setPinSettingsModalOpen(true),
-              "aria-label": "\u0625\u0639\u062F\u0627\u062F\u0627\u062A \u0631\u0645\u0648\u0632 \u0627\u0644\u062F\u062E\u0648\u0644",
-              title: "\u0625\u0639\u062F\u0627\u062F\u0627\u062A \u0631\u0645\u0648\u0632 \u0627\u0644\u062F\u062E\u0648\u0644 \u0644\u0644\u0645\u062F\u064A\u0631 \u0648\u0627\u0644\u0645\u0633\u062A\u0648\u062F\u0639",
-              className: "p-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300",
-              children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.KeyRound, { className: "w-4 h-4 text-amber-400" })
-            }
-          ),
+          userRole === "manager" && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
+              "button",
+              {
+                type: "button",
+                onClick: openGithubCodeModal,
+                className: "px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 font-bold flex items-center gap-1.5 whitespace-nowrap",
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.Download, { className: "w-3.5 h-3.5 text-amber-400" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0643\u0648\u062F GitHub" })
+                ]
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+              "button",
+              {
+                type: "button",
+                onClick: () => setPinSettingsModalOpen(true),
+                "aria-label": "\u0625\u0639\u062F\u0627\u062F\u0627\u062A \u0627\u0644\u0623\u0645\u0627\u0646 \u0648\u0627\u0644\u0646\u0638\u0627\u0645",
+                title: "\u0625\u0639\u062F\u0627\u062F\u0627\u062A \u0627\u0644\u0623\u0645\u0627\u0646 \u0648\u0627\u0644\u0631\u0645\u0648\u0632 \u0627\u0644\u0633\u0631\u064A\u0629",
+                className: "p-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300",
+                children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.KeyRound, { className: "w-4 h-4 text-amber-400" })
+              }
+            )
+          ] }),
           /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
             "button",
             {
               type: "button",
               onClick: () => {
                 setIsAuthenticated(false);
+                setPinDigits(["", "", "", "", "", ""]);
                 localStorage.removeItem("reeftek_v4_auth_day");
-                showToast("\u062A\u0645 \u0642\u0641\u0644 \u0627\u0644\u0646\u0638\u0627\u0645 \u0628\u0646\u062C\u0627\u062D");
+                showToast("\u062A\u0645 \u0642\u0641\u0644 \u0627\u0644\u0646\u0638\u0627\u0645");
               },
               className: "px-2.5 py-1.5 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/30 font-bold flex items-center gap-1 whitespace-nowrap",
               children: [
@@ -4555,10 +4445,7 @@ lucide-react/dist/esm/lucide-react.js:
         activeTab === "create" && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("section", { className: "grid grid-cols-1 lg:grid-cols-12 gap-6 items-start", children: [
           /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl", children: [
             /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex items-center justify-between pb-4 mb-4 border-b border-slate-800", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { className: "font-extrabold text-base text-white", children: "01. \u0628\u064A\u0627\u0646\u0627\u062A \u0627\u0644\u0643\u0631\u062A\u0648\u0646 \u0648\u0627\u0644\u0628\u0648\u0644\u064A\u0635\u0629" }),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-[11px] text-slate-400", children: "\u0628\u0627\u0631\u0643\u0648\u062F \u0648 QR \u0645\u062D\u0644\u064A \u0641\u0648\u0631\u064A \u064A\u0639\u0645\u0644 \u0628\u062F\u0648\u0646 \u0625\u0646\u062A\u0631\u0646\u062A + \u0625\u0631\u0641\u0627\u0642 \u0635\u0648\u0631\u0629 \u0627\u0644\u0643\u0631\u062A\u0648\u0646" })
-              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { className: "font-extrabold text-base text-white", children: "\u0628\u064A\u0627\u0646\u0627\u062A \u0627\u0644\u0628\u0648\u0644\u064A\u0635\u0629 \u0648\u0627\u0644\u0637\u0631\u062F" }) }),
               /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "text-left", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "text-[11px] text-slate-400 block", children: "\u0631\u0642\u0645 \u0627\u0644\u0634\u062D\u0646\u0629" }),
                 /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flex items-center gap-1", children: [
@@ -4966,10 +4853,7 @@ lucide-react/dist/esm/lucide-react.js:
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "lg:col-span-7 space-y-4", children: [
             /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h3", { className: "font-bold text-sm text-white", children: "02. \u0645\u0639\u0627\u064A\u0646\u0629 \u062D\u064A\u0629 \u0644\u0648\u0631\u0642\u0629 \u0627\u0644\u0637\u0628\u0627\u0639\u0629 (QR \u0648\u0628\u0627\u0631\u0643\u0648\u062F \u0645\u062D\u0644\u064A \u0641\u0648\u0631\u064A \u0628\u062F\u0648\u0646 \u0625\u0646\u062A\u0631\u0646\u062A)" }),
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "text-[11px] text-slate-400", children: "\u0627\u0636\u063A\u0637 \u0639\u0644\u0649 \u0627\u0644\u0628\u0627\u0631\u0643\u0648\u062F \u0623\u0648 \u0627\u0644\u0640 QR \u0641\u064A \u0627\u0644\u0648\u0631\u0642\u0629 \u0644\u0645\u0639\u0627\u064A\u0646\u0629 \u0628\u0637\u0627\u0642\u0629 \u0627\u0644\u062A\u062A\u0628\u0639 \u0648\u0627\u0644\u062E\u0637 \u0627\u0644\u0632\u0645\u0646\u064A \u0644\u0644\u0639\u0645\u064A\u0644" })
-              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h3", { className: "font-bold text-sm text-white", children: "\u0645\u0639\u0627\u064A\u0646\u0629 \u0627\u0644\u0645\u0644\u0635\u0642 \u0648\u0627\u0644\u0637\u0628\u0627\u0639\u0629" }) }),
               /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "flex flex-wrap items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs", children: [
                 { id: "single", label: "\u0645\u0644\u0635\u0642 \u0635\u0646\u0627\u0639\u064A \u0643\u0628\u064A\u0631" },
                 { id: "thermal", label: "\u062D\u0631\u0627\u0631\u064A 10\xD715 \u0633\u0645" },
@@ -5697,6 +5581,25 @@ lucide-react/dist/esm/lucide-react.js:
                         onChange: (e) => setNewWarehousePin(normalizeDigits(e.target.value)),
                         dir: "ltr",
                         className: "w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2 font-mono font-black text-center text-base tracking-widest text-sky-400"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "pt-2 border-t border-slate-800 space-y-2", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "block text-slate-400 font-bold", children: "\u0625\u062F\u0627\u0631\u0629 \u0628\u064A\u0627\u0646\u0627\u062A \u0627\u0644\u0646\u0638\u0627\u0645:" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
+                      "button",
+                      {
+                        type: "button",
+                        onClick: () => {
+                          persistShipments([]);
+                          setPinSettingsModalOpen(false);
+                          showToast("\u062A\u0645 \u062A\u0635\u0641\u064A\u0631 \u0627\u0644\u0634\u062D\u0646\u0627\u062A \u0627\u0644\u062A\u062C\u0631\u064A\u0628\u064A\u0629 \u0648\u0627\u0644\u0628\u062F\u0621 \u0628\u0633\u062C\u0644 \u0641\u0627\u0631\u063A \u0646\u0638\u064A\u0641 \u2713");
+                        },
+                        className: "w-full py-2 px-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 font-bold flex items-center justify-center gap-1.5",
+                        children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react7.Trash2, { className: "w-3.5 h-3.5" }),
+                          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\u0645\u0633\u062D \u0627\u0644\u0634\u062D\u0646\u0627\u062A \u0627\u0644\u062A\u062C\u0631\u064A\u0628\u064A\u0629 \u0648\u0627\u0644\u0628\u062F\u0621 \u0628\u0633\u062C\u0644 \u0641\u0627\u0631\u063A" })
+                        ]
                       }
                     )
                   ] }),
